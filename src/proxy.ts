@@ -2,9 +2,19 @@ import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 const PUBLIC_ROUTES = ["/login", "/register", "/auth/callback", "/auth/confirm"];
+const STATIC_FILES = ["/sw.js", "/manifest.json", "/offline.html"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Static public files and cron API — skip auth entirely
+  if (
+    STATIC_FILES.includes(pathname) ||
+    pathname.startsWith("/brand/") ||
+    pathname.startsWith("/api/cron/")
+  ) {
+    return NextResponse.next({ request });
+  }
 
   const response = NextResponse.next({ request });
 
