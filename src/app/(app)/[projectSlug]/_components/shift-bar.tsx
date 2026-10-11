@@ -116,8 +116,8 @@ export function ShiftBar({
       <div className="flex items-center justify-between mb-2">
         <span className="text-[13px] font-medium text-text">
           {isPaused
-            ? "Smena pozastavena"
-            : `Smena ${formatDuration(shift.started_at!, shift.total_pause_s ?? 0)}`}
+            ? "Směna pozastavena"
+            : `Směna ${formatDuration(shift.started_at!, shift.total_pause_s ?? 0)}`}
         </span>
         <div className="flex items-center gap-2">
           {isPaused ? (
@@ -126,7 +126,7 @@ export function ShiftBar({
               onClick={handleResume}
               className="px-3 h-8 rounded-lg text-[13px] font-medium bg-accent text-white hover:bg-accent/90 transition-colors"
             >
-              Pokracovat
+              Pokračovat
             </button>
           ) : (
             <button
@@ -142,7 +142,7 @@ export function ShiftBar({
             onClick={handleEnd}
             className="px-3 h-8 rounded-lg text-[13px] font-medium text-urgent hover:bg-urgent-soft transition-colors"
           >
-            Ukoncit
+            Ukončit
           </button>
         </div>
       </div>
@@ -162,7 +162,7 @@ export function ShiftBar({
           }`}
         >
           {callsThisHour} / {callsPerHour}
-          {underTarget && " pod cilem"}
+          {underTarget && " pod cílem"}
         </span>
       </div>
     </div>

@@ -53,7 +53,7 @@ export function HistoryList({
         <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-muted block mb-3">
           Historie
         </span>
-        <p className="text-[13px] text-muted">Zatim zadne hovory.</p>
+        <p className="text-[13px] text-muted">Zatím žádné hovory.</p>
       </div>
     );
   }

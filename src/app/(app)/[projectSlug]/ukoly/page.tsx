@@ -22,10 +22,10 @@ type TaskRow = {
 };
 
 const TASK_LABELS: Record<string, string> = {
-  send_offer: "Odeslat nabidku",
+  send_offer: "Odeslat nabídku",
   send_deck: "Odeslat prezentaci",
   check_contact: "Zkontrolovat kontakt",
-  custom: "Ukol",
+  custom: "Úkol",
 };
 
 const TEMPLATE_MAP: Record<string, string> = {
@@ -80,13 +80,13 @@ export default async function TasksPage({
   if (taskList.length === 0) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-semibold text-text mb-6">Ukoly</h1>
+        <h1 className="text-2xl font-semibold text-text mb-6">Úkoly</h1>
         <div className="bg-surface border border-line rounded-lg p-8 text-center">
           <p className="text-muted text-[15px]">
-            Zadne nevyrizene ukoly.
+            Žádné nevyřízené úkoly.
           </p>
           <p className="text-muted text-[13px] mt-1">
-            Ukoly se vytvarei automaticky pri zapisu vysledku hovoru.
+            Úkoly se vytvářejí automaticky při zápisu výsledku hovoru.
           </p>
         </div>
       </div>
@@ -95,7 +95,7 @@ export default async function TasksPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-semibold text-text mb-6">Ukoly</h1>
+      <h1 className="text-2xl font-semibold text-text mb-6">Úkoly</h1>
       <div className="space-y-3">
         {taskList.map((task) => {
           const isOverdue = new Date(task.due_at) < new Date();

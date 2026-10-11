@@ -61,7 +61,7 @@ export function SendEmailForm({
     if (result.success) {
       router.refresh();
     } else {
-      setError(result.error ?? "Odeslani selhalo.");
+      setError(result.error ?? "Odeslání selhalo.");
     }
   }
 
@@ -72,7 +72,7 @@ export function SendEmailForm({
         onClick={() => setOpen(true)}
         className="mt-3 w-full h-11 bg-accent text-white rounded-lg font-medium text-[14px] hover:bg-accent/90 transition-colors"
       >
-        Otevrit a odeslat
+        Otevřít a odeslat
       </button>
     );
   }
@@ -87,7 +87,7 @@ export function SendEmailForm({
       {/* Email field */}
       <div>
         <label className="text-[13px] font-medium text-muted block mb-1">
-          E-mail prijemce
+          E-mail příjemce
         </label>
         <input
           type="email"
@@ -102,7 +102,7 @@ export function SendEmailForm({
       {missingVars.length > 0 && (
         <div className="space-y-3">
           <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-muted block">
-            Doplnte udaje
+            Doplňte údaje
           </span>
           {missingVars.map((varKey) => (
             <div key={varKey}>
@@ -126,7 +126,7 @@ export function SendEmailForm({
       {/* Preview */}
       <div>
         <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-muted block mb-2">
-          Nahled
+          Náhled
         </span>
         <div className="bg-bg rounded-lg p-4 border border-line">
           <p className="text-[14px] font-medium text-text mb-2">
@@ -152,14 +152,14 @@ export function SendEmailForm({
           disabled={!allFilled || sending}
           className="flex-1 h-11 bg-accent text-white rounded-lg font-medium text-[14px] hover:bg-accent/90 transition-colors disabled:opacity-50"
         >
-          {sending ? "Odesilam..." : "Odeslat e-mail"}
+          {sending ? "Odesílám..." : "Odeslat e-mail"}
         </button>
         <button
           type="button"
           onClick={() => setOpen(false)}
           className="px-4 h-11 text-[14px] text-muted border border-line rounded-lg hover:bg-bg transition-colors"
         >
-          Zrusit
+          Zrušit
         </button>
       </div>
     </div>

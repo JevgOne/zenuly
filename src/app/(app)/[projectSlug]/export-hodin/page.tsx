@@ -23,7 +23,8 @@ export default async function ExportHodinPage({
     .eq("id", user.id)
     .single();
 
-  if (!profile || profile.role !== "admin") redirect(`/${projectSlug}`);
+  if (!profile || (profile.role !== "admin" && profile.role !== "manager"))
+    redirect(`/${projectSlug}`);
 
   const { data: project } = await supabase
     .from("projects")
@@ -36,7 +37,7 @@ export default async function ExportHodinPage({
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-semibold text-text mb-6">
-        Export odpracovanych hodin
+        Export odpracovaných hodin
       </h1>
       <MonthlyHoursExport projectId={project.id} />
     </div>

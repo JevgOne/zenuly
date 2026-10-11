@@ -61,7 +61,7 @@ export function UserMenu({
             Nastavení
           </Link>
 
-          {(role === "admin" || role === "manager") && (
+          {role === "admin" && (
             <Link
               href="/admin/users"
               className="block px-3 py-2 text-sm text-text hover:bg-bg transition-colors"

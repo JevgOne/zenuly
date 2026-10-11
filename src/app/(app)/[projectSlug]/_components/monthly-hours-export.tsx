@@ -9,15 +9,15 @@ import {
 
 const MONTH_NAMES = [
   "Leden",
-  "Unor",
-  "Brezen",
+  "Únor",
+  "Březen",
   "Duben",
-  "Kveten",
-  "Cerven",
-  "Cervenec",
+  "Květen",
+  "Červen",
+  "Červenec",
   "Srpen",
-  "Zari",
-  "Rijen",
+  "Září",
+  "Říjen",
   "Listopad",
   "Prosinec",
 ];
@@ -106,7 +106,7 @@ export function MonthlyHoursExport({
           disabled={downloading || rows.length === 0}
           className="px-5 h-11 bg-accent text-white rounded-lg font-medium text-[14px] hover:bg-accent/90 transition-colors disabled:opacity-50"
         >
-          {downloading ? "Stahuji..." : "Stahnout CSV"}
+          {downloading ? "Stahuji..." : "Stáhnout CSV"}
         </button>
       </div>
 
@@ -116,7 +116,7 @@ export function MonthlyHoursExport({
       ) : rows.length === 0 ? (
         <div className="bg-surface border border-line rounded-lg p-8 text-center">
           <p className="text-muted text-[15px]">
-            Za {MONTH_NAMES[month - 1]} {year} nejsou zadne zaznamy.
+            Za {MONTH_NAMES[month - 1]} {year} nejsou žádné záznamy.
           </p>
         </div>
       ) : (
@@ -125,10 +125,10 @@ export function MonthlyHoursExport({
             <thead>
               <tr className="bg-bg text-left">
                 <th className="px-4 py-3 font-medium text-muted">
-                  Operator
+                  Operátor
                 </th>
                 <th className="px-4 py-3 font-medium text-muted text-right">
-                  Smeny
+                  Směny
                 </th>
                 <th className="px-4 py-3 font-medium text-muted text-right">
                   Hodiny
@@ -137,13 +137,13 @@ export function MonthlyHoursExport({
                   Pauzy
                 </th>
                 <th className="px-4 py-3 font-medium text-muted text-right">
-                  Ciste h
+                  Čisté h
                 </th>
                 <th className="px-4 py-3 font-medium text-muted text-right">
                   Hovory
                 </th>
                 <th className="px-4 py-3 font-medium text-muted text-right">
-                  Dovolano
+                  Dovoláno
                 </th>
                 <th className="px-4 py-3 font-medium text-muted text-right">
                   Hovory/h

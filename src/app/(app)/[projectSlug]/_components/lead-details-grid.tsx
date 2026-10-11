@@ -36,7 +36,7 @@ export function LeadDetailsGrid({
               priority === 3
                 ? "bg-accent"
                 : priority === 1
-                  ? "border border-line-strong"
+                  ? "border border-input-border"
                   : "bg-muted/40"
             }`}
           />

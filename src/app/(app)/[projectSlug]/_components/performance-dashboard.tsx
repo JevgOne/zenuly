@@ -106,7 +106,7 @@ export function PerformanceDashboard({
             {stats.calls_per_hour}
           </span>
           <span className="text-[15px] text-muted mb-1">
-            / {stats.target_per_hour} cil
+            / {stats.target_per_hour} cíl
           </span>
         </div>
         <div className="h-2 bg-bg rounded-full overflow-hidden">
@@ -119,7 +119,7 @@ export function PerformanceDashboard({
         </div>
         {!stats.on_target && (
           <p className="text-[13px] text-urgent mt-2 font-medium">
-            Pod cilem
+            Pod cílem
           </p>
         )}
       </div>
@@ -128,12 +128,12 @@ export function PerformanceDashboard({
       <div className="grid grid-cols-2 gap-3">
         <KpiTile label="Hovory dnes" value={stats.calls_today} />
         <KpiTile
-          label="Dovolano"
+          label="Dovoláno"
           value={stats.reached_today}
           suffix={`${reachedPct} %`}
         />
         <KpiTile label="Konzultace" value={stats.meetings_today} />
-        <KpiTile label="Odpracovano" value={stats.hours_today} suffix="h" />
+        <KpiTile label="Odpracováno" value={stats.hours_today} suffix="h" />
       </div>
     </div>
   );

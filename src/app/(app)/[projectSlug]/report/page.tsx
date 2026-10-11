@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { getDailyReport } from "@/app/actions/report";
 import { ReportView } from "./report-view";
 
+export const instant = false;
+
 export default async function ReportPage({
   params,
   searchParams,
@@ -24,7 +26,8 @@ export default async function ReportPage({
     .select("role")
     .eq("id", user.id)
     .single();
-  if (!profile || profile.role !== "admin") redirect(`/${projectSlug}/fronta`);
+  if (!profile || (profile.role !== "admin" && profile.role !== "manager"))
+    redirect(`/${projectSlug}/fronta`);
 
   const { data: project } = await supabase
     .from("projects")

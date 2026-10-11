@@ -27,7 +27,7 @@ export default async function VykonPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-semibold text-text mb-6">Vykon</h1>
+      <h1 className="text-2xl font-semibold text-text mb-6">Výkon</h1>
       <PerformanceDashboard projectId={project.id} />
     </div>
   );

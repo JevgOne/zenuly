@@ -20,6 +20,7 @@ const ADMIN_NAV_ITEMS = [
   { label: "Pipeline", href: "pipeline" },
   { label: "Import", href: "import" },
   { label: "Report", href: "report" },
+  { label: "Export hodin", href: "export-hodin" },
   NAV_ITEMS[3],
 ];
 
