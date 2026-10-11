@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Offline — Zenuly</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F6F5F1;
+      color: #16181D;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      padding: 24px;
+    }
+    .card {
+      max-width: 400px;
+      text-align: center;
+      background: #FDFDFB;
+      border: 1px solid #E4E2DC;
+      border-radius: 16px;
+      padding: 48px 32px;
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      background: #E4E2DC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 15px;
+      color: #5E6168;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    button {
+      height: 44px;
+      padding: 0 24px;
+      background: #2449C9;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    button:active { opacity: 0.85; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">&#x26A0;</div>
+    <h1>Jste offline</h1>
+    <p>Nem&#xe1;te p&#x159;ipojen&#xed; k internetu. Zkontrolujte si&#x165; a zkuste to znovu.</p>
+    <button onclick="location.reload()">Zkusit znovu</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Průvodce prvním přihlášením</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F6F5F1; color: #16181D; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; padding: 24px 24px 28px">
+<div style="display: flex; justify-content: space-between; align-items: center; height: 44px">
+<span style="font-size: 13px; color: #5E6168">Vítej ve Weblyx CRM</span>
+<button onClick="{{ skip }}" style="height: 44px; padding: 0 4px; border: none; background: none; font-family: inherit; font-size: 14px; color: #5E6168">Přeskočit</button>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 28px">
+<div style="height: 240px; border-radius: 20px; background: #FDFDFB; border: 1px solid #E4E2DC; display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box">
+<div style="width: 100%; display: flex; flex-direction: column; gap: 10px">
+<span style="align-self: flex-start; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #1B3699; background: #E8ECFA; padding: 4px 10px; border-radius: 8px">{{ chip }}</span>
+<div style="padding: 14px 16px; border-radius: 14px; border: 1.5px solid #2449C9; background: #E8ECFA; display: flex; justify-content: space-between; align-items: center"><span style="font-size: 16px; font-weight: 600; color: #12245F">{{ demo }}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #1B3699">{{ demoRight }}</span></div>
+<div style="padding: 14px 16px; border-radius: 14px; border: 1px solid #E4E2DC; background: #F6F5F1; height: 20px"></div>
+<div style="padding: 14px 16px; border-radius: 14px; border: 1px solid #E4E2DC; background: #F6F5F1; height: 20px"></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #1B3699">Krok {{ num }} ze 4</span>
+<h1 style="margin: 0; font-size: 28px; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em">{{ title }}</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #3A3D44">{{ body }}</p>
+</div>
+</div>
+<div style="display: flex; justify-content: center; gap: 8px; padding-bottom: 20px">
+<sc-for list="{{ dots }}" as="d" hint-placeholder-count="4">
+<span style="{{ d.style }}"></span>
+</sc-for>
+</div>
+<div style="display: flex; gap: 8px">
+<sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ back }}" style="width: 120px; height: 54px; border-radius: 14px; border: 1px solid #C9C6BE; background: #FDFDFB; font-family: inherit; font-size: 16px; font-weight: 500; color: #16181D">Zpět</button>
+</sc-if>
+<button onClick="{{ next }}" style="flex: 1; height: 54px; border-radius: 14px; border: none; background: #2449C9; color: #FDFDFB; font-family: inherit; font-size: 16px; font-weight: 600">{{ cta }}</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const steps = [
+{ chip: 'SMĚNA', demo: 'Začít směnu', demoRight: '0 / 20', title: 'Začni směnu', body: 'Ťukni na „Začít směnu“. Počítá se ti čas a hovory. Na přestávku dej „Pauza“.' },
+{ chip: 'VOLAT TEĎ', demo: 'Autoservis Dvořák', demoRight: '1.', title: 'Volej odshora', body: 'Fronta je seřazená za tebe. Vždy ber první lead, nic nevybírej.' },
+{ chip: 'HÁČEK', demo: 'Web 6,1 s na mobilu', demoRight: '34/100', title: 'Než zavoláš, přečti si háček', body: 'Na kartě je jedna věc o webu firmy a první věta. Tou začni hovor.' },
+{ chip: 'PO HOVORU', demo: 'Konzultace', demoRight: '1', title: 'Po hovoru ťukni, jak skončil', body: 'CRM samo naplánuje, co dál. Pak „Uložit a další lead“. Nevíš si rady? Ťukni na „?“ vpravo nahoře.' }
+];
+const i = Math.min((this.state && this.state.i) || 0, 3);
+const s = steps[i];
+const dots = steps.map((_, k) => ({ style: 'width: ' + (k === i ? '22px' : '8px') + '; height: 8px; border-radius: 4px; background: ' + (k === i ? '#2449C9' : '#C9C6BE') }));
+return {
+...s,
+num: i + 1,
+dots,
+canBack: i > 0,
+cta: i === 3 ? 'Rozumím, začínám' : 'Další',
+next: () => this.setState({ i: i === 3 ? 0 : i + 1 }),
+back: () => this.setState({ i: Math.max(0, i - 1) }),
+skip: () => this.setState({ i: 3 })
+};
+}
+}
+</script>
+</body>
+</html>

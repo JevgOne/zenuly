@@ -1,0 +1,1729 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leady – Praha 9</title>
+<style>
+:root { --bg:#f6f7f9; --card:#fff; --text:#1a1d23; --muted:#6b7280; --line:#e5e7eb; --link:#1d4ed8; --chip:#eef0f3;
+  --high:#dc2626; --mid:#d97706; --low:#2563eb; --none:#6b7280; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#0f1115; --card:#181b21; --text:#e6e8ec; --muted:#9aa1ad; --line:#2a2e37; --link:#7aa7ff; --chip:#242833;
+    --high:#f87171; --mid:#fbbf24; --low:#60a5fa; --none:#9aa1ad; }
+}
+* { box-sizing: border-box; }
+body { margin:0; padding:24px 16px 48px; background:var(--bg); color:var(--text);
+  font:14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+.wrap { max-width:1280px; margin:0 auto; }
+h1 { font-size:22px; margin:0 0 4px; }
+.sub { color:var(--muted); margin-bottom:16px; }
+.bar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px; }
+.bar input[type=search] { flex:1 1 240px; padding:9px 12px; border:1px solid var(--line); border-radius:8px;
+  background:var(--card); color:var(--text); font:inherit; }
+.bar label { display:flex; gap:6px; align-items:center; color:var(--muted); white-space:nowrap; }
+button { padding:9px 14px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--text);
+  font:inherit; cursor:pointer; }
+button:hover { border-color:var(--link); }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; overflow-x:auto; }
+table { width:100%; border-collapse:collapse; }
+th { text-align:left; font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);
+  padding:10px 12px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--card); }
+td { padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+tr:last-child td { border-bottom:0; }
+tr[hidden] { display:none; }
+tr.lead td { border-bottom:0; padding-bottom:4px; }
+tr.mail td { padding-top:0; }
+tr.mail td > details { display:inline-block; vertical-align:top; max-width:760px; }
+summary { cursor:pointer; color:var(--link); padding:6px 0; }
+.subject { font-weight:600; margin:2px 0; }
+pre { margin:0 0 8px; padding:12px 14px; background:var(--chip); border-radius:8px; white-space:pre-wrap; font:inherit; }
+.actions { display:inline-flex; gap:8px; margin-left:12px; vertical-align:top; }
+.btn, .actions button { padding:5px 12px; border:1px solid var(--line); border-radius:8px; background:var(--card);
+  color:var(--text); font-size:13px; }
+.btn:hover { border-color:var(--link); text-decoration:none; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+.name { font-weight:600; }
+.muted { color:var(--muted); font-size:13px; }
+.nowrap { white-space:nowrap; }
+.score { width:1%; }
+.badge { display:inline-block; min-width:30px; padding:3px 8px; border-radius:999px; text-align:center; font-weight:700;
+  color:#fff; background:var(--none); }
+.badge.high { background:var(--high); } .badge.mid { background:var(--mid); } .badge.low { background:var(--low); }
+@media (prefers-color-scheme: dark) { .badge { color:#0f1115; } }
+.chip { display:inline-block; margin:0 4px 4px 0; padding:2px 8px; border-radius:6px; background:var(--chip); font-size:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Leady – Praha 9</h1>
+<div class="sub">60 leadů z 215 prověřených firem · 34 s e-mailem · vygenerováno 9. 10. 2026 · skóre: čím vyšší, tím zastaralejší web</div>
+<div class="bar">
+<input type="search" id="q" placeholder="Hledat firmu, web, e-mail, důvod…">
+<label><input type="checkbox" id="onlyEmail"> jen s e-mailem</label>
+<label><input type="checkbox" id="onlyPhone"> jen s telefonem</label>
+<button id="copy">Kopírovat e-maily</button>
+<span class="muted" id="count"></span>
+</div>
+<div class="card">
+<table>
+<thead><tr><th>Skóre</th><th>Firma</th><th>Web</th><th>E-mail</th><th>Telefon</th><th>Proč je web zastaralý</th></tr></thead>
+<tbody id="rows">
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge high">8</span></td>
+<td><div class="name">Azyl opuštěných zvířat v Libni</div></td>
+<td><a href="https://www.utulek-liben.com/" target="_blank" rel="noopener noreferrer">utulek-liben.com ↗</a></td>
+<td><a class="email" href="mailto:utulek.liben@seznam.cz">utulek.liben@seznam.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">patička © 2023</span><span class="chip">zastaralé HTML (font/center/frameset)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Azyl opuštěných zvířat v Libni</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Azyl opuštěných zvířat v Libni při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:utulek.liben@seznam.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Azyl%20opu%C5%A1t%C4%9Bn%C3%BDch%20zv%C3%AD%C5%99at%20v%20Libni&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Azyl%20opu%C5%A1t%C4%9Bn%C3%BDch%20zv%C3%AD%C5%99at%20v%20Libni%20p%C5%99i%20hled%C3%A1n%C3%AD%20firem%20a%20slu%C5%BEeb%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20kontaktem%2C%20nab%C3%ADdkou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20popt%C3%A1vky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge high">8</span></td>
+<td><div class="name">Hotel Harfa</div><div class="muted">Drahobejlova 1058/17</div></td>
+<td><a href="http://www.hotel-harfa.cz" target="_blank" rel="noopener noreferrer">hotel-harfa.cz ↗</a></td>
+<td><a class="email" href="mailto:hotelharfa@tophostel.cz">hotelharfa@tophostel.cz</a><br><a class="email" href="mailto:info@tophostel.cz">info@tophostel.cz</a></td>
+<td class="nowrap"><a href="tel:+420774373119">+420774373119</a></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">bez HTTPS</span><span class="chip">patička © 2014</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Hotel Harfa</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Hotel Harfa při hledání hotelu ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s fotkami pokojů, ceníkem a možností rezervace vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:hotelharfa@tophostel.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Hotel%20Harfa&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Hotel%20Harfa%20p%C5%99i%20hled%C3%A1n%C3%AD%20hotelu%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20fotkami%20pokoj%C5%AF%2C%20cen%C3%ADkem%20a%20mo%C5%BEnost%C3%AD%20rezervace%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge high">8</span></td>
+<td><div class="name">Brumbambule</div></td>
+<td><a href="http://www.brum-bambule.cz/" target="_blank" rel="noopener noreferrer">brum-bambule.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">bez HTTPS</span><span class="chip">patička © 2013</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Brumbambule</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Brumbambule při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">6</span></td>
+<td><div class="name">Autodílna Burian</div><div class="muted">Poděbradská 339/20</div></td>
+<td><a href="http://www.autodilnaburian.cz" target="_blank" rel="noopener noreferrer">autodilnaburian.cz ↗</a></td>
+<td><a class="email" href="mailto:autodilnaburian@centrum.cz">autodilnaburian@centrum.cz</a><br><a class="email" href="mailto:autodilnaburian@gmail.com">autodilnaburian@gmail.com</a></td>
+<td class="nowrap"><a href="tel:+420266312573">+420 266312573</a></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">bez HTTPS</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Autodílna Burian</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Autodílna Burian při hledání autoservisu ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s přehledem služeb, ceníkem a možností objednání vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:autodilnaburian@centrum.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Autod%C3%ADlna%20Burian&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Autod%C3%ADlna%20Burian%20p%C5%99i%20hled%C3%A1n%C3%AD%20autoservisu%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20p%C5%99ehledem%20slu%C5%BEeb%2C%20cen%C3%ADkem%20a%20mo%C5%BEnost%C3%AD%20objedn%C3%A1n%C3%AD%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">6</span></td>
+<td><div class="name">Pension Polly</div><div class="muted">Chrastavská 31, Praha</div></td>
+<td><a href="https://pensionpolly.webnode.cz/" target="_blank" rel="noopener noreferrer">pensionpolly.webnode.cz ↗</a></td>
+<td><a class="email" href="mailto:pension.polly@seznam.cz">pension.polly@seznam.cz</a></td>
+<td class="nowrap"><a href="tel:+420286880138">+420 286 880 138</a></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">patička © 2013</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Pension Polly</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Pension Polly při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:pension.polly@seznam.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Pension%20Polly&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Pension%20Polly%20p%C5%99i%20hled%C3%A1n%C3%AD%20firem%20a%20slu%C5%BEeb%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20kontaktem%2C%20nab%C3%ADdkou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20popt%C3%A1vky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">6</span></td>
+<td><div class="name">AE Servis - Servisni centrum LG Electronics</div><div class="muted">U Svobodárny 2460/3a</div></td>
+<td><a href="http://www.aeservis.cz/" target="_blank" rel="noopener noreferrer">aeservis.cz ↗</a></td>
+<td><a class="email" href="mailto:info@aeservis.cz">info@aeservis.cz</a></td>
+<td class="nowrap"><a href="tel:+420261215332">+420 261 215 332</a></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">bez HTTPS</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro AE Servis - Servisni centrum LG Electronics</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na AE Servis - Servisni centrum LG Electronics při hledání obchodů ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@aeservis.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20AE%20Servis%20-%20Servisni%20centrum%20LG%20Electronics&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20AE%20Servis%20-%20Servisni%20centrum%20LG%20Electronics%20p%C5%99i%20hled%C3%A1n%C3%AD%20obchod%C5%AF%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20se%20sortimentem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge mid">6</span></td>
+<td><div class="name">K-pneuservis</div></td>
+<td><a href="http://www.k-pneuservis.cz/" target="_blank" rel="noopener noreferrer">k-pneuservis.cz ↗</a></td>
+<td><a class="email" href="mailto:info@k-pneuservis.cz">info@k-pneuservis.cz</a><br><a class="email" href="mailto:eshop@k-pneuservis.cz">eshop@k-pneuservis.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">patička © 2019</span><span class="chip">jQuery 1.x</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro K-pneuservis</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na K-pneuservis při hledání autoservisu ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s přehledem služeb, ceníkem a možností objednání vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@k-pneuservis.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20K-pneuservis&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20K-pneuservis%20p%C5%99i%20hled%C3%A1n%C3%AD%20autoservisu%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20prohl%C3%AD%C5%BEe%C4%8D%20ho%20ozna%C4%8Duje%20jako%20nezabezpe%C4%8Den%C3%BD.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20p%C5%99ehledem%20slu%C5%BEeb%2C%20cen%C3%ADkem%20a%20mo%C5%BEnost%C3%AD%20objedn%C3%A1n%C3%AD%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge mid">6</span></td>
+<td><div class="name">Praha 9 net</div></td>
+<td><a href="http://www.praha9net.cz/" target="_blank" rel="noopener noreferrer">praha9net.cz ↗</a></td>
+<td><a class="email" href="mailto:tech@praha9net.cz">tech@praha9net.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">bez HTTPS</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Praha 9 net</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Praha 9 net při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:tech@praha9net.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Praha%209%20net&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Praha%209%20net%20p%C5%99i%20hled%C3%A1n%C3%AD%20firem%20a%20slu%C5%BEeb%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20kontaktem%2C%20nab%C3%ADdkou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20popt%C3%A1vky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">VM-SPORT</div></td>
+<td><a href="http://vmsport.cz/" target="_blank" rel="noopener noreferrer">vmsport.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420284813050">+420 284 813 050</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro VM-SPORT</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na VM-SPORT při hledání obchodů ve městě Praha 9 a všiml jsem si, že váš web vmsport.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Jasmín</div><div class="muted">Skloněná 515</div></td>
+<td><a href="https://www.hoteljasminprague.cz/" target="_blank" rel="noopener noreferrer">hoteljasminprague.cz ↗</a></td>
+<td><a class="email" href="mailto:fitjas@euroagentur.cz">fitjas@euroagentur.cz</a></td>
+<td class="nowrap"><a href="tel:+420271090832">+420 271 090 832</a></td>
+<td><span class="chip">web nefunguje (UND_ERR_SOCKET)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Jasmín</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Jasmín při hledání hotelu ve městě Praha 9 a všiml jsem si, že váš web hoteljasminprague.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s fotkami pokojů, ceníkem a možností rezervace vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:fitjas@euroagentur.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Jasm%C3%ADn&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Jasm%C3%ADn%20p%C5%99i%20hled%C3%A1n%C3%AD%20hotelu%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20hoteljasminprague.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20fotkami%20pokoj%C5%AF%2C%20cen%C3%ADkem%20a%20mo%C5%BEnost%C3%AD%20rezervace%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Cortéz Restaurant</div><div class="muted">Freyova 1/12</div></td>
+<td><a href="http://www.cortez.cz/" target="_blank" rel="noopener noreferrer">cortez.cz ↗</a></td>
+<td><a class="email" href="mailto:restaurant@cortez.cz">restaurant@cortez.cz</a></td>
+<td class="nowrap"><a href="tel:+420283891452">+420 283 891 452</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Cortéz Restaurant</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Cortéz Restaurant při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web cortez.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:restaurant@cortez.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Cort%C3%A9z%20Restaurant&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Cort%C3%A9z%20Restaurant%20p%C5%99i%20hled%C3%A1n%C3%AD%20restaurace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20cortez.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20j%C3%ADdeln%C3%ADm%20l%C3%ADstkem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Hotel penzion Praga</div></td>
+<td><a href="http://www.pragahotel.eu/" target="_blank" rel="noopener noreferrer">pragahotel.eu ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420283892152">+420283892152</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Hotel penzion Praga</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Hotel penzion Praga při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web pragahotel.eu se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Dětská obuv Balabenka</div></td>
+<td><a href="https://www.detskaobuvbalabenka.cz/" target="_blank" rel="noopener noreferrer">detskaobuvbalabenka.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Dětská obuv Balabenka</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Dětská obuv Balabenka při hledání obchodu s obuví ve městě Praha 9 a všiml jsem si, že váš web detskaobuvbalabenka.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Vinotéka Naskok</div></td>
+<td><a href="http://www.sudovevinoadestilaty.cz" target="_blank" rel="noopener noreferrer">sudovevinoadestilaty.cz ↗</a></td>
+<td><a class="email" href="mailto:jirkadudak@centrum.cz">jirkadudak@centrum.cz</a></td>
+<td class="nowrap"><a href="tel:+420777562964">+420 777 562 964</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Vinotéka Naskok</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Vinotéka Naskok při hledání obchodů ve městě Praha 9 a všiml jsem si, že váš web sudovevinoadestilaty.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:jirkadudak@centrum.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Vinot%C3%A9ka%20Naskok&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Vinot%C3%A9ka%20Naskok%20p%C5%99i%20hled%C3%A1n%C3%AD%20obchod%C5%AF%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20sudovevinoadestilaty.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20se%20sortimentem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">vtr224.cz</div><div class="muted">V třešňovce 224/8, Praha</div></td>
+<td><a href="http://www.vtr224.cz" target="_blank" rel="noopener noreferrer">vtr224.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na váš web vtr224.cz při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web vtr224.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Pharmacentrum Vysočany</div></td>
+<td><a href="http://www.pharmacenrum.cz" target="_blank" rel="noopener noreferrer">pharmacenrum.cz ↗</a></td>
+<td><a class="email" href="mailto:vysocany@pharmacentrum.cz">vysocany@pharmacentrum.cz</a></td>
+<td class="nowrap"><a href="tel:+420227777321">+420 227 777 321</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Pharmacentrum Vysočany</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Pharmacentrum Vysočany při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web pharmacenrum.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:vysocany@pharmacentrum.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Pharmacentrum%20Vyso%C4%8Dany&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Pharmacentrum%20Vyso%C4%8Dany%20p%C5%99i%20hled%C3%A1n%C3%AD%20firem%20a%20slu%C5%BEeb%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20pharmacenrum.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20kontaktem%2C%20nab%C3%ADdkou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20popt%C3%A1vky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Fantuci</div><div class="muted">Novovysočanská 556/26, Praha</div></td>
+<td><a href="https://pizzafantoci.cz/" target="_blank" rel="noopener noreferrer">pizzafantoci.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420773020203">+420773020203</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Fantuci</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Fantuci při hledání občerstvení ve městě Praha 9 a všiml jsem si, že váš web pizzafantoci.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s nabídkou, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Kafe Bar Jablonecká</div><div class="muted">Jablonecká 423/70, Praha 9</div></td>
+<td><a href="http://www.kafe-bar.cz" target="_blank" rel="noopener noreferrer">kafe-bar.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420728015320">+420 728 015 320</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Kafe Bar Jablonecká</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Kafe Bar Jablonecká při hledání baru ve městě Praha 9 a všiml jsem si, že váš web kafe-bar.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s nabídkou, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">U Rasa</div><div class="muted">Paříkova 362/3, Praha</div></td>
+<td><a href="http://www.urasa.cz/" target="_blank" rel="noopener noreferrer">urasa.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420702006860">+420 702 006 860</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro U Rasa</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na U Rasa při hledání obchodů ve městě Praha 9 a všiml jsem si, že váš web urasa.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Pizza &amp; Café Restaurace</div></td>
+<td><a href="http://www.ncfenix.cz/cs/restaurace/detail/pizza-caffe-10201" target="_blank" rel="noopener noreferrer">ncfenix.cz ↗</a></td>
+<td><a class="email" href="mailto:restaurace@pizza-cafe.cz">restaurace@pizza-cafe.cz</a></td>
+<td class="nowrap"><a href="tel:+420211138211">+420 211 138 211</a></td>
+<td><span class="chip">web nefunguje (HTTP 404)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Pizza &amp; Café Restaurace</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Pizza &amp; Café Restaurace při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web ncfenix.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:restaurace@pizza-cafe.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Pizza%20%26%20Caf%C3%A9%20Restaurace&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Pizza%20%26%20Caf%C3%A9%20Restaurace%20p%C5%99i%20hled%C3%A1n%C3%AD%20restaurace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20ncfenix.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20j%C3%ADdeln%C3%ADm%20l%C3%ADstkem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Lékárna Královka</div></td>
+<td><a href="http://www.lekarny.zdravcentra.cz/kralovka/" target="_blank" rel="noopener noreferrer">lekarny.zdravcentra.cz ↗</a></td>
+<td><a class="email" href="mailto:bazjuk@volny.cz">bazjuk@volny.cz</a></td>
+<td class="nowrap"><a href="tel:+420286880001">+420 286 880 001</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Lékárna Královka</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Lékárna Královka při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web lekarny.zdravcentra.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:bazjuk@volny.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20L%C3%A9k%C3%A1rna%20Kr%C3%A1lovka&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20L%C3%A9k%C3%A1rna%20Kr%C3%A1lovka%20p%C5%99i%20hled%C3%A1n%C3%AD%20firem%20a%20slu%C5%BEeb%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20lekarny.zdravcentra.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20kontaktem%2C%20nab%C3%ADdkou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20popt%C3%A1vky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Parčík</div></td>
+<td><a href="http://www.usenkyru.cz/" target="_blank" rel="noopener noreferrer">usenkyru.cz ↗</a></td>
+<td><a class="email" href="mailto:info@usenkyru.cz">info@usenkyru.cz</a></td>
+<td class="nowrap"><a href="tel:+420737843760">+420 737 843 760</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Parčík</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Parčík při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web usenkyru.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@usenkyru.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Par%C4%8D%C3%ADk&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Par%C4%8D%C3%ADk%20p%C5%99i%20hled%C3%A1n%C3%AD%20restaurace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20usenkyru.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20j%C3%ADdeln%C3%ADm%20l%C3%ADstkem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">ke-utc.appspot.com</div></td>
+<td><a href="https://ke-utc.appspot.com/static/ticket_offstreet.html?shortname=110" target="_blank" rel="noopener noreferrer">ke-utc.appspot.com ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420211131167">+420 211 131 167</a></td>
+<td><span class="chip">web nefunguje (HTTP 404)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na váš web ke-utc.appspot.com při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web ke-utc.appspot.com se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Billiard Center</div><div class="muted">Českomoravská 2420/15a, Praha 9</div></td>
+<td><a href="http://www.bcmsk.cz/" target="_blank" rel="noopener noreferrer">bcmsk.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Billiard Center</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Billiard Center při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web bcmsk.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">SinnerSchrader Praha s.r.o.</div><div class="muted">Drahobejlova 2400/15, Praha 9</div></td>
+<td><a href="https://sinnerschrader.cz" target="_blank" rel="noopener noreferrer">sinnerschrader.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro SinnerSchrader Praha s.r.o.</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na SinnerSchrader Praha s.r.o. při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web sinnerschrader.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Stříhání psů.cz</div></td>
+<td><a href="https://www.strihanipsu.cz/" target="_blank" rel="noopener noreferrer">strihanipsu.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (HTTP 404)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Stříhání psů.cz</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Stříhání psů.cz při hledání obchodů ve městě Praha 9 a všiml jsem si, že váš web strihanipsu.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Květinářství Marina</div><div class="muted">Harrachovská 340, Praha 9</div></td>
+<td><a href="http://www.kvetinarstvi-marina.cz/" target="_blank" rel="noopener noreferrer">kvetinarstvi-marina.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420720677295">+420720677295</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Květinářství Marina</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Květinářství Marina při hledání květinářství ve městě Praha 9 a všiml jsem si, že váš web kvetinarstvi-marina.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s nabídkou, otevírací dobou a pár fotkami vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">TSM Sokol Vysočany</div><div class="muted">Novoškolská 696, Praha 9</div></td>
+<td><a href="http://www.tenisvysocany.cz/" target="_blank" rel="noopener noreferrer">tenisvysocany.cz ↗</a></td>
+<td><a class="email" href="mailto:tsmvysocany@seznam.cz">tsmvysocany@seznam.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">starý WordPress 5.1.19</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro TSM Sokol Vysočany</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na TSM Sokol Vysočany při hledání sportovního centra ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s rozvrhem, ceníkem a pár fotkami vám může přivést nové návštěvníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:tsmvysocany@seznam.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20TSM%20Sokol%20Vyso%C4%8Dany&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20TSM%20Sokol%20Vyso%C4%8Dany%20p%C5%99i%20hled%C3%A1n%C3%AD%20sportovn%C3%ADho%20centra%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20prohl%C3%AD%C5%BEe%C4%8D%20ho%20ozna%C4%8Duje%20jako%20nezabezpe%C4%8Den%C3%BD.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20rozvrhem%2C%20cen%C3%ADkem%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20n%C3%A1v%C5%A1t%C4%9Bvn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Hospoda V parku</div><div class="muted">Freyova 12, Praha 9</div></td>
+<td><a href="https://praha9vparku.cz" target="_blank" rel="noopener noreferrer">praha9vparku.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420777308348">+420777308348</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Hospoda V parku</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Hospoda V parku při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web praha9vparku.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Jitka</div></td>
+<td><a href="http://www.kosmetickysalonjitka.cz" target="_blank" rel="noopener noreferrer">kosmetickysalonjitka.cz ↗</a></td>
+<td><a class="email" href="mailto:jitka.sal@seznam.cz">jitka.sal@seznam.cz</a></td>
+<td class="nowrap"><a href="tel:+420725790837">+420 725 790 837</a></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">starý WordPress 5.8.18</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Jitka</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Jitka při hledání nehtového studia ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s ceníkem, možností objednání a fotkami vaší práce vám může přivést nové zákaznice a zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:jitka.sal@seznam.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Jitka&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Jitka%20p%C5%99i%20hled%C3%A1n%C3%AD%20nehtov%C3%A9ho%20studia%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20prohl%C3%AD%C5%BEe%C4%8D%20ho%20ozna%C4%8Duje%20jako%20nezabezpe%C4%8Den%C3%BD.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20cen%C3%ADkem%2C%20mo%C5%BEnost%C3%AD%20objedn%C3%A1n%C3%AD%20a%20fotkami%20va%C5%A1%C3%AD%20pr%C3%A1ce%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kaznice%20a%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Monkey Sushi</div><div class="muted">Harrachovská 340/1, Praha 9</div></td>
+<td><a href="https://monkeysushi.cz/" target="_blank" rel="noopener noreferrer">monkeysushi.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420723208206">+420 723 208 206</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Monkey Sushi</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Monkey Sushi při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web monkeysushi.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Melicharovi</div></td>
+<td><a href="https://www.melicharhodiny.cz/" target="_blank" rel="noopener noreferrer">melicharhodiny.cz ↗</a></td>
+<td><a class="email" href="mailto:hodinymelichar@seznam.cz">hodinymelichar@seznam.cz</a></td>
+<td class="nowrap"><a href="tel:+420603953087">+420 603 953 087</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Melicharovi</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Melicharovi při hledání řemeslníků ve městě Praha 9 a všiml jsem si, že váš web melicharhodiny.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s přehledem služeb, referencemi a kontaktem vám může přivést nové zakázky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:hodinymelichar@seznam.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Melicharovi&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Melicharovi%20p%C5%99i%20hled%C3%A1n%C3%AD%20%C5%99emesln%C3%ADk%C5%AF%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20melicharhodiny.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20p%C5%99ehledem%20slu%C5%BEeb%2C%20referencemi%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20zak%C3%A1zky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">O2TV Sport</div><div class="muted">Českomoravská 2345/17, Praha 9</div></td>
+<td><a href="https://www.o2tvsport.cz/" target="_blank" rel="noopener noreferrer">o2tvsport.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (CERT_HAS_EXPIRED)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro O2TV Sport</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na O2TV Sport při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web o2tvsport.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Beseder Restaurace</div><div class="muted">Lihovarská 12, Praha 9</div></td>
+<td><a href="https://www.beseder.cz" target="_blank" rel="noopener noreferrer">beseder.cz ↗</a></td>
+<td><a class="email" href="mailto:restaurace@beseder.cz">restaurace@beseder.cz</a></td>
+<td class="nowrap"><a href="tel:+420721526912">+420 721 526 912</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Beseder Restaurace</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Beseder Restaurace při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web beseder.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:restaurace@beseder.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Beseder%20Restaurace&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Beseder%20Restaurace%20p%C5%99i%20hled%C3%A1n%C3%AD%20restaurace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20beseder.cz%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20j%C3%ADdeln%C3%ADm%20l%C3%ADstkem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Restaurace a pension Školička</div><div class="muted">Klíčovská 11</div></td>
+<td><a href="https://www.skolicka.cz/" target="_blank" rel="noopener noreferrer">skolicka.cz ↗</a></td>
+<td><a class="email" href="mailto:minipivovarbeznoska@skolicka.cz">minipivovarbeznoska@skolicka.cz</a></td>
+<td class="nowrap"><a href="tel:+420286583299">+420286583299</a></td>
+<td><span class="chip">starý WordPress 3.9.40</span><span class="chip">zastaralé HTML (font/center/frameset)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Restaurace a pension Školička</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Restaurace a pension Školička při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:minipivovarbeznoska@skolicka.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Restaurace%20a%20pension%20%C5%A0koli%C4%8Dka&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Restaurace%20a%20pension%20%C5%A0koli%C4%8Dka%20p%C5%99i%20hled%C3%A1n%C3%AD%20restaurace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20j%C3%ADdeln%C3%ADm%20l%C3%ADstkem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Doma u Rokytky</div></td>
+<td><a href="https://domaurokytky.cz/" target="_blank" rel="noopener noreferrer">domaurokytky.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Doma u Rokytky</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Doma u Rokytky při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web domaurokytky.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">Reproprint</div></td>
+<td><a href="http://koda.kominari.cz/?action=karta&amp;cislo=0921" target="_blank" rel="noopener noreferrer">koda.kominari.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">jQuery 1.x</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Reproprint</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Reproprint při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">Fastgood</div></td>
+<td><a href="https://www.fastgood.cz/" target="_blank" rel="noopener noreferrer">fastgood.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Fastgood</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Fastgood při hledání občerstvení ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s nabídkou, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">Arena</div></td>
+<td><a href="https://www.hotel-arena.cz/" target="_blank" rel="noopener noreferrer">hotel-arena.cz ↗</a></td>
+<td><a class="email" href="mailto:recepce@hotel-arena.cz">recepce@hotel-arena.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Arena</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Arena při hledání hotelu ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s fotkami pokojů, ceníkem a možností rezervace vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:recepce@hotel-arena.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Arena&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Arena%20p%C5%99i%20hled%C3%A1n%C3%AD%20hotelu%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20fotkami%20pokoj%C5%AF%2C%20cen%C3%ADkem%20a%20mo%C5%BEnost%C3%AD%20rezervace%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">Sunnysoft.cz</div><div class="muted">Kovanecká 2390/1a, Praha</div></td>
+<td><a href="https://www.sunnysoft.cz/" target="_blank" rel="noopener noreferrer">sunnysoft.cz ↗</a></td>
+<td><a class="email" href="mailto:objednavky@sunnysoft.cz">objednavky@sunnysoft.cz</a><br><a class="email" href="mailto:reklamace@sunnysoft.cz">reklamace@sunnysoft.cz</a></td>
+<td class="nowrap"><a href="tel:+420222998233">+420 222 998 233</a></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Sunnysoft.cz</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Sunnysoft.cz při hledání obchodů ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:objednavky@sunnysoft.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Sunnysoft.cz&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Sunnysoft.cz%20p%C5%99i%20hled%C3%A1n%C3%AD%20obchod%C5%AF%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20se%20sortimentem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">MM Žaluzie interiér</div></td>
+<td><a href="https://www.mm-zaluzie.com/" target="_blank" rel="noopener noreferrer">mm-zaluzie.com ↗</a></td>
+<td><a class="email" href="mailto:info@mm-zaluzie.com">info@mm-zaluzie.com</a></td>
+<td class="nowrap"><a href="tel:+420603736403">+420603736403</a></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro MM Žaluzie interiér</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na MM Žaluzie interiér při hledání obchodů ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@mm-zaluzie.com?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20MM%20%C5%BDaluzie%20interi%C3%A9r&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20MM%20%C5%BDaluzie%20interi%C3%A9r%20p%C5%99i%20hled%C3%A1n%C3%AD%20obchod%C5%AF%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20se%20sortimentem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">Radegastovna Kolbenka</div><div class="muted">Kolbenova 659/16, Praha</div></td>
+<td><a href="https://www.radegastovna.cz/kolbenka" target="_blank" rel="noopener noreferrer">radegastovna.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420735121242">+420 735 121 242</a></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Radegastovna Kolbenka</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Radegastovna Kolbenka při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">The 7th Heaven</div></td>
+<td><a href="https://www.the7heaven-thaimassage.cz/" target="_blank" rel="noopener noreferrer">the7heaven-thaimassage.cz ↗</a></td>
+<td><a class="email" href="mailto:the7heaven@email.cz">the7heaven@email.cz</a></td>
+<td class="nowrap"><a href="tel:+420773707987">+420 773 707 987</a></td>
+<td><span class="chip">patička © 2022</span><span class="chip">zastaralé HTML (font/center/frameset)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro The 7th Heaven</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na The 7th Heaven při hledání masáží ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2022).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s ceníkem, možností objednání a fotkami vaší práce vám může přivést nové zákaznice a zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:the7heaven@email.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20The%207th%20Heaven&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20The%207th%20Heaven%20p%C5%99i%20hled%C3%A1n%C3%AD%20mas%C3%A1%C5%BE%C3%AD%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202022).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20cen%C3%ADkem%2C%20mo%C5%BEnost%C3%AD%20objedn%C3%A1n%C3%AD%20a%20fotkami%20va%C5%A1%C3%AD%20pr%C3%A1ce%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kaznice%20a%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">Daniela Fleur</div></td>
+<td><a href="https://www.kvetiny-daniela.cz/" target="_blank" rel="noopener noreferrer">kvetiny-daniela.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420730898963">+420730898963</a></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">jQuery 1.x</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Daniela Fleur</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Daniela Fleur při hledání květinářství ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s nabídkou, otevírací dobou a pár fotkami vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">jablonka.cz</div></td>
+<td><a href="https://jablonka.cz/" target="_blank" rel="noopener noreferrer">jablonka.cz ↗</a></td>
+<td><a class="email" href="mailto:helpdesk@jablonka.cz">helpdesk@jablonka.cz</a><br><a class="email" href="mailto:fakturace@jablonka.cz">fakturace@jablonka.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na váš web jablonka.cz při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:helpdesk@jablonka.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20v%C3%A1%C5%A1%20web%20jablonka.cz%20p%C5%99i%20hled%C3%A1n%C3%AD%20firem%20a%20slu%C5%BEeb%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20kontaktem%2C%20nab%C3%ADdkou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20popt%C3%A1vky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">Harfa Living</div></td>
+<td><a href="https://www.central-group.cz/lokalita/152" target="_blank" rel="noopener noreferrer">central-group.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">patička © 2019</span><span class="chip">jQuery 1.x</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Harfa Living</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Harfa Living při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2019).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">zahrádkářská osada Na Balkáně</div></td>
+<td><a href="https://zo-53.webnode.cz/" target="_blank" rel="noopener noreferrer">zo-53.webnode.cz ↗</a></td>
+<td><a class="email" href="mailto:zo53@seznam.cz">zo53@seznam.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro zahrádkářská osada Na Balkáně</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na zahrádkářská osada Na Balkáně při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:zo53@seznam.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20zahr%C3%A1dk%C3%A1%C5%99sk%C3%A1%20osada%20Na%20Balk%C3%A1n%C4%9B&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20zahr%C3%A1dk%C3%A1%C5%99sk%C3%A1%20osada%20Na%20Balk%C3%A1n%C4%9B%20p%C5%99i%20hled%C3%A1n%C3%AD%20firem%20a%20slu%C5%BEeb%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20na%20mobilu%20se%20%C5%A1patn%C4%9B%20zobrazuje.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20kontaktem%2C%20nab%C3%ADdkou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20popt%C3%A1vky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Pizzeria Cerreto</div></td>
+<td><a href="https://www.cerreto.cz/" target="_blank" rel="noopener noreferrer">cerreto.cz ↗</a></td>
+<td><a class="email" href="mailto:info@cerreto.cz">info@cerreto.cz</a></td>
+<td class="nowrap"><a href="tel:+420266312266">+420 266312266</a></td>
+<td><span class="chip">patička © 2014</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Pizzeria Cerreto</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Pizzeria Cerreto při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2014).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@cerreto.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Pizzeria%20Cerreto&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Pizzeria%20Cerreto%20p%C5%99i%20hled%C3%A1n%C3%AD%20restaurace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202014).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20j%C3%ADdeln%C3%ADm%20l%C3%ADstkem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Zlaté Sele</div><div class="muted">Na Proseku 40/1, Praha 9</div></td>
+<td><a href="https://zlateseleprosek.cz/" target="_blank" rel="noopener noreferrer">zlateseleprosek.cz ↗</a></td>
+<td><a class="email" href="mailto:zlatesele@gmail.com">zlatesele@gmail.com</a></td>
+<td class="nowrap"><a href="tel:+420773474123">+420 773 474 123</a></td>
+<td><span class="chip">patička © 2015</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Zlaté Sele</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Zlaté Sele při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2015).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:zlatesele@gmail.com?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Zlat%C3%A9%20Sele&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Zlat%C3%A9%20Sele%20p%C5%99i%20hled%C3%A1n%C3%AD%20restaurace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202015).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20j%C3%ADdeln%C3%ADm%20l%C3%ADstkem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Gusto Giusto</div><div class="muted">Jablonecká 423/70, Praha 9</div></td>
+<td><a href="https://www.gustopizza.cz/" target="_blank" rel="noopener noreferrer">gustopizza.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420776836876">+420 776 836 876</a></td>
+<td><span class="chip">starý WordPress 5.1.5</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Gusto Giusto</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Gusto Giusto při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Ngon</div><div class="muted">Lovosická 2, Praha</div></td>
+<td><a href="https://ngonrestaurace.cz/" target="_blank" rel="noopener noreferrer">ngonrestaurace.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420774426868">+420 774 426 868</a></td>
+<td><span class="chip">starý WordPress 5.7.2</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Ngon</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Ngon při hledání restaurace ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">HS autosdružení</div></td>
+<td><a href="http://hsautosdruzeni.cz" target="_blank" rel="noopener noreferrer">hsautosdruzeni.cz ↗</a></td>
+<td><a class="email" href="mailto:info@hsautosdruzeni.cz">info@hsautosdruzeni.cz</a></td>
+<td class="nowrap"><a href="tel:+420720231385">+420720231385</a></td>
+<td><span class="chip">patička © 2016</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro HS autosdružení</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na HS autosdružení při hledání autoservisu ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2016).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s přehledem služeb, ceníkem a možností objednání vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@hsautosdruzeni.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20HS%20autosdru%C5%BEen%C3%AD&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20HS%20autosdru%C5%BEen%C3%AD%20p%C5%99i%20hled%C3%A1n%C3%AD%20autoservisu%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202016).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20p%C5%99ehledem%20slu%C5%BEeb%2C%20cen%C3%ADkem%20a%20mo%C5%BEnost%C3%AD%20objedn%C3%A1n%C3%AD%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">The Stage</div></td>
+<td><a href="https://thestage.cz/" target="_blank" rel="noopener noreferrer">thestage.cz ↗</a></td>
+<td><a class="email" href="mailto:info@thestage.cz">info@thestage.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">patička © 2020</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro The Stage</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na The Stage při hledání kadeřnictví ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2020).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s ceníkem, možností objednání a fotkami vaší práce vám může přivést nové zákaznice a zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@thestage.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20The%20Stage&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20The%20Stage%20p%C5%99i%20hled%C3%A1n%C3%AD%20kade%C5%99nictv%C3%AD%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202020).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20cen%C3%ADkem%2C%20mo%C5%BEnost%C3%AD%20objedn%C3%A1n%C3%AD%20a%20fotkami%20va%C5%A1%C3%AD%20pr%C3%A1ce%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kaznice%20a%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Zubní pohotovost Praha</div><div class="muted">Nepilova 903/3, Praha 9</div></td>
+<td><a href="https://www.zp9.cz/cz/" target="_blank" rel="noopener noreferrer">zp9.cz ↗</a></td>
+<td><a class="email" href="mailto:artstom.cz@email.cz">artstom.cz@email.cz</a></td>
+<td class="nowrap"><a href="tel:+420777245775">+420 777 245 775</a></td>
+<td><span class="chip">patička © 2012</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Zubní pohotovost Praha</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Zubní pohotovost Praha při hledání zubní ordinace ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2012).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s ordinačními hodinami, přehledem péče a kontaktem vám může přivést nové pacienty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:artstom.cz@email.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Zubn%C3%AD%20pohotovost%20Praha&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Zubn%C3%AD%20pohotovost%20Praha%20p%C5%99i%20hled%C3%A1n%C3%AD%20zubn%C3%AD%20ordinace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202012).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20ordina%C4%8Dn%C3%ADmi%20hodinami%2C%20p%C5%99ehledem%20p%C3%A9%C4%8De%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20pacienty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Fresh school</div><div class="muted">Litvínovská 609/3</div></td>
+<td><a href="https://www.fresh-school.cz/" target="_blank" rel="noopener noreferrer">fresh-school.cz ↗</a></td>
+<td><a class="email" href="mailto:info@fresh-school.cz">info@fresh-school.cz</a><br><a class="email" href="mailto:prokopova@fresh-school.cz">prokopova@fresh-school.cz</a></td>
+<td class="nowrap"><a href="tel:+420604116969">+420604116969</a></td>
+<td><span class="chip">patička © 2023</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Fresh school</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Fresh school při hledání jazykové školy ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2023).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s přehledem kurzů, ceníkem a termíny vám může přivést nové studenty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@fresh-school.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Fresh%20school&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Fresh%20school%20p%C5%99i%20hled%C3%A1n%C3%AD%20jazykov%C3%A9%20%C5%A1koly%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202023).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20p%C5%99ehledem%20kurz%C5%AF%2C%20cen%C3%ADkem%20a%20term%C3%ADny%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20studenty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Mgr. Petr Klimeš</div><div class="muted">U Skládky 1469/5</div></td>
+<td><a href="http://www.psychoterapie-klimes.cz/" target="_blank" rel="noopener noreferrer">psychoterapie-klimes.cz ↗</a></td>
+<td><a class="email" href="mailto:klimes.petr@gmail.com">klimes.petr@gmail.com</a></td>
+<td class="nowrap"><a href="tel:+420774271272">+420774271272</a></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Mgr. Petr Klimeš</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Mgr. Petr Klimeš při hledání psychoterapie ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s ordinačními hodinami, přehledem péče a kontaktem vám může přivést nové klienty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:klimes.petr@gmail.com?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Mgr.%20Petr%20Klime%C5%A1&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Mgr.%20Petr%20Klime%C5%A1%20p%C5%99i%20hled%C3%A1n%C3%AD%20psychoterapie%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20prohl%C3%AD%C5%BEe%C4%8D%20ho%20ozna%C4%8Duje%20jako%20nezabezpe%C4%8Den%C3%BD.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20ordina%C4%8Dn%C3%ADmi%20hodinami%2C%20p%C5%99ehledem%20p%C3%A9%C4%8De%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20klienty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">ARTSTOM</div><div class="muted">Nepilova 903/3</div></td>
+<td><a href="https://www.artstom.cz/cz/" target="_blank" rel="noopener noreferrer">artstom.cz ↗</a></td>
+<td><a class="email" href="mailto:artstom.cz@email.cz">artstom.cz@email.cz</a></td>
+<td class="nowrap"><a href="tel:+420777245775">+420 777 245 775</a></td>
+<td><span class="chip">patička © 2012</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro ARTSTOM</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na ARTSTOM při hledání zubní ordinace ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2012).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s ordinačními hodinami, přehledem péče a kontaktem vám může přivést nové pacienty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:artstom.cz@email.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20ARTSTOM&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20ARTSTOM%20p%C5%99i%20hled%C3%A1n%C3%AD%20zubn%C3%AD%20ordinace%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202012).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20ordina%C4%8Dn%C3%ADmi%20hodinami%2C%20p%C5%99ehledem%20p%C3%A9%C4%8De%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20pacienty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Arena Sparta</div></td>
+<td><a href="http://www.arena-sparta.cz" target="_blank" rel="noopener noreferrer">arena-sparta.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Arena Sparta</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Arena Sparta při hledání sportovního centra ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s rozvrhem, ceníkem a pár fotkami vám může přivést nové návštěvníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Hostel Kolbenka</div></td>
+<td><a href="http://www.kolbenka.com" target="_blank" rel="noopener noreferrer">kolbenka.com ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Hostel Kolbenka</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Hostel Kolbenka při hledání ubytování ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s fotkami pokojů, ceníkem a možností rezervace vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">Bleší trhy</div></td>
+<td><a href="https://www.blesitrhy.cz/" target="_blank" rel="noopener noreferrer">blesitrhy.cz ↗</a></td>
+<td><a class="email" href="mailto:info@blesitrhy.cz">info@blesitrhy.cz</a><br><a class="email" href="mailto:roman@blesitrhy.cz">roman@blesitrhy.cz</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">starý WordPress 5.9.19</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Bleší trhy</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Bleší trhy při hledání firem a služeb ve městě Praha 9 a všiml jsem si, že váš web není úplně aktuální.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@blesitrhy.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Ble%C5%A1%C3%AD%20trhy&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Ble%C5%A1%C3%AD%20trhy%20p%C5%99i%20hled%C3%A1n%C3%AD%20firem%20a%20slu%C5%BEeb%20ve%20m%C4%9Bst%C4%9B%20Praha%209%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20kontaktem%2C%20nab%C3%ADdkou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20popt%C3%A1vky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<script>
+const q = document.getElementById('q'), onlyEmail = document.getElementById('onlyEmail'),
+  onlyPhone = document.getElementById('onlyPhone'), count = document.getElementById('count'),
+  trs = [...document.querySelectorAll('#rows tr.lead')]
+function apply() {
+  const needle = q.value.trim().toLowerCase()
+  let shown = 0
+  for (const tr of trs) {
+    const ok = (!needle || tr.textContent.toLowerCase().includes(needle)) &&
+      (!onlyEmail.checked || tr.dataset.email === '1') && (!onlyPhone.checked || tr.dataset.phone === '1')
+    tr.hidden = !ok
+    tr.nextElementSibling.hidden = !ok
+    if (ok) shown++
+  }
+  count.textContent = 'zobrazeno ' + shown + ' z ' + trs.length
+}
+q.addEventListener('input', apply); onlyEmail.addEventListener('change', apply); onlyPhone.addEventListener('change', apply)
+document.getElementById('copy').addEventListener('click', async (e) => {
+  const emails = [...new Set(trs.filter((tr) => !tr.hidden).flatMap((tr) => [...tr.querySelectorAll('a.email')].map((a) => a.textContent)))]
+  await navigator.clipboard.writeText(emails.join('\n'))
+  e.target.textContent = 'Zkopírováno (' + emails.length + ')'
+  setTimeout(() => (e.target.textContent = 'Kopírovat e-maily'), 2000)
+})
+document.getElementById('rows').addEventListener('click', async (e) => {
+  if (!e.target.classList.contains('copy')) return
+  const label = e.target.textContent
+  await navigator.clipboard.writeText(e.target.closest('tr').querySelector(e.target.dataset.what).textContent)
+  e.target.textContent = 'Zkopírováno'
+  setTimeout(() => (e.target.textContent = label), 2000)
+})
+apply()
+</script>
+</body>
+</html>

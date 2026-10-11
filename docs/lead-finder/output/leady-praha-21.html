@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leady – Praha 21</title>
+<style>
+:root { --bg:#f6f7f9; --card:#fff; --text:#1a1d23; --muted:#6b7280; --line:#e5e7eb; --link:#1d4ed8; --chip:#eef0f3;
+  --high:#dc2626; --mid:#d97706; --low:#2563eb; --none:#6b7280; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#0f1115; --card:#181b21; --text:#e6e8ec; --muted:#9aa1ad; --line:#2a2e37; --link:#7aa7ff; --chip:#242833;
+    --high:#f87171; --mid:#fbbf24; --low:#60a5fa; --none:#9aa1ad; }
+}
+* { box-sizing: border-box; }
+body { margin:0; padding:24px 16px 48px; background:var(--bg); color:var(--text);
+  font:14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+.wrap { max-width:1280px; margin:0 auto; }
+h1 { font-size:22px; margin:0 0 4px; }
+.sub { color:var(--muted); margin-bottom:16px; }
+.bar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px; }
+.bar input[type=search] { flex:1 1 240px; padding:9px 12px; border:1px solid var(--line); border-radius:8px;
+  background:var(--card); color:var(--text); font:inherit; }
+.bar label { display:flex; gap:6px; align-items:center; color:var(--muted); white-space:nowrap; }
+button { padding:9px 14px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--text);
+  font:inherit; cursor:pointer; }
+button:hover { border-color:var(--link); }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; overflow-x:auto; }
+table { width:100%; border-collapse:collapse; }
+th { text-align:left; font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);
+  padding:10px 12px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--card); }
+td { padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+tr:last-child td { border-bottom:0; }
+tr[hidden] { display:none; }
+tr.lead td { border-bottom:0; padding-bottom:4px; }
+tr.mail td { padding-top:0; }
+tr.mail td > details { display:inline-block; vertical-align:top; max-width:760px; }
+summary { cursor:pointer; color:var(--link); padding:6px 0; }
+.subject { font-weight:600; margin:2px 0; }
+pre { margin:0 0 8px; padding:12px 14px; background:var(--chip); border-radius:8px; white-space:pre-wrap; font:inherit; }
+.actions { display:inline-flex; gap:8px; margin-left:12px; vertical-align:top; }
+.btn, .actions button { padding:5px 12px; border:1px solid var(--line); border-radius:8px; background:var(--card);
+  color:var(--text); font-size:13px; }
+.btn:hover { border-color:var(--link); text-decoration:none; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+.name { font-weight:600; }
+.muted { color:var(--muted); font-size:13px; }
+.nowrap { white-space:nowrap; }
+.score { width:1%; }
+.badge { display:inline-block; min-width:30px; padding:3px 8px; border-radius:999px; text-align:center; font-weight:700;
+  color:#fff; background:var(--none); }
+.badge.high { background:var(--high); } .badge.mid { background:var(--mid); } .badge.low { background:var(--low); }
+@media (prefers-color-scheme: dark) { .badge { color:#0f1115; } }
+.chip { display:inline-block; margin:0 4px 4px 0; padding:2px 8px; border-radius:6px; background:var(--chip); font-size:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Leady – Praha 21</h1>
+<div class="sub">9 leadů z 24 prověřených firem · 4 s e-mailem · vygenerováno 9. 10. 2026 · skóre: čím vyšší, tím zastaralejší web</div>
+<div class="bar">
+<input type="search" id="q" placeholder="Hledat firmu, web, e-mail, důvod…">
+<label><input type="checkbox" id="onlyEmail"> jen s e-mailem</label>
+<label><input type="checkbox" id="onlyPhone"> jen s telefonem</label>
+<button id="copy">Kopírovat e-maily</button>
+<span class="muted" id="count"></span>
+</div>
+<div class="card">
+<table>
+<thead><tr><th>Skóre</th><th>Firma</th><th>Web</th><th>E-mail</th><th>Telefon</th><th>Proč je web zastaralý</th></tr></thead>
+<tbody id="rows">
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge high">7</span></td>
+<td><div class="name">Alej přátelství</div></td>
+<td><a href="https://kolodeje.farnost.cz/old/alej/" target="_blank" rel="noopener noreferrer">kolodeje.farnost.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">není responzivní (chybí viewport)</span><span class="chip">zastaralé HTML (font/center/frameset)</span><span class="chip">chybí OG tagy</span><span class="chip">neměněno od 2015</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Alej přátelství</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Alej přátelství při hledání firem a služeb ve městě Praha 21 a všiml jsem si, že váš web není úplně aktuální a na mobilu se špatně zobrazuje.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Cukrarna Sofie</div><div class="muted">Račiněveská 2444</div></td>
+<td><a href="http://www.cukrarnasofie.cz/" target="_blank" rel="noopener noreferrer">cukrarnasofie.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420737623611">+420 737 623 611</a></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Cukrarna Sofie</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Cukrarna Sofie při hledání kavárny ve městě Praha 21 a všiml jsem si, že váš web cukrarnasofie.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s nabídkou, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Zlatnictví Ťukal</div><div class="muted">Staroklánovická 165, Praha</div></td>
+<td><a href="https://zlatnictvi-tukal.websnadno.cz/" target="_blank" rel="noopener noreferrer">zlatnictvi-tukal.websnadno.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><a href="tel:+420605346861">+420 605 346 861</a></td>
+<td><span class="chip">web nefunguje (HTTP 404)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Zlatnictví Ťukal</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Zlatnictví Ťukal při hledání klenotnictví ve městě Praha 21 a všiml jsem si, že váš web zlatnictvi-tukal.websnadno.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Kůrovky</div></td>
+<td><a href="http://www.kurovky-deluxe.cz/" target="_blank" rel="noopener noreferrer">kurovky-deluxe.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (HTTP 404)</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Kůrovky</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Kůrovky při hledání firem a služeb ve městě Praha 21 a všiml jsem si, že váš web kurovky-deluxe.cz se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="0">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Vexlaak</div><div class="muted">Poličanská 1487, Praha</div></td>
+<td><a href="https://www.vexlaak.com/" target="_blank" rel="noopener noreferrer">vexlaak.com ↗</a></td>
+<td><a class="email" href="mailto:info@vexlaak.com">info@vexlaak.com</a></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">web nefunguje (ENOTFOUND)</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Vexlaak</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Vexlaak při hledání obchodů ve městě Praha 21 a všiml jsem si, že váš web vexlaak.com se mi nepodařilo načíst.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@vexlaak.com?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Vexlaak&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Vexlaak%20p%C5%99i%20hled%C3%A1n%C3%AD%20obchod%C5%AF%20ve%20m%C4%9Bst%C4%9B%20Praha%2021%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20vexlaak.com%20se%20mi%20nepoda%C5%99ilo%20na%C4%8D%C3%ADst.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20se%20sortimentem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge mid">5</span></td>
+<td><div class="name">Café Útes</div></td>
+<td><a href="http://cafeutes.cz/" target="_blank" rel="noopener noreferrer">cafeutes.cz ↗</a></td>
+<td><a class="email" href="mailto:info@cafeutes.cz">info@cafeutes.cz</a></td>
+<td class="nowrap"><a href="tel:+420722925830">+420 722925830</a></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">patička © 2014</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Café Útes</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Café Útes při hledání restaurace ve městě Praha 21 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s jídelním lístkem, otevírací dobou a pár fotkami vám může přivést nové hosty.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@cafeutes.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Caf%C3%A9%20%C3%9Ates&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Caf%C3%A9%20%C3%9Ates%20p%C5%99i%20hled%C3%A1n%C3%AD%20restaurace%20ve%20m%C4%9Bst%C4%9B%20Praha%2021%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20a%20prohl%C3%AD%C5%BEe%C4%8D%20ho%20ozna%C4%8Duje%20jako%20nezabezpe%C4%8Den%C3%BD.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20s%20j%C3%ADdeln%C3%ADm%20l%C3%ADstkem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20p%C3%A1r%20fotkami%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20hosty.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">Bohemia Air soft</div><div class="muted">Ratajská 504, Praha 9 – Újezd nad Lesy</div></td>
+<td><a href="https://airsoftshop.cz/" target="_blank" rel="noopener noreferrer">airsoftshop.cz ↗</a></td>
+<td><a class="email" href="mailto:prodejna@airsoft.cz">prodejna@airsoft.cz</a><br><a class="email" href="mailto:bas@airsoft.cz">bas@airsoft.cz</a></td>
+<td class="nowrap"><a href="tel:+420774774378">+420 774 774 378</a></td>
+<td><span class="chip">Flash</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro Bohemia Air soft</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na Bohemia Air soft při hledání obchodů ve městě Praha 21 a všiml jsem si, že váš web není úplně aktuální.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:prodejna@airsoft.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20Bohemia%20Air%20soft&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20Bohemia%20Air%20soft%20p%C5%99i%20hled%C3%A1n%C3%AD%20obchod%C5%AF%20ve%20m%C4%9Bst%C4%9B%20Praha%2021%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD.%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20se%20sortimentem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="0" data-phone="0">
+<td class="score"><span class="badge low">4</span></td>
+<td><div class="name">koda.kominari.cz</div></td>
+<td><a href="http://koda.kominari.cz/?action=karta&amp;cislo=1742" target="_blank" rel="noopener noreferrer">koda.kominari.cz ↗</a></td>
+<td><span class="muted">–</span></td>
+<td class="nowrap"><span class="muted">–</span></td>
+<td><span class="chip">bez HTTPS</span><span class="chip">jQuery 1.x</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="0" data-phone="0"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na váš web koda.kominari.cz při hledání firem a služeb ve městě Praha 21 a všiml jsem si, že váš web není úplně aktuální a prohlížeč ho označuje jako nezabezpečený.
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web s kontaktem, nabídkou a pár fotkami vám může přivést nové poptávky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+<tr class="lead" data-email="1" data-phone="1">
+<td class="score"><span class="badge low">3</span></td>
+<td><div class="name">shopbike.cz</div></td>
+<td><a href="https://www.shopbike.cz/" target="_blank" rel="noopener noreferrer">shopbike.cz ↗</a></td>
+<td><a class="email" href="mailto:info@shopbike.cz">info@shopbike.cz</a></td>
+<td class="nowrap"><a href="tel:+420602671228">+420602671228</a></td>
+<td><span class="chip">patička © 2014</span><span class="chip">chybí OG tagy</span></td>
+</tr>
+<tr class="mail" data-email="1" data-phone="1"><td></td><td colspan="5">
+<div class="subject"><span class="muted">Předmět:</span> <span class="subj">Návrh nového webu pro shopbike.cz</span></div>
+<details><summary>Text oslovení</summary>
+<pre>Dobrý den,
+
+narazil jsem na shopbike.cz při hledání cykloprodejny a servisu ve městě Praha 21 a všiml jsem si, že váš web není úplně aktuální (v patičce je stále rok 2014).
+
+Dnes většina zákazníků hledá služby nejdřív na internetu, a jednoduchý, přehledný web se sortimentem, otevírací dobou a kontaktem vám může přivést nové zákazníky.
+
+Rád vám připravím návrh webu nezávazně a zdarma, ať vidíte, jak by mohl vypadat. Pokud se vám zalíbí, domluvíme se na detailech.
+
+Máte zájem, abych vám návrh poslal?</pre>
+</details>
+<div class="actions">
+<a class="btn" href="mailto:info@shopbike.cz?subject=N%C3%A1vrh%20nov%C3%A9ho%20webu%20pro%20shopbike.cz&amp;body=Dobr%C3%BD%20den%2C%0A%0Anarazil%20jsem%20na%20shopbike.cz%20p%C5%99i%20hled%C3%A1n%C3%AD%20cykloprodejny%20a%20servisu%20ve%20m%C4%9Bst%C4%9B%20Praha%2021%20a%20v%C5%A1iml%20jsem%20si%2C%20%C5%BEe%20v%C3%A1%C5%A1%20web%20nen%C3%AD%20%C3%BApln%C4%9B%20aktu%C3%A1ln%C3%AD%20(v%20pati%C4%8Dce%20je%20st%C3%A1le%20rok%202014).%0A%0ADnes%20v%C4%9Bt%C5%A1ina%20z%C3%A1kazn%C3%ADk%C5%AF%20hled%C3%A1%20slu%C5%BEby%20nejd%C5%99%C3%ADv%20na%20internetu%2C%20a%20jednoduch%C3%BD%2C%20p%C5%99ehledn%C3%BD%20web%20se%20sortimentem%2C%20otev%C3%ADrac%C3%AD%20dobou%20a%20kontaktem%20v%C3%A1m%20m%C5%AF%C5%BEe%20p%C5%99iv%C3%A9st%20nov%C3%A9%20z%C3%A1kazn%C3%ADky.%0A%0AR%C3%A1d%20v%C3%A1m%20p%C5%99iprav%C3%ADm%20n%C3%A1vrh%20webu%20nez%C3%A1vazn%C4%9B%20a%20zdarma%2C%20a%C5%A5%20vid%C3%ADte%2C%20jak%20by%20mohl%20vypadat.%20Pokud%20se%20v%C3%A1m%20zal%C3%ADb%C3%AD%2C%20domluv%C3%ADme%20se%20na%20detailech.%0A%0AM%C3%A1te%20z%C3%A1jem%2C%20abych%20v%C3%A1m%20n%C3%A1vrh%20poslal%3F">Napsat e-mail</a>
+<button class="copy" data-what=".subj">Kopírovat předmět</button>
+<button class="copy" data-what="pre">Kopírovat text</button>
+</div>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<script>
+const q = document.getElementById('q'), onlyEmail = document.getElementById('onlyEmail'),
+  onlyPhone = document.getElementById('onlyPhone'), count = document.getElementById('count'),
+  trs = [...document.querySelectorAll('#rows tr.lead')]
+function apply() {
+  const needle = q.value.trim().toLowerCase()
+  let shown = 0
+  for (const tr of trs) {
+    const ok = (!needle || tr.textContent.toLowerCase().includes(needle)) &&
+      (!onlyEmail.checked || tr.dataset.email === '1') && (!onlyPhone.checked || tr.dataset.phone === '1')
+    tr.hidden = !ok
+    tr.nextElementSibling.hidden = !ok
+    if (ok) shown++
+  }
+  count.textContent = 'zobrazeno ' + shown + ' z ' + trs.length
+}
+q.addEventListener('input', apply); onlyEmail.addEventListener('change', apply); onlyPhone.addEventListener('change', apply)
+document.getElementById('copy').addEventListener('click', async (e) => {
+  const emails = [...new Set(trs.filter((tr) => !tr.hidden).flatMap((tr) => [...tr.querySelectorAll('a.email')].map((a) => a.textContent)))]
+  await navigator.clipboard.writeText(emails.join('\n'))
+  e.target.textContent = 'Zkopírováno (' + emails.length + ')'
+  setTimeout(() => (e.target.textContent = 'Kopírovat e-maily'), 2000)
+})
+document.getElementById('rows').addEventListener('click', async (e) => {
+  if (!e.target.classList.contains('copy')) return
+  const label = e.target.textContent
+  await navigator.clipboard.writeText(e.target.closest('tr').querySelector(e.target.dataset.what).textContent)
+  e.target.textContent = 'Zkopírováno'
+  setTimeout(() => (e.target.textContent = label), 2000)
+})
+apply()
+</script>
+</body>
+</html>

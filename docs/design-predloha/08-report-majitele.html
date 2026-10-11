@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Denní report majitele</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0;background:#F6F5F1}
+a{color:#2449C9}a:hover{color:#1B3699}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; background: #F6F5F1; color: #16181D; font-family: 'IBM Plex Sans', system-ui, sans-serif; padding: 40px 24px 64px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 13px; color: #5E6168">Denní report · čtvrtek 8. 10. · ukázková data</span>
+<h1 style="margin: 0; font-size: 32px; font-weight: 600">Weblyx dnes: 6 konzultací ze 152 hovorů</h1>
+</div>
+<div style="display: flex; gap: 8px">
+<button style="height: 40px; padding: 0 14px; border: 1.5px solid #16181D; border-radius: 20px; background: #16181D; color: #F6F5F1; font-family: inherit; font-size: 14px; font-weight: 500">Weblyx</button>
+<button style="height: 40px; padding: 0 14px; border: 1px solid #C9C6BE; border-radius: 20px; background: #FDFDFB; color: #16181D; font-family: inherit; font-size: 14px">Úklid</button>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px">
+<div style="padding: 18px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 16px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #5E6168">Hovory</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500">152</span><span style="font-size: 13px; color: #5E6168">19 / h · cíl 20</span></div>
+<div style="padding: 18px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 16px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #5E6168">Dovoláno</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500">61</span><span style="font-size: 13px; color: #5E6168">40 % hovorů</span></div>
+<div style="padding: 18px; background: #E8ECFA; border: 1.5px solid #2449C9; border-radius: 16px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #1B3699">Konzultace</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500; color: #12245F">6</span><span style="font-size: 13px; color: #1B3699">10 % dovolaných</span></div>
+<div style="padding: 18px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 16px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #5E6168">Prezentace odeslány</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500">7</span><span style="font-size: 13px; color: #A3410E">3 po termínu</span></div>
+<div style="padding: 18px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 16px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #5E6168">Nabídky odeslány</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500">4</span><span style="font-size: 13px; color: #5E6168">callback za 3 dny</span></div>
+<div style="padding: 18px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 16px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #5E6168">Nemá zájem</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 500">26</span><span style="font-size: 13px; color: #5E6168">43 % dovolaných</span></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 999 1 560px; min-width: 0; padding: 22px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 16px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600">Proč odmítli: „už má web“ je 38 % důvodů</h2>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: grid; grid-template-columns: 140px minmax(0, 1fr) 40px; align-items: center; gap: 12px; font-size: 14px"><span>Už má web</span><div style="height: 10px; border-radius: 5px; background: #ECEAE4"><div style="width: 100%; height: 10px; border-radius: 5px; background: #2449C9"></div></div><span style="font-family: 'IBM Plex Mono', monospace; text-align: right">10</span></div>
+<div style="display: grid; grid-template-columns: 140px minmax(0, 1fr) 40px; align-items: center; gap: 12px; font-size: 14px"><span>Nemá čas</span><div style="height: 10px; border-radius: 5px; background: #ECEAE4"><div style="width: 60%; height: 10px; border-radius: 5px; background: #8A8D94"></div></div><span style="font-family: 'IBM Plex Mono', monospace; text-align: right">6</span></div>
+<div style="display: grid; grid-template-columns: 140px minmax(0, 1fr) 40px; align-items: center; gap: 12px; font-size: 14px"><span>Cena</span><div style="height: 10px; border-radius: 5px; background: #ECEAE4"><div style="width: 40%; height: 10px; border-radius: 5px; background: #8A8D94"></div></div><span style="font-family: 'IBM Plex Mono', monospace; text-align: right">4</span></div>
+<div style="display: grid; grid-template-columns: 140px minmax(0, 1fr) 40px; align-items: center; gap: 12px; font-size: 14px"><span>Má agenturu</span><div style="height: 10px; border-radius: 5px; background: #ECEAE4"><div style="width: 30%; height: 10px; border-radius: 5px; background: #8A8D94"></div></div><span style="font-family: 'IBM Plex Mono', monospace; text-align: right">3</span></div>
+<div style="display: grid; grid-template-columns: 140px minmax(0, 1fr) 40px; align-items: center; gap: 12px; font-size: 14px"><span>Nedůvěra k AI</span><div style="height: 10px; border-radius: 5px; background: #ECEAE4"><div style="width: 20%; height: 10px; border-radius: 5px; background: #8A8D94"></div></div><span style="font-family: 'IBM Plex Mono', monospace; text-align: right">2</span></div>
+<div style="display: grid; grid-template-columns: 140px minmax(0, 1fr) 40px; align-items: center; gap: 12px; font-size: 14px"><span>Jiné</span><div style="height: 10px; border-radius: 5px; background: #ECEAE4"><div style="width: 10%; height: 10px; border-radius: 5px; background: #8A8D94"></div></div><span style="font-family: 'IBM Plex Mono', monospace; text-align: right">1</span></div>
+</div>
+<span style="font-size: 13px; color: #5E6168">Za 7 dní „už má web“ roste z 29 % na 38 %.</span>
+</div>
+<div style="flex: 1 1 360px; min-width: 0; padding: 22px; background: #16181D; color: #F6F5F1; border-radius: 16px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600; color: #F6F5F1">Doporučení na zítra</h2>
+<div style="display: flex; gap: 12px; font-size: 15px; line-height: 1.45"><span style="font-family: 'IBM Plex Mono', monospace; color: #9DB2F5">1</span><span>Na „už mám web“ otevírat rovnou číslem z PageSpeed, ne obecnou nabídkou.</span></div>
+<div style="display: flex; gap: 12px; font-size: 15px; line-height: 1.45"><span style="font-family: 'IBM Plex Mono', monospace; color: #9DB2F5">2</span><span>Tomáš je na 17,5 hovoru/h. Zkrátit mu přípravu na 20 s podle karty.</span></div>
+<div style="display: flex; gap: 12px; font-size: 15px; line-height: 1.45"><span style="font-family: 'IBM Plex Mono', monospace; color: #9DB2F5">3</span><span>Odeslat 3 prezentace po termínu do 10:00.</span></div>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 999 1 560px; min-width: 0; padding: 22px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 16px; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600">Operátoři</h2>
+<div style="overflow-x: auto">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px">
+<tr style="color: #5E6168; text-align: left"><th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #E4E2DC">Operátor</th><th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #E4E2DC; text-align: right">Hodiny</th><th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #E4E2DC; text-align: right">Hovory</th><th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #E4E2DC; text-align: right">Za hodinu</th><th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #E4E2DC; text-align: right">Dovoláno</th><th style="padding: 10px 8px; font-weight: 500; border-bottom: 1px solid #E4E2DC; text-align: right">Konzultace</th></tr>
+<tr><td style="padding: 12px 8px; border-bottom: 1px solid #ECEAE4; font-weight: 500">Petra</td><td style="padding: 12px 8px; border-bottom: 1px solid #ECEAE4; text-align: right; font-family: 'IBM Plex Mono', monospace">4,0</td><td style="padding: 12px 8px; border-bottom: 1px solid #ECEAE4; text-align: right; font-family: 'IBM Plex Mono', monospace">82</td><td style="padding: 12px 8px; border-bottom: 1px solid #ECEAE4; text-align: right; font-family: 'IBM Plex Mono', monospace">20,5</td><td style="padding: 12px 8px; border-bottom: 1px solid #ECEAE4; text-align: right; font-family: 'IBM Plex Mono', monospace">34</td><td style="padding: 12px 8px; border-bottom: 1px solid #ECEAE4; text-align: right; font-family: 'IBM Plex Mono', monospace">4</td></tr>
+<tr><td style="padding: 12px 8px; font-weight: 500">Tomáš</td><td style="padding: 12px 8px; text-align: right; font-family: 'IBM Plex Mono', monospace">4,0</td><td style="padding: 12px 8px; text-align: right; font-family: 'IBM Plex Mono', monospace">70</td><td style="padding: 12px 8px; text-align: right; font-family: 'IBM Plex Mono', monospace; color: #A3410E">17,5 pod cílem</td><td style="padding: 12px 8px; text-align: right; font-family: 'IBM Plex Mono', monospace">27</td><td style="padding: 12px 8px; text-align: right; font-family: 'IBM Plex Mono', monospace">2</td></tr>
+</table>
+</div>
+</div>
+<div style="flex: 1 1 360px; min-width: 0; padding: 22px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 16px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600">Kde hovory padají</h2>
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span>Dovoláno</span><span style="font-family: 'IBM Plex Mono', monospace">61</span></div><div style="height: 12px; border-radius: 6px; background: #8A8D94; width: 100%"></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span>Zájem (podklady nebo konzultace)</span><span style="font-family: 'IBM Plex Mono', monospace">17</span></div><div style="height: 12px; border-radius: 6px; background: #8A8D94; width: 28%"></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span>Konzultace</span><span style="font-family: 'IBM Plex Mono', monospace">6</span></div><div style="height: 12px; border-radius: 6px; background: #2449C9; width: 10%"></div></div>
+<span style="font-size: 13px; color: #5E6168">Nedodělky: 3 prezentace po termínu, 2 propadlé callbacky.</span>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1330,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weblyx CRM
 
-## Getting Started
+Interní CRM pro callcentrum Weblyxu. Operátorky volají firmám, zapisují výsledek hovoru a systém naplánuje další krok.
 
-First, run the development server:
+## Stack
+
+- **Frontend:** Next.js 16 (App Router), TypeScript strict, Tailwind CSS 4
+- **Backend:** Supabase (Postgres, Auth, RLS, Edge Functions)
+- **Nasazení:** Vercel, doména zenuly.cz
+
+## Spuštění lokálně
 
 ```bash
+# 1. Nainstaluj závislosti
+npm install
+
+# 2. Nastav proměnné prostředí
+cp .env.example .env.local
+# Vyplň NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY a SUPABASE_SERVICE_ROLE_KEY
+
+# 3. Spusť vývojový server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Aplikace poběží na [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Supabase
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Schéma databáze se spravuje výhradně přes migrace v `supabase/migrations/`.
 
-## Learn More
+```bash
+npx supabase db push    # Spusť migrace
+npx supabase test db    # Spusť testy
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Dokumentace
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `CLAUDE.md` – pravidla a zásady projektu
+- `docs/specifikace-weblyx.md` – byznys specifikace
+- `docs/design.md` – design systém
+- `docs/design-predloha/` – 8 HTML předloh obrazovek
+- `docs/navod-operatorka.md` – texty nápovědy
+- `docs/postup-prompty.md` – postup stavby

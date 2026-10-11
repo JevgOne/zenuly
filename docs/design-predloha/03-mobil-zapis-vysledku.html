@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Zápis výsledku hovoru</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F6F5F1; color: #16181D; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column">
+<div style="padding: 16px 12px 4px; display: flex; align-items: center; justify-content: space-between">
+<a href="Karta.dc.html" style="display: flex; align-items: center; gap: 4px; height: 44px; padding: 0 8px; font-size: 15px; color: #5E6168"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Autoservis Dvořák</a>
+<a href="Napoveda.dc.html" aria-label="Nápověda: co zvolit po hovoru" style="width: 44px; height: 44px; margin-right: 4px; border-radius: 22px; border: 1px solid #C9C6BE; background: #FDFDFB; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; color: #16181D">?</a>
+</div>
+<div style="padding: 4px 20px 10px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 13px; color: #5E6168">Hovor skončil · <span style="font-family: 'IBM Plex Mono', monospace">2:41</span></span>
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.01em">Jak hovor skončil?</h1>
+</div>
+<div style="flex: 1; overflow: hidden; padding: 0 20px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #5E6168">ZÁJEM</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{ g1 }}" as="c" hint-placeholder-count="3">
+<button onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button>
+</sc-for>
+</div>
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #5E6168">ZKUSIT ZNOVU</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{ g2 }}" as="c" hint-placeholder-count="3">
+<button onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button>
+</sc-for>
+</div>
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #5E6168">KONEC</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{ g3 }}" as="c" hint-placeholder-count="2">
+<button onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button>
+</sc-for>
+</div>
+<sc-if value="{{ hasPick }}" hint-placeholder-val="{{ true }}">
+<div style="margin-top: 4px; padding: 14px 16px; background: #FDFDFB; border: 1px solid #E4E2DC; border-radius: 14px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #5E6168">{{ effect }}</p>
+<sc-if value="{{ isLater }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 500">Kdy zavolat</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px"><button style="height: 40px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; color: #16181D; font-family: inherit; font-size: 13px">Za 2 h</button><button style="height: 40px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; color: #16181D; font-family: inherit; font-size: 13px">Zítra 9:00</button><button style="height: 40px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; color: #16181D; font-family: inherit; font-size: 13px">Za týden</button><button style="height: 40px; border: 1.5px solid #2449C9; border-radius: 10px; background: #E8ECFA; color: #1B3699; font-family: inherit; font-size: 13px; font-weight: 600">Za měsíc</button><button style="height: 40px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; color: #16181D; font-family: inherit; font-size: 13px">Za 3 měsíce</button><button style="height: 40px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; color: #16181D; font-family: inherit; font-size: 13px">Datum…</button></div>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500">Proč odkládáme (nepovinné)
+<input type="text" value="Až po sezóně, v listopadu" style="height: 40px; padding: 0 12px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; font-family: inherit; font-size: 14px; font-weight: 400; color: #16181D"></label>
+<span style="font-size: 13px; color: #5E6168">Vrátí se ti do fronty 9. 11. v 9:00.</span></div>
+</sc-if>
+<sc-if value="{{ isMeeting }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 500">Tvoje volné termíny</span>
+<div style="display: flex; gap: 6px"><button style="flex: 1; height: 44px; border: 1.5px solid #2449C9; border-radius: 10px; background: #E8ECFA; color: #1B3699; font-family: inherit; font-size: 14px; font-weight: 600">Út 10:00</button><button style="flex: 1; height: 44px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; color: #16181D; font-family: inherit; font-size: 14px">Čt 14:00</button><button style="flex: 1; height: 44px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; color: #16181D; font-family: inherit; font-size: 14px">Jiný…</button></div></div>
+</sc-if>
+<sc-if value="{{ isSend }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500">E-mail klienta
+<input type="email" value="jan@dvorak-servis.cz" style="height: 44px; padding: 0 12px; border: 1px solid #C9C6BE; border-radius: 10px; background: #F6F5F1; font-family: inherit; font-size: 15px; font-weight: 400; color: #16181D"></label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 14px"><input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #2449C9">Odeslat {{ template }} hned po uložení</label>
+</div>
+</sc-if>
+<sc-if value="{{ isLost }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 500">Proč</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<button style="height: 36px; padding: 0 12px; border: 1.5px solid #7A3410; border-radius: 18px; background: #FBEDE4; color: #7A3410; font-family: inherit; font-size: 13px; font-weight: 600">Už má web</button>
+<button style="height: 36px; padding: 0 12px; border: 1px solid #C9C6BE; border-radius: 18px; background: #F6F5F1; font-family: inherit; font-size: 13px; color: #16181D">Cena</button>
+<button style="height: 36px; padding: 0 12px; border: 1px solid #C9C6BE; border-radius: 18px; background: #F6F5F1; font-family: inherit; font-size: 13px; color: #16181D">Nemá čas</button>
+<button style="height: 36px; padding: 0 12px; border: 1px solid #C9C6BE; border-radius: 18px; background: #F6F5F1; font-family: inherit; font-size: 13px; color: #16181D">Má agenturu</button>
+<button style="height: 36px; padding: 0 12px; border: 1px solid #C9C6BE; border-radius: 18px; background: #F6F5F1; font-family: inherit; font-size: 13px; color: #16181D">Nedůvěra k AI</button>
+<button style="height: 36px; padding: 0 12px; border: 1px solid #C9C6BE; border-radius: 18px; background: #F6F5F1; font-family: inherit; font-size: 13px; color: #16181D">Jiné</button>
+</div>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 14px"><input type="checkbox" style="width: 20px; height: 20px; accent-color: #7A3410">Nechce, abychom volali (seznam Nevolat)</label>
+</div>
+</sc-if>
+</div>
+</sc-if>
+</div>
+<div style="padding: 12px 20px 24px; border-top: 1px solid #E4E2DC; background: #FDFDFB; display: flex; gap: 8px">
+<button aria-label="Hlasová poznámka" style="width: 52px; height: 52px; border-radius: 14px; border: 1px solid #C9C6BE; background: #F6F5F1; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16181D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+<a href="Main.dc.html" style="flex: 1; display: flex; align-items: center; justify-content: center; height: 52px; border-radius: 14px; background: #2449C9; color: #FDFDFB; font-size: 16px; font-weight: 600">Uložit a další lead</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const picked = (this.state && this.state.picked) || 'meeting';
+const all = [
+{ id: 'meeting', g: 1, label: 'Konzultace', effect: 'Lead přejde na majitele, schůzka se zapíše do jeho kalendáře a operátor ho už nevolá.' },
+{ id: 'offer', g: 1, label: 'Nabídka', effect: 'Nabídka odejde e-mailem a za 3 dny přijde callback.' },
+{ id: 'deck', g: 1, label: 'Prezentace', effect: 'Prezentace odejde e-mailem a za 2 dny přijde callback.' },
+{ id: 'later', g: 2, label: 'Jindy', effect: 'Lead zmizí z fronty a vrátí se přesně v čas, který klient řekl – i za měsíc.' },
+{ id: 'noanswer', g: 2, label: 'Nevzal to', effect: 'Další pokus zítra v jinou denní dobu. Zbývají 3 pokusy.' },
+{ id: 'busy', g: 2, label: 'Obsazeno', effect: 'Lead se vrátí do fronty za 30 minut.' },
+{ id: 'lost', g: 3, label: 'Nemá zájem', effect: 'Fáze Ztraceno. Znovu oslovit za 6 měsíců, pokud nechce na seznam Nevolat.' },
+{ id: 'wrong', g: 3, label: 'Špatné číslo', effect: 'Fáze Ztraceno, lead jde ke kontrole majiteli.' }
+];
+const base = 'min-height: 52px; padding: 0 8px; border-radius: 12px; font-family: inherit; font-size: 14px; text-align: center; ';
+const on = (c) => c.g === 3
+? 'border: 1.5px solid #7A3410; background: #FBEDE4; color: #7A3410; font-weight: 600'
+: 'border: 1.5px solid #2449C9; background: #E8ECFA; color: #12245F; font-weight: 600';
+const off = 'border: 1px solid #E4E2DC; background: #FDFDFB; color: #16181D; font-weight: 500';
+const cats = all.map((c) => ({ ...c, pick: () => this.setState({ picked: c.id }), style: base + (c.id === picked ? on(c) : off) }));
+const cur = all.find((c) => c.id === picked);
+return {
+g1: cats.filter((c) => c.g === 1),
+g2: cats.filter((c) => c.g === 2),
+g3: cats.filter((c) => c.g === 3),
+hasPick: !!cur,
+effect: cur ? cur.effect : '',
+isLater: picked === 'later',
+isMeeting: picked === 'meeting',
+isLost: picked === 'lost',
+isSend: picked === 'offer' || picked === 'deck',
+template: picked === 'deck' ? 'prezentaci' : 'nabídku'
+};
+}
+}
+</script>
+</body>
+</html>
