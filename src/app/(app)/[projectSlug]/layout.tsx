@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { ProjectProvider } from "@/lib/contexts/project-context";
 import { AppHeader } from "@/components/app-header";
 import { BottomNav } from "@/components/bottom-nav";
+import { OnboardingGate } from "./_components/onboarding-gate";
 
 export const instant = false;
 
@@ -24,7 +25,7 @@ export default async function ProjectLayout({
   // Load profile
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, role, full_name")
+    .select("id, role, full_name, onboarding_completed")
     .eq("id", user.id)
     .single();
   if (!profile) redirect("/login");
@@ -97,6 +98,7 @@ export default async function ProjectLayout({
       />
       <main className="pt-14 pb-[78px] lg:pb-0">{children}</main>
       <BottomNav projectSlug={projectSlug} role={effectiveRole} />
+      <OnboardingGate onboardingCompleted={profile.onboarding_completed ?? false} />
     </ProjectProvider>
   );
 }

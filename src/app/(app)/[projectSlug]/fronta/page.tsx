@@ -20,7 +20,7 @@ export default async function FrontaPage({
   // Get profile
   const { data: profile } = await supabase
     .from("profiles")
-    .select("full_name, onboarding_completed")
+    .select("full_name")
     .eq("id", user.id)
     .single();
 
@@ -46,7 +46,6 @@ export default async function FrontaPage({
       callerName={profile?.full_name ?? "Operátor"}
       callsPerHour={project.calls_per_hour}
       lostReasons={(lostReasons ?? []).map((r) => ({ id: r.id, name: r.name }))}
-      onboardingCompleted={profile?.onboarding_completed ?? false}
     />
   );
 }

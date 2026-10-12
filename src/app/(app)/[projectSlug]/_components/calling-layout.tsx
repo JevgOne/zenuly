@@ -7,7 +7,6 @@ import { ShiftBar } from "./shift-bar";
 import { LeadCard } from "./lead-card";
 import { OutcomePanel } from "./outcome-panel";
 import { ObjectionChips } from "./objection-chips";
-import { OnboardingWizard } from "./onboarding-wizard";
 import { HelpSheet } from "./help-sheet";
 
 type LostReason = { id: string; name: string };
@@ -17,19 +16,16 @@ export function CallingLayout({
   callerName,
   callsPerHour,
   lostReasons,
-  onboardingCompleted,
 }: {
   projectId: string;
   callerName: string;
   callsPerHour: number;
   lostReasons: LostReason[];
-  onboardingCompleted: boolean;
 }) {
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
   const [lead, setLead] = useState<LeadCardData | null>(null);
   const [loadingLead, setLoadingLead] = useState(false);
   const [showOutcome, setShowOutcome] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(!onboardingCompleted);
 
   const loadLead = useCallback(async (leadId: string) => {
     setLoadingLead(true);
@@ -260,10 +256,6 @@ export function CallingLayout({
         <HelpSheet />
       </div>
 
-      {/* Onboarding wizard overlay */}
-      {showOnboarding && (
-        <OnboardingWizard onComplete={() => setShowOnboarding(false)} />
-      )}
     </div>
   );
 }
