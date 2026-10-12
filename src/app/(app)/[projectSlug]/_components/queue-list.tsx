@@ -2,6 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { getQueue, type QueueItem } from "@/app/actions/queue";
+import { reasonsFor } from "@/lib/callscript";
+
+function formatHookPreview(hookText: string | null): string | null {
+  if (!hookText) return null;
+  // If it looks like raw technical findings, convert to human-readable
+  if (/\|/.test(hookText) && /responziv|HTTPS|HTML|OG tag|tabulk|viewport|PageSpeed/i.test(hookText)) {
+    const reasons = reasonsFor(hookText);
+    if (reasons.length > 0) return reasons[0].say;
+  }
+  return hookText;
+}
 
 const SECTION_LABELS: Record<string, string> = {
   overdue: "Propadlé",
@@ -136,12 +147,14 @@ export function QueueList({
                     {item.company_name}
                   </p>
                   <p className="text-[13px] text-muted truncate mt-0.5">
-                    {item.hook_text
-                      ? item.hook_text.slice(0, 40) +
-                        (item.hook_text.length > 40 ? "…" : "")
-                      : item.stage_key === "new"
-                        ? "Nový lead"
-                        : "Callback"}
+                    {(() => {
+                      const preview = formatHookPreview(item.hook_text);
+                      if (preview) {
+                        const text = preview.slice(0, 50);
+                        return text + (preview.length > 50 ? "\u2026" : "");
+                      }
+                      return item.stage_key === "new" ? "Nový lead" : "Callback";
+                    })()}
                   </p>
                 </div>
                 <div className="text-right shrink-0">

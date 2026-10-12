@@ -104,6 +104,7 @@ export function LeadCard({
           hookText={lead.hook_text}
           hookSource={lead.hook_source}
           findings={lead.findings}
+          website={lead.website}
         />
       </div>
 

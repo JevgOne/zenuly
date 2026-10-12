@@ -98,7 +98,11 @@ export default async function ProjectLayout({
       />
       <main className="pt-14 pb-[78px] lg:pb-0">{children}</main>
       <BottomNav projectSlug={projectSlug} role={effectiveRole} />
-      <OnboardingGate onboardingCompleted={profile.onboarding_completed ?? false} />
+      <OnboardingGate
+        onboardingCompleted={profile.onboarding_completed ?? false}
+        role={effectiveRole}
+        projectSlug={projectSlug}
+      />
     </ProjectProvider>
   );
 }

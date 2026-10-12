@@ -69,6 +69,7 @@ export type ContactDetail = {
   lead_source: string | null;
   phone_source: string;
   hook_text: string | null;
+  findings: string | null;
   priority: number;
   attempt_count: number;
   next_action_at: string | null;
@@ -78,7 +79,13 @@ export type ContactDetail = {
   stage_name: string;
   stage_key: string;
   stage_type: string;
+  stage_id: string;
+  owner_id: string | null;
   owner_name: string | null;
+  project_id: string;
+  trust_score: number;
+  completeness_pct: number;
+  total_calls: number;
   calls: {
     id: string;
     outcome_name: string;
@@ -100,7 +107,7 @@ export async function getContactDetail(
   const { data: lead } = await supabase
     .from("leads")
     .select(
-      "id, company, contact_person, phone, email, website, city, ico, lead_source, phone_source, hook_text, priority, attempt_count, next_action_at, next_action_type, created_at, updated_at, stage_id, owner_id"
+      "id, company, contact_person, phone, email, website, city, ico, lead_source, phone_source, hook_text, findings, priority, attempt_count, next_action_at, next_action_type, created_at, updated_at, stage_id, owner_id, project_id"
     )
     .eq("id", leadId)
     .single();
@@ -155,6 +162,16 @@ export async function getContactDetail(
     });
   }
 
+  // Compute completeness percentage
+  const fields = [lead.company, lead.contact_person, lead.phone, lead.email, lead.website, lead.city, lead.ico];
+  const filled = fields.filter(Boolean).length;
+  const completeness_pct = Math.round((filled / fields.length) * 100);
+
+  // Simple trust score: based on completeness + call history + stage
+  const callBonus = Math.min(resolvedCalls.length * 10, 30);
+  const stageBonus = stage?.type === "won" ? 20 : stage?.type === "lost" ? 0 : 10;
+  const trust_score = Math.min(Math.round(completeness_pct * 0.5 + callBonus + stageBonus), 100);
+
   return {
     id: lead.id,
     company: lead.company,
@@ -167,6 +184,7 @@ export async function getContactDetail(
     lead_source: lead.lead_source,
     phone_source: lead.phone_source,
     hook_text: lead.hook_text,
+    findings: lead.findings,
     priority: lead.priority,
     attempt_count: lead.attempt_count,
     next_action_at: lead.next_action_at,
@@ -176,7 +194,47 @@ export async function getContactDetail(
     stage_name: stage?.name ?? "—",
     stage_key: stage?.key ?? "",
     stage_type: stage?.type ?? "open",
+    stage_id: lead.stage_id,
+    owner_id: lead.owner_id,
     owner_name: ownerName,
+    project_id: lead.project_id,
+    trust_score,
+    completeness_pct,
+    total_calls: resolvedCalls.length,
     calls: resolvedCalls,
   };
+}
+
+export async function assignLeadOwner(
+  leadId: string,
+  operatorId: string | null,
+): Promise<void> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const { error } = await supabase
+    .from("leads")
+    .update({ owner_id: operatorId, updated_at: new Date().toISOString() })
+    .eq("id", leadId);
+  if (error) throw new Error(error.message);
+}
+
+export async function changeLeadStage(
+  leadId: string,
+  stageId: string,
+): Promise<void> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const { error } = await supabase
+    .from("leads")
+    .update({ stage_id: stageId, updated_at: new Date().toISOString() })
+    .eq("id", leadId);
+  if (error) throw new Error(error.message);
 }
