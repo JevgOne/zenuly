@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { getQueue, type QueueItem } from "@/app/actions/queue";
 
 const SECTION_LABELS: Record<string, string> = {
@@ -28,7 +28,6 @@ export function QueueList({
 }) {
   const [items, setItems] = useState<QueueItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const mountedRef = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -44,10 +43,7 @@ export function QueueList({
       }
     };
 
-    if (!mountedRef.current) {
-      mountedRef.current = true;
-      load();
-    }
+    load();
 
     const interval = setInterval(load, 30_000);
 
