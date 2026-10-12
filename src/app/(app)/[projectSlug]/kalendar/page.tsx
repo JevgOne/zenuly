@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { PageHelpButton } from "@/components/page-help-button";
 import { getCalendarConnection } from "@/app/actions/calendar";
 
 export const instant = false;
@@ -23,6 +24,7 @@ export default async function KalendarPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
+      <PageHelpButton text="Propojte kalendář pro automatickou synchronizaci domluvených konzultací." />
       <h1 className="text-2xl font-semibold text-text mb-6">
         Kalendář
       </h1>

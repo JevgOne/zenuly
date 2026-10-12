@@ -132,35 +132,21 @@ export async function getContactDetail(
     ownerName = owner?.full_name ?? null;
   }
 
-  // Get call history
-  const { data: calls } = await supabase
+  // Get call history with outcomes and operator names in a single query
+  const { data: callsWithJoins } = await supabase
     .from("calls")
-    .select("id, outcome_id, note, operator_id, created_at")
+    .select("id, note, created_at, outcomes(name), profiles!calls_operator_id_fkey(full_name)")
     .eq("lead_id", leadId)
     .order("created_at", { ascending: false })
     .limit(50);
 
-  // Resolve outcome names and operator names
-  const resolvedCalls: ContactDetail["calls"] = [];
-  for (const call of calls ?? []) {
-    const { data: outcome } = await supabase
-      .from("outcomes")
-      .select("name")
-      .eq("id", call.outcome_id)
-      .single();
-    const { data: operator } = await supabase
-      .from("profiles")
-      .select("full_name")
-      .eq("id", call.operator_id)
-      .single();
-    resolvedCalls.push({
-      id: call.id,
-      outcome_name: outcome?.name ?? "—",
-      note: call.note,
-      operator_name: operator?.full_name ?? "—",
-      created_at: call.created_at,
-    });
-  }
+  const resolvedCalls: ContactDetail["calls"] = (callsWithJoins ?? []).map((call) => ({
+    id: call.id,
+    outcome_name: (call.outcomes as unknown as { name: string } | null)?.name ?? "—",
+    note: call.note,
+    operator_name: (call.profiles as unknown as { full_name: string } | null)?.full_name ?? "—",
+    created_at: call.created_at,
+  }));
 
   // Compute completeness percentage
   const fields = [lead.company, lead.contact_person, lead.phone, lead.email, lead.website, lead.city, lead.ico];
@@ -205,7 +191,7 @@ export async function getContactDetail(
   };
 }
 
-async function requireAdminOrManager() {
+async function requireAdminOrManager(projectId: string) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -225,6 +211,7 @@ async function requireAdminOrManager() {
     .from("project_members")
     .select("role")
     .eq("profile_id", user.id)
+    .eq("project_id", projectId)
     .single();
   if (!membership || membership.role !== "manager")
     throw new Error("Forbidden");
@@ -236,7 +223,15 @@ export async function assignLeadOwner(
   leadId: string,
   operatorId: string | null,
 ): Promise<void> {
-  const supabase = await requireAdminOrManager();
+  const tmpSupabase = await createClient();
+  const { data: lead } = await tmpSupabase
+    .from("leads")
+    .select("project_id")
+    .eq("id", leadId)
+    .single();
+  if (!lead) throw new Error("Lead not found");
+
+  const supabase = await requireAdminOrManager(lead.project_id);
 
   const { error } = await supabase
     .from("leads")
@@ -249,7 +244,15 @@ export async function changeLeadStage(
   leadId: string,
   stageId: string,
 ): Promise<void> {
-  const supabase = await requireAdminOrManager();
+  const tmpSupabase = await createClient();
+  const { data: lead } = await tmpSupabase
+    .from("leads")
+    .select("project_id")
+    .eq("id", leadId)
+    .single();
+  if (!lead) throw new Error("Lead not found");
+
+  const supabase = await requireAdminOrManager(lead.project_id);
 
   const { error } = await supabase
     .from("leads")

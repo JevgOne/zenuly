@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { PageHelpButton } from "@/components/page-help-button";
 import { MfaSetup } from "./mfa-setup";
 import { CalendarSection } from "./calendar-section";
 import { getAvailableProviders } from "@/lib/calendar/factory";
@@ -24,11 +25,24 @@ export default async function SettingsPage() {
 
   if (!profile) redirect("/login");
 
+  // Check if user is a manager in any project (profiles.role only has "admin" | "operator")
+  const isManager = profile.role === "admin" || await (async () => {
+    const { data: membership } = await supabase
+      .from("project_members")
+      .select("role")
+      .eq("profile_id", user.id)
+      .eq("role", "manager")
+      .limit(1)
+      .maybeSingle();
+    return !!membership;
+  })();
+
   const providers = getAvailableProviders();
   const calendarConnection = await getCalendarConnection();
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
+      <PageHelpButton text="Nastavení vašeho profilu, hesla a propojení s kalendářem." />
       <Link
         href="/"
         className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-4"
@@ -56,7 +70,7 @@ export default async function SettingsPage() {
           </div>
         </div>
 
-        {(profile.role === "admin" || profile.role === "manager") && (
+        {isManager && (
           <Suspense fallback={<div className="bg-surface border border-line rounded-lg p-6 animate-pulse h-40" />}>
             <CalendarSection
               providers={providers}

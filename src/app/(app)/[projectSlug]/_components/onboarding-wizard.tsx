@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { completeOnboarding } from "@/app/actions/onboarding";
 
 type OnboardingStep = {
@@ -270,26 +270,44 @@ export function OnboardingWizard({
   onComplete: () => void;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const steps = getSteps(role, projectSlug);
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
-  const [navigating, setNavigating] = useState(false);
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
 
   const current = steps[step];
   const isFirst = step === 0;
   const isLast = step === steps.length - 1;
   const totalSteps = steps.length;
 
-  // Navigate to the step's page on each step change
+  // navigating = we requested a navigation and URL hasn't arrived yet
+  const navigating = pendingPath !== null && pathname !== pendingPath;
+
+  // Trigger navigation on step change
   useEffect(() => {
     if (current.path) {
-      setNavigating(true);
+      setPendingPath(current.path);
       router.push(current.path);
-      const t = setTimeout(() => setNavigating(false), 600);
-      return () => clearTimeout(t);
+    } else {
+      setPendingPath(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
+
+  // Clear pendingPath once URL matches (navigation complete)
+  useEffect(() => {
+    if (pendingPath && pathname === pendingPath) {
+      setPendingPath(null);
+    }
+  }, [pathname, pendingPath]);
+
+  // Fallback: clear after 2s if pathname never matches
+  useEffect(() => {
+    if (!pendingPath) return;
+    const t = setTimeout(() => setPendingPath(null), 2000);
+    return () => clearTimeout(t);
+  }, [pendingPath]);
 
   const handleNext = useCallback(() => {
     if (step < totalSteps - 1) {

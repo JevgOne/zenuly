@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
+import { PageHelpButton } from "@/components/page-help-button";
 import { ImportWizard } from "./import-wizard";
 
 export const instant = false;
@@ -51,6 +52,7 @@ export default async function ImportPage({
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6">
+      <PageHelpButton text="Import kontaktů z CSV nebo Excelu. Systém kontroluje duplicity a normalizuje telefonní čísla." />
       <Link
         href={`/${projectSlug}/kontakty`}
         className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-4"

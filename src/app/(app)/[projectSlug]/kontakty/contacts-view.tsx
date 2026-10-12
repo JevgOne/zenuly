@@ -6,6 +6,7 @@ import {
   getContactsOverview,
   type ContactCard,
 } from "@/app/actions/contacts";
+import { PageHelpButton } from "@/components/page-help-button";
 
 type Stage = { key: string; name: string; type: string };
 
@@ -228,6 +229,7 @@ export function ContactsView({
 
   return (
     <div className="max-w-[1400px] mx-auto px-4 py-8">
+      <PageHelpButton text="Seznam všech kontaktů v projektu. Můžete filtrovat, řadit a kliknout na kontakt pro detail." />
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
         <div>

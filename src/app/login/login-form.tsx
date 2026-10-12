@@ -95,6 +95,23 @@ export function LoginForm() {
           <button
             type="button"
             tabIndex={-1}
+            onClick={async () => {
+              if (!email) {
+                setError("Zadejte e-mail pro obnovení hesla.");
+                return;
+              }
+              const supabase = createClient();
+              const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${window.location.origin}/auth/confirm`,
+              });
+              if (resetError) {
+                setError(resetError.message);
+              } else {
+                setError("");
+                setShowResend(false);
+                setResendSent(true);
+              }
+            }}
             className="text-[13px] text-accent hover:text-accent/80 transition-colors"
           >
             Zapomenuté heslo?
@@ -146,17 +163,6 @@ export function LoginForm() {
           </button>
         </div>
       </div>
-
-      <label className="flex items-center gap-2 cursor-pointer">
-        <input
-          type="checkbox"
-          defaultChecked
-          className="rounded border-input-border text-accent w-4 h-4"
-        />
-        <span className="text-[13px] text-muted">
-          Zůstat přihlášen na tomto zařízení
-        </span>
-      </label>
 
       {error && <p className="text-urgent text-sm">{error}</p>}
 

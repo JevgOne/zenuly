@@ -45,16 +45,25 @@ export function PerformanceDashboard({
 }) {
   const [stats, setStats] = useState<OperatorStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     const load = () => {
-      getOperatorStats(projectId).then((data) => {
-        if (!cancelled) {
-          setStats(data);
-          setLoading(false);
-        }
-      });
+      getOperatorStats(projectId)
+        .then((data) => {
+          if (!cancelled) {
+            setStats(data);
+            setLoading(false);
+            setError(null);
+          }
+        })
+        .catch((err) => {
+          if (!cancelled) {
+            setError(err instanceof Error ? err.message : "Nepodařilo se načíst statistiky.");
+            setLoading(false);
+          }
+        });
     };
     load();
     const interval = setInterval(load, 60_000);
@@ -71,6 +80,12 @@ export function PerformanceDashboard({
           />
         ))}
       </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <p className="text-urgent text-[15px]">{error}</p>
     );
   }
 

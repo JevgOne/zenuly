@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   assignToProject,
   changeProjectRole,
@@ -24,6 +25,7 @@ export function UserActions({
   allProjects: Project[];
   globalRole: string;
 }) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -39,6 +41,7 @@ export function UserActions({
     try {
       await assignToProject(profileId, addProjectId);
       setAddProjectId("");
+      router.refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Chyba");
     } finally {
@@ -51,6 +54,7 @@ export function UserActions({
     setError("");
     try {
       await changeProjectRole(profileId, projectId, newRole);
+      router.refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Chyba");
     } finally {
@@ -64,6 +68,7 @@ export function UserActions({
     setError("");
     try {
       await removeFromProject(profileId, projectId);
+      router.refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Chyba");
     } finally {
@@ -190,6 +195,7 @@ export function UserActions({
                 try {
                   await deleteUser(profileId);
                   setOpen(false);
+                  router.refresh();
                 } catch (e) {
                   setError(e instanceof Error ? e.message : "Chyba při mazání");
                   setLoading(false);

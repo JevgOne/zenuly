@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { PageHelpButton } from "@/components/page-help-button";
 import { MonthlyHoursExport } from "../_components/monthly-hours-export";
 
 export const instant = false;
@@ -45,6 +46,7 @@ export default async function ExportHodinPage({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      <PageHelpButton text="Měsíční přehled odpracovaných hodin operátorů pro výpočet mezd." />
       <Link
         href={`/${projectSlug}/dashboard`}
         className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-4"

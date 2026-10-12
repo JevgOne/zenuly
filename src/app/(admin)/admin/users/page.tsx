@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
+import { PageHelpButton } from "@/components/page-help-button";
 import { InviteForm } from "./invite-form";
 import { UserActions } from "./user-actions";
 
@@ -50,6 +51,7 @@ export default async function UsersPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      <PageHelpButton text="Správa uživatelů — pozvánky, přiřazení k projektům, role a odebrání přístupu." />
       <Link
         href="/"
         className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-4"

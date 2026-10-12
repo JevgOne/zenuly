@@ -1,0 +1,146 @@
+{
+  "timestamp": "2026-10-12T05:37:36.721Z",
+  "summary": {
+    "total": 27,
+    "ok": 27,
+    "fail": 0,
+    "warn": 0
+  },
+  "results": [
+    {
+      "test": "Přesměrování na login",
+      "status": "OK",
+      "detail": "http://localhost:3098/login"
+    },
+    {
+      "test": "Přihlášení",
+      "status": "OK",
+      "detail": "http://localhost:3098/"
+    },
+    {
+      "test": "Nav: Fronta",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Nav: Úkoly",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Nav: Kalendář",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Nav: Pipeline",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Nav: Import",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Nav: Report",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Nav: Export hodin",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Nav: Výkon",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Nav: Správa/Admin",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Fronta leadů (/weblyx/fronta)",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/fronta"
+    },
+    {
+      "test": "Import (/weblyx/import)",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/import"
+    },
+    {
+      "test": "Úkoly (/weblyx/ukoly)",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/ukoly"
+    },
+    {
+      "test": "Výkon (/weblyx/vykon)",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/vykon"
+    },
+    {
+      "test": "Denní report (/weblyx/report)",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/report"
+    },
+    {
+      "test": "Export hodin (/weblyx/export-hodin)",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/export-hodin"
+    },
+    {
+      "test": "Pipeline (/weblyx/pipeline)",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/pipeline"
+    },
+    {
+      "test": "Kalendář (/weblyx/kalendar)",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/kalendar"
+    },
+    {
+      "test": "Nastavení (/settings)",
+      "status": "OK",
+      "detail": "http://localhost:3098/settings"
+    },
+    {
+      "test": "Správa uživatelů (/admin/users)",
+      "status": "OK",
+      "detail": "http://localhost:3098/admin/users"
+    },
+    {
+      "test": "Fronta - stav",
+      "status": "OK",
+      "detail": "24 elementů, empty state: false"
+    },
+    {
+      "test": "Shift bar tlačítko",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "test": "Design - background",
+      "status": "OK",
+      "detail": "bg: rgb(246, 245, 241)"
+    },
+    {
+      "test": "Responsivita mobile (375px)",
+      "status": "OK",
+      "detail": "screenshot uložen"
+    },
+    {
+      "test": "Kontrola češtiny",
+      "status": "OK",
+      "detail": "žádné anglické UI texty nenalezeny"
+    },
+    {
+      "test": "Import - upload element",
+      "status": "OK",
+      "detail": "nalezeno"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { PageHelpButton } from "@/components/page-help-button";
 import { SendEmailForm } from "../_components/send-email-form";
 
 export const instant = false;
@@ -80,6 +81,7 @@ export default async function TasksPage({
   if (taskList.length === 0) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-8">
+        <PageHelpButton text="Nevyřízené úkoly — odesílání nabídek, prezentací a kontrola kontaktů." />
         <h1 className="text-2xl font-semibold text-text mb-6">Úkoly</h1>
         <div className="bg-surface border border-line rounded-lg p-8 text-center">
           <p className="text-muted text-[15px]">
@@ -95,6 +97,7 @@ export default async function TasksPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
+      <PageHelpButton text="Nevyřízené úkoly — odesílání nabídek, prezentací a kontrola kontaktů." />
       <h1 className="text-2xl font-semibold text-text mb-6">Úkoly</h1>
       <div className="space-y-3">
         {taskList.map((task) => {

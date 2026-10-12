@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import type { ReportData } from "@/app/actions/report";
+import { PageHelpButton } from "@/components/page-help-button";
 import { KpiGrid } from "./_components/kpi-grid";
 import { LostReasonsChart } from "./_components/lost-reasons-chart";
 import { RecommendationsPanel } from "./_components/recommendations-panel";
@@ -55,6 +56,7 @@ export function ReportView({
 
   return (
     <div className="max-w-[1240px] mx-auto px-6 py-10 flex flex-col gap-6">
+      <PageHelpButton text="Denní report shrnuje výkon operátorů — hovory, výsledky, ztráty a trendy." />
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex flex-col gap-1">

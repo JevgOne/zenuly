@@ -8,6 +8,7 @@ import {
   type PipelineStage,
   type OperatorStat,
 } from "@/app/actions/dashboard";
+import { PageHelpButton } from "@/components/page-help-button";
 
 function KpiCard({
   label,
@@ -240,6 +241,7 @@ export function DashboardView({
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 py-8">
+      <PageHelpButton text="Dashboard zobrazuje přehled projektu — počty leadů, hovory, operátory a klíčové metriky." />
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-text">Dashboard</h1>

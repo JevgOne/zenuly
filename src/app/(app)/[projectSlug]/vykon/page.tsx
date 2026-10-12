@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { PageHelpButton } from "@/components/page-help-button";
 import { PerformanceDashboard } from "../_components/performance-dashboard";
 
 export const instant = false;
@@ -27,6 +28,7 @@ export default async function VykonPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
+      <PageHelpButton text="Vaše osobní statistiky — počet hovorů, úspěšnost, průměrná doba a denní cíl." />
       <h1 className="text-2xl font-semibold text-text mb-6">Výkon</h1>
       <PerformanceDashboard projectId={project.id} />
     </div>

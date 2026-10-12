@@ -55,9 +55,9 @@ export default async function ContactDetailPage({
   // Load stages for stage change dropdown
   const { data: stages } = await supabase
     .from("stages")
-    .select("id, name, key, type, sort_order")
+    .select("id, name, key, type, position")
     .eq("project_id", contact.project_id)
-    .order("sort_order");
+    .order("position");
 
   return (
     <ContactDetailView

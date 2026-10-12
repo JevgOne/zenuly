@@ -251,8 +251,8 @@ export function CallingLayout({
         )}
       </div>
 
-      {/* Help button — fixed bottom-right */}
-      <div className="fixed bottom-4 right-4 z-40">
+      {/* Help button — fixed bottom-right, above bottom-nav on mobile */}
+      <div className="fixed bottom-20 lg:bottom-4 right-4 z-40">
         <HelpSheet />
       </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -9,6 +9,7 @@ import {
   changeLeadStage,
 } from "@/app/actions/contacts";
 import { reasonsFor } from "@/lib/callscript";
+import { PageHelpButton } from "@/components/page-help-button";
 
 type Operator = { id: string; name: string };
 type Stage = { id: string; name: string; key: string; type: string };
@@ -147,6 +148,21 @@ export function ContactDetailView({
   const [isPending, startTransition] = useTransition();
   const [showAssign, setShowAssign] = useState(false);
   const [showStage, setShowStage] = useState(false);
+  const assignRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (assignRef.current && !assignRef.current.contains(e.target as Node)) {
+        setShowAssign(false);
+      }
+      if (stageRef.current && !stageRef.current.contains(e.target as Node)) {
+        setShowStage(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const priority = priorityBadge(contact.priority);
 
@@ -187,6 +203,7 @@ export function ContactDetailView({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
+      <PageHelpButton text="Detail kontaktu s historií hovorů, úkolů a možností přiřadit operátora nebo změnit fázi." />
       {/* Back link */}
       <Link
         href={`/${projectSlug}/kontakty`}
@@ -274,7 +291,7 @@ export function ContactDetailView({
         </a>
 
         {/* Assign operator */}
-        <div className="relative">
+        <div className="relative" ref={assignRef}>
           <button
             type="button"
             onClick={() => { setShowAssign(!showAssign); setShowStage(false); }}
@@ -311,7 +328,7 @@ export function ContactDetailView({
         </div>
 
         {/* Change stage */}
-        <div className="relative">
+        <div className="relative" ref={stageRef}>
           <button
             type="button"
             onClick={() => { setShowStage(!showStage); setShowAssign(false); }}

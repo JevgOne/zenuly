@@ -1,0 +1,297 @@
+{
+  "timestamp": "2026-10-12T06:20:27.760Z",
+  "summary": {
+    "ok": 50,
+    "fail": 3,
+    "warn": 1
+  },
+  "results": [
+    {
+      "name": "Login",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx"
+    },
+    {
+      "name": "Admin landing na dashboard",
+      "status": "FAIL",
+      "detail": "landuje na: http://localhost:3098/weblyx"
+    },
+    {
+      "name": "Dashboard načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/dashboard"
+    },
+    {
+      "name": "Dashboard - KPI dlaždice",
+      "status": "FAIL",
+      "detail": "KPI chybí"
+    },
+    {
+      "name": "Dashboard - pipeline/operátoři",
+      "status": "OK",
+      "detail": "pipeline sekce nalezena"
+    },
+    {
+      "name": "Dashboard diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Dashboard data",
+      "status": "FAIL",
+      "detail": "Chybová zpráva: Nepodařilo se načíst data dashboardu"
+    },
+    {
+      "name": "Kontakty načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/kontakty"
+    },
+    {
+      "name": "Kontakty - filtrování",
+      "status": "OK",
+      "detail": "filter dropdown"
+    },
+    {
+      "name": "Kontakty - Trust score řazení",
+      "status": "OK",
+      "detail": "sort dropdown"
+    },
+    {
+      "name": "Kontakty - SVG trust score kruhy",
+      "status": "OK",
+      "detail": "2 SVG kruhů nalezeno"
+    },
+    {
+      "name": "Kontakty - progress bary",
+      "status": "WARN",
+      "detail": "žádné progress bary (možná prázdná DB)"
+    },
+    {
+      "name": "Kontakty diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Fronta načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/fronta"
+    },
+    {
+      "name": "Fronta - žádný spinning",
+      "status": "OK",
+      "detail": "loading dokončen"
+    },
+    {
+      "name": "Fronta - shift bar",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Fronta diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Report diakritika",
+      "status": "OK",
+      "detail": "opraveno, diakritika OK"
+    },
+    {
+      "name": "Report - správná čeština",
+      "status": "OK",
+      "detail": "české texty nalezeny"
+    },
+    {
+      "name": "Settings diakritika",
+      "status": "OK",
+      "detail": "opraveno"
+    },
+    {
+      "name": "Settings - sekce kalendáře",
+      "status": "OK",
+      "detail": "text správně česky"
+    },
+    {
+      "name": "Pipeline načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/pipeline"
+    },
+    {
+      "name": "Pipeline obsah",
+      "status": "OK",
+      "detail": "OK"
+    },
+    {
+      "name": "Pipeline diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Úkoly načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/ukoly"
+    },
+    {
+      "name": "Úkoly obsah",
+      "status": "OK",
+      "detail": "OK"
+    },
+    {
+      "name": "Úkoly diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Import načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/import"
+    },
+    {
+      "name": "Import obsah",
+      "status": "OK",
+      "detail": "OK"
+    },
+    {
+      "name": "Import diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Export hodin načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/export-hodin"
+    },
+    {
+      "name": "Export hodin obsah",
+      "status": "OK",
+      "detail": "OK"
+    },
+    {
+      "name": "Export hodin diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Výkon načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/vykon"
+    },
+    {
+      "name": "Výkon obsah",
+      "status": "OK",
+      "detail": "OK"
+    },
+    {
+      "name": "Výkon diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Kalendář načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/kalendar"
+    },
+    {
+      "name": "Kalendář obsah",
+      "status": "OK",
+      "detail": "OK"
+    },
+    {
+      "name": "Kalendář diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Admin/users načtení",
+      "status": "OK",
+      "detail": "http://localhost:3098/admin/users"
+    },
+    {
+      "name": "Admin/users obsah",
+      "status": "OK",
+      "detail": "OK"
+    },
+    {
+      "name": "Admin/users diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Nav: Dashboard",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Fronta",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Úkoly",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Kalendář",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Kontakty",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Pipeline",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Import",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Report",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Export hodin",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Výkon",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Nav: Administrace",
+      "status": "OK",
+      "detail": ""
+    },
+    {
+      "name": "Onboarding přítomen",
+      "status": "OK",
+      "detail": "14 overlay elementů"
+    }
+  ],
+  "jsErrors": [
+    "Error: Route \"/[projectSlug]/dashboard\": Next.js encountered the unstable value `Date.now()` while p",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Error: Route \"/[projectSlug]/kontakty\": Next.js encountered the unstable value `Date.now()` while pr",
+    "Error: Route \"/[projectSlug]/fronta\": Next.js encountered the unstable value `Date.now()` while prer",
+    "Error: Route \"/[projectSlug]/report\": Next.js encountered the unstable value `Date.now()` while prer",
+    "Error: Route \"/settings\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nT",
+    "Error: Route \"/[projectSlug]/pipeline\": Next.js encountered the unstable value `Date.now()` while pr",
+    "Error: Route \"/[projectSlug]/ukoly\": Next.js encountered the unstable value `Date.now()` while prere",
+    "Error: Route \"/[projectSlug]/import\": Next.js encountered the unstable value `Date.now()` while prer",
+    "Error: Route \"/[projectSlug]/export-hodin\": Next.js encountered the unstable value `Date.now()` whil",
+    "Error: Route \"/[projectSlug]/vykon\": Next.js encountered the unstable value `Date.now()` while prere",
+    "Error: Route \"/[projectSlug]/kalendar\": Next.js encountered the unstable value `Date.now()` while pr",
+    "Error: Route \"/admin/users\": Next.js encountered the unstable value `Date.now()` while prerendering.",
+    "Error: Route \"/[projectSlug]/dashboard\": Next.js encountered the unstable value `Date.now()` while p"
+  ]
+}

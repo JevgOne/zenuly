@@ -121,6 +121,25 @@ export function OutcomePanel({
   const [consent, setConsent] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [calendarWarning, setCalendarWarning] = useState(false);
+
+  // Reset form state when leadId changes
+  useEffect(() => {
+    setSelected(null);
+    setNote("");
+    setEmail(leadEmail ?? "");
+    setTimeSlot("");
+    setCallbackAt("");
+    setQuickOption(null);
+    setShowCustomDate(false);
+    setPostponeReason("");
+    setLostReasonId("");
+    setAddToDnc(false);
+    setConsent(false);
+    setSaving(false);
+    setError("");
+    setCalendarWarning(false);
+  }, [leadId, leadEmail]);
 
   // Dynamic effect text for no_answer
   const effectText = selected
@@ -179,7 +198,7 @@ export function OutcomePanel({
     setSaving(true);
     setError("");
     try {
-      await recordOutcome({
+      const result = await recordOutcome({
         leadId,
         outcomeKey: selected,
         note: note || undefined,
@@ -190,6 +209,12 @@ export function OutcomePanel({
         addToDnc,
         postponeReason: postponeReason || undefined,
       });
+      // Warn if meeting was saved but calendar event wasn't created
+      if (selected === "meeting" && result.calendar_event && result.calendar_event_created === false) {
+        setCalendarWarning(true);
+        setSaving(false);
+        return;
+      }
       onSaved();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Uložení se nepovedlo.");
@@ -431,6 +456,21 @@ export function OutcomePanel({
             />
             Nevolat – přidat na seznam
           </label>
+        </div>
+      )}
+
+      {/* Calendar warning — meeting saved but event not created in calendar */}
+      {calendarWarning && (
+        <div className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-2.5 text-[13px] text-amber-800 space-y-1">
+          <p className="font-semibold">Konzultace uložena, ale kalendář se nesynchronizoval.</p>
+          <p>Zkontrolujte v Nastavení, zda je kalendář správně propojený. Termín si zapište ručně.</p>
+          <button
+            type="button"
+            onClick={onSaved}
+            className="mt-1 underline text-amber-700 hover:text-amber-900"
+          >
+            Pokračovat na další lead
+          </button>
         </div>
       )}
 

@@ -1,0 +1,263 @@
+{
+  "timestamp": "2026-10-12T06:17:16.853Z",
+  "summary": {
+    "total": 46,
+    "ok": 43,
+    "fail": 2,
+    "warn": 1
+  },
+  "consoleErrors": [
+    "Error: Route \"/[projectSlug]/dashboard\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis v",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Error: Route \"/[projectSlug]/dashboard\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis v",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Error: Route \"/[projectSlug]/kontakty\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis va",
+    "Error: Route \"/[projectSlug]/fronta\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis valu",
+    "Error: Route \"/[projectSlug]/report\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis valu",
+    "PAGE ERROR: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on ",
+    "Error: Route \"/settings\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis value can change",
+    "Error: Route \"/[projectSlug]/pipeline\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis va",
+    "Error: Route \"/[projectSlug]/ukoly\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis value",
+    "Error: Route \"/[projectSlug]/import\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis valu",
+    "Error: Route \"/[projectSlug]/export-hodin\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThi",
+    "Error: Route \"/[projectSlug]/vykon\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis value",
+    "Error: Route \"/[projectSlug]/kalendar\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis va",
+    "Error: Route \"/admin/users\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis value can cha",
+    "Error: Route \"/[projectSlug]/dashboard\": Next.js encountered the unstable value `Date.now()` while prerendering.\n\nThis v",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+  ],
+  "results": [
+    {
+      "name": "Login",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/dashboard"
+    },
+    {
+      "name": "Dashboard URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/dashboard"
+    },
+    {
+      "name": "Dashboard obsah",
+      "status": "OK",
+      "detail": "KPI/obsah nalezen"
+    },
+    {
+      "name": "Dashboard diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Kontakty URL",
+      "status": "FAIL",
+      "detail": "http://localhost:3098/weblyx/kontakty"
+    },
+    {
+      "name": "Kontakty obsah",
+      "status": "OK",
+      "detail": "karty/tabulka nalezena"
+    },
+    {
+      "name": "Kontakty diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Fronta URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/fronta"
+    },
+    {
+      "name": "Fronta - data",
+      "status": "OK",
+      "detail": "25 lead elementů"
+    },
+    {
+      "name": "Fronta - shift bar",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Fronta diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Report URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/report"
+    },
+    {
+      "name": "Report diakritika",
+      "status": "FAIL",
+      "detail": "STÁLE ROZBITÉ \\uXXXX"
+    },
+    {
+      "name": "Settings URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/settings"
+    },
+    {
+      "name": "Settings diakritika",
+      "status": "OK",
+      "detail": "diakritika opravena"
+    },
+    {
+      "name": "Settings - sekce kalendáře",
+      "status": "OK",
+      "detail": "text o kalendáři přítomen"
+    },
+    {
+      "name": "Pipeline URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/pipeline"
+    },
+    {
+      "name": "Pipeline obsah",
+      "status": "OK",
+      "detail": "stages nalezeny"
+    },
+    {
+      "name": "Pipeline diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Úkoly URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/ukoly"
+    },
+    {
+      "name": "Úkoly diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Import URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/import"
+    },
+    {
+      "name": "Import obsah",
+      "status": "OK",
+      "detail": "upload element nalezen"
+    },
+    {
+      "name": "Import diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Export hodin URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/export-hodin"
+    },
+    {
+      "name": "Export hodin - CSV",
+      "status": "OK",
+      "detail": "tlačítko nalezeno"
+    },
+    {
+      "name": "Export hodin diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Výkon URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/vykon"
+    },
+    {
+      "name": "Výkon diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Kalendář URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/weblyx/kalendar"
+    },
+    {
+      "name": "Kalendář diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Admin/users URL",
+      "status": "OK",
+      "detail": "http://localhost:3098/admin/users"
+    },
+    {
+      "name": "Admin/users obsah",
+      "status": "OK",
+      "detail": "tabulka uživatelů nalezena"
+    },
+    {
+      "name": "Admin/users diakritika",
+      "status": "OK",
+      "detail": "čisto"
+    },
+    {
+      "name": "Nav: Dashboard",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Fronta",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Úkoly",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Kalendář",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Kontakty",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Pipeline",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Import",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Report",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Export hodin",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Výkon",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "Nav: Administrace",
+      "status": "OK",
+      "detail": "nalezeno"
+    },
+    {
+      "name": "JS konzole chyby",
+      "status": "WARN",
+      "detail": "20 chyb"
+    }
+  ]
+}

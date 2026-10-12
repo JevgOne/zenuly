@@ -40,7 +40,7 @@ export function AppHeader({
   const navItems = role === "admin" || role === "manager" ? ADMIN_NAV_ITEMS : NAV_ITEMS;
 
   return (
-    <header className="h-14 border-b border-line bg-surface px-4 flex items-center gap-4">
+    <header className="fixed top-0 left-0 right-0 z-30 h-14 border-b border-line bg-surface px-4 flex items-center gap-4">
       <ProjectSwitcher projects={projects} currentSlug={currentSlug} />
 
       {/* Desktop navigation */}

@@ -4,12 +4,12 @@ import type { ReportData } from "@/app/actions/report";
 function formatCzechDateEmail(dateStr: string): string {
   const d = new Date(dateStr + "T12:00:00");
   const days = [
-    "ned\u011ble",
-    "pond\u011bl\u00ed",
-    "\u00fater\u00fd",
-    "st\u0159eda",
-    "\u010dtvrtek",
-    "p\u00e1tek",
+    "neděle",
+    "pondělí",
+    "úterý",
+    "středa",
+    "čtvrtek",
+    "pátek",
     "sobota",
   ];
   return `${days[d.getDay()]} ${d.getDate()}. ${d.getMonth() + 1}.`;
@@ -19,7 +19,7 @@ export function renderReportEmail(report: ReportData): {
   subject: string;
   html: string;
 } {
-  const subject = `${report.project_name}: ${report.total_meetings} konzultac\u00ed ze ${report.total_calls} hovor\u016f \u2014 ${formatCzechDateEmail(report.date)}`;
+  const subject = `${report.project_name}: ${report.total_meetings} konzultací ze ${report.total_calls} hovorů — ${formatCzechDateEmail(report.date)}`;
 
   const o = report.outcomes;
 
@@ -27,17 +27,17 @@ export function renderReportEmail(report: ReportData): {
     {
       label: "Hovory",
       value: report.total_calls,
-      sub: `${report.avg_calls_per_hour}/h \u00b7 c\u00edl ${report.target_per_hour}`,
+      sub: `${report.avg_calls_per_hour}/h · cíl ${report.target_per_hour}`,
     },
     {
-      label: "Dovol\u00e1no",
+      label: "Dovoláno",
       value: report.total_reached,
-      sub: `${report.reached_pct} % hovor\u016f`,
+      sub: `${report.reached_pct} % hovorů`,
     },
     {
       label: "Konzultace",
       value: report.total_meetings,
-      sub: `${report.total_reached > 0 ? Math.round((report.total_meetings / report.total_reached) * 100) : 0} % dovolan\u00fdch`,
+      sub: `${report.total_reached > 0 ? Math.round((report.total_meetings / report.total_reached) * 100) : 0} % dovolaných`,
       accent: true,
     },
     {
@@ -45,23 +45,23 @@ export function renderReportEmail(report: ReportData): {
       value: o.decks,
       sub:
         report.overdue_decks > 0
-          ? `${report.overdue_decks} po term\u00ednu`
+          ? `${report.overdue_decks} po termínu`
           : "OK",
       urgent: report.overdue_decks > 0,
     },
     {
-      label: "Nab\u00eddky",
+      label: "Nabídky",
       value: o.offers,
       sub:
         report.overdue_offers > 0
-          ? `${report.overdue_offers} po term\u00ednu`
+          ? `${report.overdue_offers} po termínu`
           : "OK",
       urgent: report.overdue_offers > 0,
     },
     {
-      label: "Nem\u00e1 z\u00e1jem",
+      label: "Nemá zájem",
       value: o.not_interested,
-      sub: `${report.not_interested_pct} % dovolan\u00fdch`,
+      sub: `${report.not_interested_pct} % dovolaných`,
     },
   ];
 
@@ -103,7 +103,7 @@ export function renderReportEmail(report: ReportData): {
     .map((op) => {
       const cphStyle = op.below_target ? "color:#A3410E" : "";
       const cphText = op.below_target
-        ? `${op.calls_per_hour} pod c\u00edlem`
+        ? `${op.calls_per_hour} pod cílem`
         : `${op.calls_per_hour}`;
       return `<tr>
         <td style="padding:10px 8px;border-bottom:1px solid #ECEAE4;font-weight:500">${op.operator_name}</td>
@@ -118,8 +118,8 @@ export function renderReportEmail(report: ReportData): {
 
   const funnelMax = report.funnel.reached || 1;
   const funnelLevels = [
-    { label: "Dovol\u00e1no", value: report.funnel.reached },
-    { label: "Z\u00e1jem", value: report.funnel.interest },
+    { label: "Dovoláno", value: report.funnel.reached },
+    { label: "Zájem", value: report.funnel.interest },
     { label: "Konzultace", value: report.funnel.meetings },
   ];
   const funnelBars = funnelLevels
@@ -140,14 +140,14 @@ export function renderReportEmail(report: ReportData): {
 
   const overdueParts: string[] = [];
   if (report.overdue_decks > 0)
-    overdueParts.push(`${report.overdue_decks} prezentace po term\u00ednu`);
+    overdueParts.push(`${report.overdue_decks} prezentace po termínu`);
   if (report.overdue_callbacks > 0)
     overdueParts.push(
-      `${report.overdue_callbacks} propadl\u00e9 callbacky`
+      `${report.overdue_callbacks} propadlé callbacky`
     );
   const overdueText =
     overdueParts.length > 0
-      ? `Nedod\u011blky: ${overdueParts.join(", ")}.`
+      ? `Nedodělky: ${overdueParts.join(", ")}.`
       : "";
 
   const html = `<!DOCTYPE html>
@@ -160,8 +160,8 @@ export function renderReportEmail(report: ReportData): {
 
   <!-- Header -->
   <tr><td style="padding-bottom:24px">
-    <div style="font-size:13px;color:#5E6168;margin-bottom:4px">Denn\u00ed report \u00b7 ${formatCzechDateEmail(report.date)}</div>
-    <div style="font-size:24px;font-weight:600;line-height:1.2">${report.project_name} dnes: ${report.total_meetings} konzultac\u00ed ze ${report.total_calls} hovor\u016f</div>
+    <div style="font-size:13px;color:#5E6168;margin-bottom:4px">Denní report · ${formatCzechDateEmail(report.date)}</div>
+    <div style="font-size:24px;font-weight:600;line-height:1.2">${report.project_name} dnes: ${report.total_meetings} konzultací ze ${report.total_calls} hovorů</div>
   </td></tr>
 
   <!-- KPI Grid (2x3) -->
@@ -179,7 +179,7 @@ export function renderReportEmail(report: ReportData): {
     report.lost_reasons.length > 0
       ? `<!-- Lost reasons -->
   <tr><td style="padding:20px;background:#FDFDFB;border:1px solid #E4E2DC;border-radius:12px;margin-bottom:16px">
-    <div style="font-size:18px;font-weight:600;margin-bottom:12px">Pro\u010d odm\u00edtli</div>
+    <div style="font-size:18px;font-weight:600;margin-bottom:12px">Proč odmítli</div>
     <table width="100%" cellpadding="0" cellspacing="0">${lostBars}</table>
   </td></tr>
   <tr><td style="padding:8px 0"></td></tr>`
@@ -190,14 +190,14 @@ export function renderReportEmail(report: ReportData): {
     report.operators.length > 0
       ? `<!-- Operators -->
   <tr><td style="padding:20px;background:#FDFDFB;border:1px solid #E4E2DC;border-radius:12px">
-    <div style="font-size:18px;font-weight:600;margin-bottom:12px">Oper\u00e1to\u0159i</div>
+    <div style="font-size:18px;font-weight:600;margin-bottom:12px">Operátoři</div>
     <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px">
       <tr style="color:#5E6168">
-        <th style="padding:8px;text-align:left;font-weight:500;border-bottom:1px solid #E4E2DC">Oper\u00e1tor</th>
+        <th style="padding:8px;text-align:left;font-weight:500;border-bottom:1px solid #E4E2DC">Operátor</th>
         <th style="padding:8px;text-align:right;font-weight:500;border-bottom:1px solid #E4E2DC">Hodiny</th>
         <th style="padding:8px;text-align:right;font-weight:500;border-bottom:1px solid #E4E2DC">Hovory</th>
         <th style="padding:8px;text-align:right;font-weight:500;border-bottom:1px solid #E4E2DC">Za hodinu</th>
-        <th style="padding:8px;text-align:right;font-weight:500;border-bottom:1px solid #E4E2DC">Dovol\u00e1no</th>
+        <th style="padding:8px;text-align:right;font-weight:500;border-bottom:1px solid #E4E2DC">Dovoláno</th>
         <th style="padding:8px;text-align:right;font-weight:500;border-bottom:1px solid #E4E2DC">Konzultace</th>
       </tr>
       ${opRows}
@@ -209,14 +209,14 @@ export function renderReportEmail(report: ReportData): {
 
   <!-- Funnel -->
   <tr><td style="padding:20px;background:#FDFDFB;border:1px solid #E4E2DC;border-radius:12px">
-    <div style="font-size:18px;font-weight:600;margin-bottom:12px">Kde hovory padaj\u00ed</div>
+    <div style="font-size:18px;font-weight:600;margin-bottom:12px">Kde hovory padají</div>
     <table width="100%" cellpadding="0" cellspacing="0">${funnelBars}</table>
     ${overdueText ? `<div style="font-size:13px;color:#5E6168;margin-top:8px">${overdueText}</div>` : ""}
   </td></tr>
 
   <!-- Footer -->
   <tr><td style="padding:24px 0 0;text-align:center;font-size:12px;color:#5E6168">
-    Odesl\u00e1no z <a href="https://zenuly.cz" style="color:#2449C9">Zenuly CRM</a>
+    Odesláno z <a href="https://zenuly.cz" style="color:#2449C9">Zenuly CRM</a>
   </td></tr>
 
 </table>

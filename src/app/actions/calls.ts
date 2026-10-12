@@ -40,6 +40,7 @@ export async function recordOutcome(params: {
 
   // Create calendar event for meetings
   if (result.calendar_event && result.meeting_time) {
+    result.calendar_event_created = false;
     try {
       const admin = createAdminClient();
 
@@ -72,11 +73,13 @@ export async function recordOutcome(params: {
             result.calendar_event_id = calResult.eventId;
             result.calendar_provider = calResult.provider;
             result.calendar_link = calResult.link;
+            result.calendar_event_created = true;
           }
         }
       }
     } catch {
       // Calendar event creation failed — don't block outcome save
+      result.calendar_event_created = false;
     }
   }
 

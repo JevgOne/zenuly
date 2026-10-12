@@ -39,18 +39,26 @@ export function QueueList({
 }) {
   const [items, setItems] = useState<QueueItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
       try {
-        const data = await getQueue(projectId);
+        const timeout = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("timeout")), 15_000)
+        );
+        const data = await Promise.race([getQueue(projectId), timeout]);
         if (!cancelled) {
           setItems(data);
+          setError(false);
           setLoading(false);
         }
       } catch {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setError(true);
+          setLoading(false);
+        }
       }
     };
 
@@ -72,6 +80,31 @@ export function QueueList({
     return (
       <div className="p-4 text-center">
         <div className="w-5 h-5 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6 text-center">
+        <p className="text-[15px] font-medium text-text mb-1">
+          Frontu se nepodařilo načíst.
+        </p>
+        <p className="text-[13px] text-muted mb-3">
+          Zkontroluj připojení a zkus to znovu.
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            setError(false);
+            setLoading(true);
+            const reload = (window as unknown as Record<string, unknown>).__reloadQueue;
+            if (typeof reload === "function") (reload as () => void)();
+          }}
+          className="px-4 h-9 rounded-lg text-[14px] font-medium bg-accent text-white hover:bg-accent/90 transition-colors"
+        >
+          Zkusit znovu
+        </button>
       </div>
     );
   }

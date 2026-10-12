@@ -146,6 +146,10 @@ export async function getAvailableSlots(
   dateFrom: string,
   dateTo: string
 ): Promise<{ start: string; end: string }[]> {
+  const authSupabase = await createClient();
+  const { data: { user } } = await authSupabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
+
   const supabase = createAdminClient();
 
   const { data: adminId } = await supabase.rpc("find_project_admin", {

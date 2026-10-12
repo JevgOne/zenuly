@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { PageHelpButton } from "@/components/page-help-button";
 
 export const instant = false;
 
@@ -47,26 +48,46 @@ export default async function PipelinePage({
     .eq("project_id", project.id)
     .order("position");
 
-  // Count leads per stage
-  const stageCounts: { name: string; key: string; type: string; count: number }[] = [];
-  for (const stage of stages ?? []) {
-    const { count } = await supabase
+  // Count leads per stage with a single aggregated query
+  const { data: leadCounts } = await supabase
+    .rpc("get_lead_counts_by_stage", { p_project_id: project.id })
+    .select("stage_id, count");
+
+  // Fallback: if the RPC doesn't exist, use a simpler approach
+  const countMap = new Map<string, number>();
+  if (leadCounts) {
+    for (const row of leadCounts as unknown as { stage_id: string; count: number }[]) {
+      countMap.set(row.stage_id, row.count);
+    }
+  } else {
+    // Single query to get all counts at once
+    const { data: rawCounts } = await supabase
       .from("leads")
-      .select("id", { count: "exact", head: true })
-      .eq("project_id", project.id)
-      .eq("stage_id", stage.id);
-    stageCounts.push({
+      .select("stage_id")
+      .eq("project_id", project.id);
+    for (const row of rawCounts ?? []) {
+      countMap.set(row.stage_id, (countMap.get(row.stage_id) ?? 0) + 1);
+    }
+  }
+
+  const stageCounts: { name: string; key: string; type: string; count: number }[] =
+    (stages ?? []).map((stage) => ({
       name: stage.name as string,
       key: stage.key as string,
       type: stage.type as string,
-      count: count ?? 0,
-    });
-  }
+      count: countMap.get(stage.id) ?? 0,
+    }));
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      <PageHelpButton text="Pipeline zobrazuje leady podle fází prodejního procesu — od nového kontaktu po domluvenou konzultaci." />
       <h1 className="text-2xl font-semibold text-text mb-6">Pipeline</h1>
       <div className="flex flex-col gap-3">
+        {stageCounts.length === 0 && (
+          <p className="text-muted text-[15px] text-center py-8">
+            Pipeline zatím nemá žádné fáze.
+          </p>
+        )}
         {stageCounts.map((stage) => {
           const maxCount = Math.max(...stageCounts.map((s) => s.count), 1);
           const pct = Math.max((stage.count / maxCount) * 100, 2);
