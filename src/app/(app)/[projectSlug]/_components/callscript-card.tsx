@@ -74,7 +74,7 @@ export function CallscriptCard({
     sourceLabel = hookSource === "ai_audit" ? "AI audit" : "audit webu";
   } else {
     displayText =
-      'Audit webu nem\u00e1me. Za\u010dni: \u201eVol\u00e1m kv\u016fli va\u0161emu webu, m\u00e1m pro v\u00e1s jednu v\u011bc\u2026\u201c';
+      "Audit webu nemáme. Začni: \u201eVolám kvůli vašemu webu, mám pro vás jednu věc\u2026\u201c";
     sourceLabel = "fallback";
   }
 
@@ -82,7 +82,7 @@ export function CallscriptCard({
     <div className="rounded-lg bg-accent-soft p-4">
       <div className="flex items-center gap-2 mb-2">
         <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-accent">
-          H\u00e1\u010dek pro otev\u0159en\u00ed
+          Háček pro otevření
         </span>
         {sourceLabel !== "fallback" && (
           <span className="text-[11px] font-medium bg-surface text-muted px-2 py-0.5 rounded">

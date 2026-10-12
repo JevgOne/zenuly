@@ -26,10 +26,10 @@ function trustBg(score: number): string {
 }
 
 function trustLabel(score: number): string {
-  if (score >= 70) return "Vysok\u00e1";
-  if (score >= 50) return "Dobr\u00e1";
-  if (score >= 30) return "St\u0159edn\u00ed";
-  return "N\u00edzk\u00e1";
+  if (score >= 70) return "Vysoká";
+  if (score >= 50) return "Dobrá";
+  if (score >= 30) return "Střední";
+  return "Nízká";
 }
 
 function stageColor(type: string): string {
@@ -39,9 +39,9 @@ function stageColor(type: string): string {
 }
 
 function priorityBadge(p: number): { label: string; cls: string } {
-  if (p === 3) return { label: "Vysok\u00e1", cls: "bg-urgent-soft text-urgent" };
-  if (p === 1) return { label: "N\u00edzk\u00e1", cls: "bg-bg text-muted" };
-  return { label: "St\u0159edn\u00ed", cls: "bg-amber-50 text-amber-600" };
+  if (p === 3) return { label: "Vysoká", cls: "bg-urgent-soft text-urgent" };
+  if (p === 1) return { label: "Nízká", cls: "bg-bg text-muted" };
+  return { label: "Střední", cls: "bg-amber-50 text-amber-600" };
 }
 
 function formatDate(iso: string): string {
@@ -75,13 +75,13 @@ function formatPhone(phone: string): string {
 function formatRelativeTime(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 60) return `p\u0159ed ${mins} min`;
+  if (mins < 60) return `před ${mins} min`;
   const hours = Math.floor(mins / 60);
-  if (hours < 24) return `p\u0159ed ${hours} h`;
+  if (hours < 24) return `před ${hours} h`;
   const days = Math.floor(hours / 24);
-  if (days < 30) return `p\u0159ed ${days} d`;
+  if (days < 30) return `před ${days} d`;
   const months = Math.floor(days / 30);
-  return `p\u0159ed ${months} m\u011bs`;
+  return `před ${months} měs`;
 }
 
 function TrustScoreRing({ score, size = 48 }: { score: number; size?: number }) {
@@ -128,7 +128,7 @@ function outcomeColor(name: string): string {
   if (lower.includes("konzultace") || lower.includes("domluveno")) return "bg-green-500";
   if (lower.includes("callback") || lower.includes("zavolat")) return "bg-amber-400";
   if (lower.includes("email") || lower.includes("report")) return "bg-blue-400";
-  if (lower.includes("nez\u00e1jem") || lower.includes("nepovedlo")) return "bg-urgent";
+  if (lower.includes("nezájem") || lower.includes("nepovedlo")) return "bg-urgent";
   return "bg-muted/40";
 }
 
@@ -159,12 +159,12 @@ export function ContactDetailView({
     const domain = contact.website
       ? contact.website.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "")
       : null;
-    const noSite = !domain || /nem\u00e1 web|jen profil na soci\u00e1ln\u00ed s\u00edti/.test(source);
+    const noSite = !domain || /nemá web|jen profil na sociální síti/.test(source);
     const found = reasons.map((r) => r.say).join(" a ");
     return {
       text: noSite
-        ? `Hledal jsem va\u0161i firmu na internetu a v\u0161iml jsem si, \u017ee ${found}.`
-        : `D\u00edval jsem se na v\u00e1\u0161 web ${domain} a v\u0161iml jsem si, \u017ee ${found}.`,
+        ? `Hledal jsem vaši firmu na internetu a všiml jsem si, že ${found}.`
+        : `Díval jsem se na váš web ${domain} a všiml jsem si, že ${found}.`,
       impact: reasons[0]?.impact ?? null,
     };
   })();
@@ -225,7 +225,7 @@ export function ContactDetailView({
                 </span>
               )}
               {contact.ico && (
-                <span className="font-mono">I\u010cO {contact.ico}</span>
+                <span className="font-mono">IČO {contact.ico}</span>
               )}
               {contact.lead_source && (
                 <span>Zdroj: {contact.lead_source}</span>
@@ -248,7 +248,7 @@ export function ContactDetailView({
         {/* Completeness bar */}
         <div className="mt-4">
           <div className="flex justify-between items-center mb-1">
-            <span className="text-[11px] font-medium text-muted">Vypl\u0148\u011bnost profilu</span>
+            <span className="text-[11px] font-medium text-muted">Vyplněnost profilu</span>
             <span className="text-[11px] font-mono text-text">{contact.completeness_pct} %</span>
           </div>
           <div className="h-1.5 bg-bg rounded-full overflow-hidden">
@@ -282,7 +282,7 @@ export function ContactDetailView({
             className="inline-flex items-center gap-2 h-10 px-4 border border-line rounded-lg text-[13px] font-medium text-text hover:border-accent/40 transition-colors bg-surface"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="3" stroke="currentColor" strokeWidth="1.2"/><path d="M2 13c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>
-            {contact.owner_name ?? "Nep\u0159i\u0159azeno"}
+            {contact.owner_name ?? "Nepřiřazeno"}
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 4l2 2 2-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
           {showAssign && (
@@ -292,7 +292,7 @@ export function ContactDetailView({
                 onClick={() => handleAssign(null)}
                 className="w-full text-left px-3 py-2 text-[13px] text-muted hover:bg-bg transition-colors"
               >
-                Odebrat oper\u00e1tora
+                Odebrat operátora
               </button>
               {operators.map((op) => (
                 <button
@@ -319,7 +319,7 @@ export function ContactDetailView({
             className="inline-flex items-center gap-2 h-10 px-4 border border-line rounded-lg text-[13px] font-medium text-text hover:border-accent/40 transition-colors bg-surface"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5h10M2 9h7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>
-            Zm\u011bnit f\u00e1zi
+            Změnit fázi
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 4l2 2 2-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
           {showStage && (
@@ -377,7 +377,7 @@ export function ContactDetailView({
                   <path d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.93L8 10.5l-3.52 1.85.67-3.93L2.3 5.64l3.94-.57L8 1.5z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
                 </svg>
                 <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-accent">
-                  H\u00e1\u010dek pro otev\u0159en\u00ed
+                  Háček pro otevření
                 </span>
               </div>
               <p className="text-[15px] leading-relaxed text-accent font-medium">
@@ -395,7 +395,7 @@ export function ContactDetailView({
           <div className="bg-surface border border-line rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-[14px] font-semibold text-text">
-                Historie hovor\u016f
+                Historie hovorů
               </h2>
               <span className="text-[12px] font-mono text-muted bg-bg px-2 py-0.5 rounded">
                 {contact.total_calls}
@@ -403,7 +403,7 @@ export function ContactDetailView({
             </div>
             {contact.calls.length === 0 ? (
               <p className="text-[13px] text-muted py-4 text-center">
-                Zat\u00edm \u017e\u00e1dn\u00e9 hovory.
+                Zatím žádné hovory.
               </p>
             ) : (
               <div className="relative">
@@ -446,7 +446,7 @@ export function ContactDetailView({
           {/* Contact info card */}
           <div className="bg-surface border border-line rounded-xl p-5">
             <h2 className="text-[11px] font-bold uppercase tracking-[0.06em] text-muted mb-3">
-              Kontaktn\u00ed \u00fadaje
+              Kontaktní údaje
             </h2>
             <div className="space-y-3">
               <div className="flex items-start gap-2.5">
@@ -505,7 +505,7 @@ export function ContactDetailView({
             </h2>
             <dl className="space-y-2.5 text-[13px]">
               <div className="flex justify-between">
-                <dt className="text-muted">F\u00e1ze</dt>
+                <dt className="text-muted">Fáze</dt>
                 <dd className={`font-medium px-2 py-0.5 rounded text-[12px] ${stageColor(contact.stage_type)}`}>
                   {contact.stage_name}
                 </dd>
@@ -517,18 +517,18 @@ export function ContactDetailView({
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-muted">Pokus\u016f</dt>
+                <dt className="text-muted">Pokusů</dt>
                 <dd className="text-text font-mono">{contact.attempt_count}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-muted">Oper\u00e1tor</dt>
+                <dt className="text-muted">Operátor</dt>
                 <dd className="text-text">{contact.owner_name ?? "\u2014"}</dd>
               </div>
               {contact.next_action_at && (
                 <div className="flex justify-between">
-                  <dt className="text-muted">Dal\u0161\u00ed akce</dt>
+                  <dt className="text-muted">Další akce</dt>
                   <dd className="text-text text-right">
-                    <span className="block">{contact.next_action_type === "call" ? "Zavolat" : contact.next_action_type === "meeting" ? "Sch\u016fzka" : contact.next_action_type ?? "\u2014"}</span>
+                    <span className="block">{contact.next_action_type === "call" ? "Zavolat" : contact.next_action_type === "meeting" ? "Schůzka" : contact.next_action_type ?? "\u2014"}</span>
                     <span className="text-[11px] text-muted">{formatDate(contact.next_action_at)}</span>
                   </dd>
                 </div>
@@ -538,11 +538,11 @@ export function ContactDetailView({
                 <dd className="text-text">{contact.lead_source ?? "\u2014"}</dd>
               </div>
               <div className="border-t border-line pt-2 flex justify-between">
-                <dt className="text-muted">Vytvo\u0159en</dt>
+                <dt className="text-muted">Vytvořen</dt>
                 <dd className="text-[12px] text-muted font-mono">{formatDate(contact.created_at)}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-muted">Aktualizov\u00e1n</dt>
+                <dt className="text-muted">Aktualizován</dt>
                 <dd className="text-[12px] text-muted font-mono">{formatRelativeTime(contact.updated_at)}</dd>
               </div>
             </dl>
