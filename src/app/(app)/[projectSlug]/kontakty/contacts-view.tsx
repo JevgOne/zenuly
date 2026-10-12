@@ -68,7 +68,7 @@ function ContactCardItem({
 
   return (
     <Link
-      href={`/${projectSlug}/fronta`}
+      href={`/${projectSlug}/kontakty/${contact.id}`}
       className="bg-surface border border-line rounded-xl p-5 flex flex-col gap-3 hover:border-accent/40 hover:shadow-sm transition-all group"
     >
       {/* Header: company + stage badge */}
