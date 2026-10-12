@@ -29,6 +29,15 @@ export default async function SettingsPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-4"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Zpět
+      </Link>
       <h1 className="text-2xl font-semibold text-text mb-6">Nastavení</h1>
 
       <div className="space-y-6">
@@ -59,14 +68,6 @@ export default async function SettingsPage() {
         {profile.role === "admin" && <MfaSetup />}
       </div>
 
-      <div className="mt-6">
-        <Link
-          href="/"
-          className="text-sm text-accent hover:text-accent transition-colors"
-        >
-          Zpět
-        </Link>
-      </div>
     </div>
   );
 }
