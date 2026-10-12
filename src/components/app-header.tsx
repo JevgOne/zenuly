@@ -17,6 +17,7 @@ const NAV_ITEMS = [
 
 const ADMIN_NAV_ITEMS = [
   ...NAV_ITEMS.slice(0, 3),
+  { label: "Kontakty", href: "kontakty" },
   { label: "Pipeline", href: "pipeline" },
   { label: "Import", href: "import" },
   { label: "Report", href: "report" },
