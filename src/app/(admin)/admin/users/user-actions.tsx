@@ -5,6 +5,7 @@ import {
   assignToProject,
   changeProjectRole,
   removeFromProject,
+  deleteUser,
 } from "@/app/actions/users";
 
 type Project = { id: string; name: string; slug: string };
@@ -167,16 +168,39 @@ export function UserActions({
 
         {error && <p className="text-sm text-urgent mb-3">{error}</p>}
 
-        <button
-          type="button"
-          onClick={() => {
-            setOpen(false);
-            setError("");
-          }}
-          className="w-full h-10 border border-line rounded-md text-sm font-medium text-text hover:bg-bg transition-colors"
-        >
-          Zavřít
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              setError("");
+            }}
+            className="flex-1 h-10 border border-line rounded-md text-sm font-medium text-text hover:bg-bg transition-colors"
+          >
+            Zavřít
+          </button>
+          {globalRole !== "admin" && (
+            <button
+              type="button"
+              disabled={loading}
+              onClick={async () => {
+                if (!confirm(`Opravdu smazat uživatele ${fullName}? Tato akce je nevratná.`)) return;
+                setLoading(true);
+                setError("");
+                try {
+                  await deleteUser(profileId);
+                  setOpen(false);
+                } catch (e) {
+                  setError(e instanceof Error ? e.message : "Chyba při mazání");
+                  setLoading(false);
+                }
+              }}
+              className="h-10 px-4 bg-urgent text-white rounded-md text-sm font-medium hover:bg-urgent/90 transition-colors disabled:opacity-50"
+            >
+              Smazat
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

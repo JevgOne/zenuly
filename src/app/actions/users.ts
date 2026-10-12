@@ -84,3 +84,30 @@ export async function changeProjectRole(
     .eq("profile_id", profileId);
   revalidatePath("/admin/users");
 }
+
+export async function deleteUser(profileId: string) {
+  const currentUser = await requireAdmin();
+  if (currentUser.id === profileId) {
+    throw new Error("Nemůžete smazat vlastní účet.");
+  }
+
+  const admin = createAdminClient();
+
+  // 1. Remove from all projects
+  await admin
+    .from("project_members")
+    .delete()
+    .eq("profile_id", profileId);
+
+  // 2. Delete profile (cascade will handle related records)
+  await admin
+    .from("profiles")
+    .delete()
+    .eq("id", profileId);
+
+  // 3. Delete from auth.users
+  const { error } = await admin.auth.admin.deleteUser(profileId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/users");
+}
