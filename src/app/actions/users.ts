@@ -31,7 +31,7 @@ export async function inviteOperator(formData: FormData) {
   const { data: newUser, error } = await admin.auth.admin.createUser({
     email,
     email_confirm: true,
-    user_metadata: { full_name: fullName, role: "user" },
+    user_metadata: { full_name: fullName },
   });
 
   if (error) throw error;
