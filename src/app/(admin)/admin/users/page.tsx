@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { InviteForm } from "./invite-form";
+import { UserActions } from "./user-actions";
 
 export default async function UsersPage() {
   const admin = createAdminClient();
@@ -70,6 +71,9 @@ export default async function UsersPage() {
               <th className="text-left px-4 py-3 font-medium text-muted">
                 Projekty
               </th>
+              <th className="text-right px-4 py-3 font-medium text-muted">
+                Akce
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -96,6 +100,14 @@ export default async function UsersPage() {
                   {(membershipMap.get(p.id) ?? [])
                     .map((proj) => `${proj.name} (${proj.role === "manager" ? "manažer" : "operátor"})`)
                     .join(", ") || "—"}
+                </td>
+                <td className="px-4 py-3 text-right">
+                  <UserActions
+                    profileId={p.id}
+                    fullName={p.full_name}
+                    memberships={membershipMap.get(p.id) ?? []}
+                    allProjects={projects ?? []}
+                  />
                 </td>
               </tr>
             ))}
