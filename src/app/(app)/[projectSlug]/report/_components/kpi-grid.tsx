@@ -60,43 +60,43 @@ export function KpiGrid({ report }: { report: ReportData }) {
       <KpiCard
         label="Hovory"
         value={report.total_calls}
-        subtitle={`${report.avg_calls_per_hour} / h \u00b7 c\u00edl ${report.target_per_hour}`}
+        subtitle={`${report.avg_calls_per_hour} / h · cíl ${report.target_per_hour}`}
       />
       <KpiCard
-        label="Dovol\u00e1no"
+        label="Dovoláno"
         value={report.total_reached}
-        subtitle={`${reachedPct} % hovor\u016f`}
+        subtitle={`${reachedPct} % hovorů`}
       />
       <KpiCard
         label="Konzultace"
         value={report.total_meetings}
-        subtitle={`${report.total_reached > 0 ? Math.round((report.total_meetings / report.total_reached) * 100) : 0} % dovolan\u00fdch`}
+        subtitle={`${report.total_reached > 0 ? Math.round((report.total_meetings / report.total_reached) * 100) : 0} % dovolaných`}
         accent
       />
       <KpiCard
-        label="Prezentace odesl\u00e1ny"
+        label="Prezentace odeslány"
         value={o.decks}
         subtitle={
           report.overdue_decks > 0
-            ? `${report.overdue_decks} po term\u00ednu`
-            : "v po\u0159\u00e1dku"
+            ? `${report.overdue_decks} po termínu`
+            : "v pořádku"
         }
         urgentSubtitle={report.overdue_decks > 0}
       />
       <KpiCard
-        label="Nab\u00eddky odesl\u00e1ny"
+        label="Nabídky odeslány"
         value={o.offers}
         subtitle={
           report.overdue_offers > 0
-            ? `${report.overdue_offers} po term\u00ednu`
-            : "v po\u0159\u00e1dku"
+            ? `${report.overdue_offers} po termínu`
+            : "v pořádku"
         }
         urgentSubtitle={report.overdue_offers > 0}
       />
       <KpiCard
-        label="Nem\u00e1 z\u00e1jem"
+        label="Nemá zájem"
         value={o.not_interested}
-        subtitle={`${notInterestedPct} % dovolan\u00fdch`}
+        subtitle={`${notInterestedPct} % dovolaných`}
       />
     </div>
   );

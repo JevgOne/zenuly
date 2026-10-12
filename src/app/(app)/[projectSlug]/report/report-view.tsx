@@ -11,25 +11,25 @@ import { FunnelChart } from "./_components/funnel-chart";
 function formatCzechDate(dateStr: string): string {
   const d = new Date(dateStr + "T12:00:00");
   const days = [
-    "ned\u011ble",
-    "pond\u011bl\u00ed",
-    "\u00fater\u00fd",
-    "st\u0159eda",
-    "\u010dtvrtek",
-    "p\u00e1tek",
+    "neděle",
+    "pondělí",
+    "úterý",
+    "středa",
+    "čtvrtek",
+    "pátek",
     "sobota",
   ];
   const months = [
     "ledna",
-    "\u00fanora",
-    "b\u0159ezna",
+    "února",
+    "března",
     "dubna",
-    "kv\u011btna",
-    "\u010dervna",
-    "\u010dervence",
+    "května",
+    "června",
+    "července",
     "srpna",
-    "z\u00e1\u0159\u00ed",
-    "\u0159\u00edjna",
+    "září",
+    "října",
     "listopadu",
     "prosince",
   ];
@@ -60,7 +60,7 @@ export function ReportView({
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
             <span className="text-[13px] text-muted">
-              Denn\u00ed report \u00b7 {formatCzechDate(currentDate)}
+              Denní report · {formatCzechDate(currentDate)}
             </span>
             <input
               type="date"
@@ -70,8 +70,8 @@ export function ReportView({
             />
           </div>
           <h1 className="text-[32px] font-semibold text-text leading-tight">
-            {report.project_name} dnes: {report.total_meetings} konzultac\u00ed
-            ze {report.total_calls} hovor\u016f
+            {report.project_name} dnes: {report.total_meetings} konzultací
+            ze {report.total_calls} hovorů
           </h1>
         </div>
 

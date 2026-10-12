@@ -22,9 +22,9 @@ export function LostReasonsChart({
     return (
       <div className="flex-[999_1_560px] min-w-0 p-[22px] bg-surface border border-line rounded-2xl">
         <h2 className="text-lg font-semibold text-text">
-          Pro\u010d odm\u00edtli
+          Proč odmítli
         </h2>
-        <p className="text-sm text-muted mt-4">Dnes \u017e\u00e1dn\u00e9 ztr\u00e1ty.</p>
+        <p className="text-sm text-muted mt-4">Dnes žádné ztráty.</p>
       </div>
     );
   }
@@ -40,15 +40,15 @@ export function LostReasonsChart({
 
   let trendText = "";
   if (topTrend && topPct7d !== topPctToday) {
-    const direction = topPctToday > topPct7d ? "roste" : "kles\u00e1";
-    trendText = `Za 7 dn\u00ed \u201e${topReason.reason_name}\u201c ${direction} z ${topPct7d}\u00a0% na ${topPctToday}\u00a0%.`;
+    const direction = topPctToday > topPct7d ? "roste" : "klesá";
+    trendText = `Za 7 dní „${topReason.reason_name}“ ${direction} z ${topPct7d} % na ${topPctToday} %.`;
   }
 
   return (
     <div className="flex-[999_1_560px] min-w-0 p-[22px] bg-surface border border-line rounded-2xl flex flex-col gap-4">
       <h2 className="text-lg font-semibold text-text">
-        Pro\u010d odm\u00edtli: \u201e{topReason.reason_name}\u201c je{" "}
-        {topPctToday}\u00a0% d\u016fvod\u016f
+        Proč odmítli: „{topReason.reason_name}“ je{" "}
+        {topPctToday} % důvodů
       </h2>
       <div className="flex flex-col gap-3">
         {reasons.map((r, i) => (

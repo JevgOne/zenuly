@@ -10,9 +10,9 @@ export function FunnelChart({
   const maxVal = funnel.reached || 1;
 
   const levels = [
-    { label: "Dovol\u00e1no", value: funnel.reached, color: "bg-muted" },
+    { label: "Dovoláno", value: funnel.reached, color: "bg-muted" },
     {
-      label: "Z\u00e1jem (podklady nebo konzultace)",
+      label: "Zájem (podklady nebo konzultace)",
       value: funnel.interest,
       color: "bg-muted",
     },
@@ -21,22 +21,22 @@ export function FunnelChart({
 
   const overdueParts: string[] = [];
   if (overdueDecks > 0) {
-    overdueParts.push(`${overdueDecks} prezentace po term\u00ednu`);
+    overdueParts.push(`${overdueDecks} prezentace po termínu`);
   }
   if (overdueCallbacks > 0) {
     overdueParts.push(
-      `${overdueCallbacks} ${overdueCallbacks === 1 ? "propadl\u00fd callback" : "propadl\u00e9 callbacky"}`
+      `${overdueCallbacks} ${overdueCallbacks === 1 ? "propadlý callback" : "propadlé callbacky"}`
     );
   }
   const overdueText =
     overdueParts.length > 0
-      ? `Nedod\u011blky: ${overdueParts.join(", ")}.`
+      ? `Nedodělky: ${overdueParts.join(", ")}.`
       : null;
 
   return (
     <div className="flex-[1_1_360px] min-w-0 p-[22px] bg-surface border border-line rounded-2xl flex flex-col gap-[14px]">
       <h2 className="text-lg font-semibold text-text">
-        Kde hovory padaj\u00ed
+        Kde hovory padají
       </h2>
       {levels.map((level) => (
         <div key={level.label} className="flex flex-col gap-1.5">

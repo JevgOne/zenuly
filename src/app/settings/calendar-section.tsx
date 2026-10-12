@@ -26,20 +26,20 @@ export function CalendarSection({
     if (calendarConnected) {
       return {
         type: "success" as const,
-        text: `${calendarConnected === "google" ? "Google Calendar" : "Kalend\u00e1\u0159"} propojen.`,
+        text: `${calendarConnected === "google" ? "Google Calendar" : "Kalendář"} propojen.`,
       };
     }
     if (calendarError) {
       const errors: Record<string, string> = {
-        denied: "P\u0159\u00edstup k Google Calendar byl odm\u00edtnut.",
-        missing_code: "Chyb\u00ed autoriza\u010dn\u00ed k\u00f3d.",
-        not_configured: "Google Calendar nen\u00ed nakonfigurov\u00e1n na serveru.",
-        token_exchange_failed: "V\u00fdm\u011bna tokenu selhala.",
-        save_failed: "Ulo\u017een\u00ed propojen\u00ed se nepovedlo.",
+        denied: "Přístup k Google Calendar byl odmítnut.",
+        missing_code: "Chybí autorizační kód.",
+        not_configured: "Google Calendar není nakonfigurován na serveru.",
+        token_exchange_failed: "Výměna tokenu selhala.",
+        save_failed: "Uložení propojení se nepovedlo.",
       };
       return {
         type: "error" as const,
-        text: errors[calendarError] ?? "Propojen\u00ed selhalo.",
+        text: errors[calendarError] ?? "Propojení selhalo.",
       };
     }
     return null;
@@ -71,7 +71,7 @@ export function CalendarSection({
     const result = await testCalendarConnection();
     setStatus("idle");
     if (result.ok) {
-      setMessage({ type: "success", text: "Spojen\u00ed funguje." });
+      setMessage({ type: "success", text: "Spojení funguje." });
     } else {
       setMessage({
         type: "error",
@@ -93,7 +93,7 @@ export function CalendarSection({
       if (!credentials[f.key]?.trim()) {
         setMessage({
           type: "error",
-          text: `Vypl\u0148te pole "${f.label}".`,
+          text: `Vyplňte pole "${f.label}".`,
         });
         return;
       }
@@ -107,11 +107,11 @@ export function CalendarSection({
     if (result.ok) {
       setConnected(true);
       setConnectedProvider(selectedProvider);
-      setMessage({ type: "success", text: "Kalend\u00e1\u0159 propojen." });
+      setMessage({ type: "success", text: "Kalendář propojen." });
     } else {
       setMessage({
         type: "error",
-        text: result.error ?? "Propojen\u00ed selhalo.",
+        text: result.error ?? "Propojení selhalo.",
       });
     }
   }
@@ -124,16 +124,16 @@ export function CalendarSection({
     setConnected(false);
     setConnectedProvider("");
     setCredentials({});
-    setMessage({ type: "success", text: "Kalend\u00e1\u0159 odpojen." });
+    setMessage({ type: "success", text: "Kalendář odpojen." });
   }
 
   return (
     <div className="bg-surface border border-line rounded-lg p-6">
       <h2 className="text-lg font-semibold text-text mb-2">
-        Propojen\u00ed kalend\u00e1\u0159e
+        Propojení kalendáře
       </h2>
       <p className="text-sm text-muted mb-4">
-        Propojte sv\u016fj kalend\u00e1\u0159 pro automatick\u00e9 vytv\u00e1\u0159en\u00ed konzultac\u00ed.
+        Propojte svůj kalendář pro automatické vytváření konzultací.
       </p>
 
       {/* Current connection status */}
@@ -154,7 +154,7 @@ export function CalendarSection({
               disabled={status !== "idle"}
               className="px-3 py-1.5 text-[13px] text-muted hover:text-text border border-line rounded-lg transition-colors disabled:opacity-50"
             >
-              {status === "testing" ? "Testuji\u2026" : "Otestovat"}
+              {status === "testing" ? "Testuji…" : "Otestovat"}
             </button>
             <button
               type="button"
@@ -162,7 +162,7 @@ export function CalendarSection({
               disabled={status !== "idle"}
               className="px-3 py-1.5 text-[13px] text-urgent hover:bg-urgent-soft border border-line rounded-lg transition-colors disabled:opacity-50"
             >
-              {status === "disconnecting" ? "Odpojuji\u2026" : "Odpojit"}
+              {status === "disconnecting" ? "Odpojuji…" : "Odpojit"}
             </button>
           </div>
         </div>
@@ -247,7 +247,7 @@ export function CalendarSection({
                 className="w-full h-11 bg-accent text-white rounded-lg font-medium text-[15px] hover:bg-accent/90 transition-colors disabled:opacity-50"
               >
                 {status === "saving"
-                  ? "Ukl\u00e1d\u00e1m\u2026"
+                  ? "Ukládám…"
                   : `Propojit ${selectedMeta.displayName}`}
               </button>
             </div>

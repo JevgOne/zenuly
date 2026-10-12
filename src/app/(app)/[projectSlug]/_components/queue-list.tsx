@@ -4,8 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { getQueue, type QueueItem } from "@/app/actions/queue";
 
 const SECTION_LABELS: Record<string, string> = {
-  overdue: "Propadl\u00E9",
-  new: "Nov\u00E9",
+  overdue: "Propadlé",
+  new: "Nové",
   today: "Dnes",
 };
 

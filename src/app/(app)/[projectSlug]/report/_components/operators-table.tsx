@@ -18,21 +18,21 @@ export function OperatorsTable({
   if (operators.length === 0) {
     return (
       <div className="flex-[999_1_560px] min-w-0 p-[22px] bg-surface border border-line rounded-2xl">
-        <h2 className="text-lg font-semibold text-text">Oper\u00e1to\u0159i</h2>
-        <p className="text-sm text-muted mt-4">Dnes \u017e\u00e1dn\u00e1 data.</p>
+        <h2 className="text-lg font-semibold text-text">Operátoři</h2>
+        <p className="text-sm text-muted mt-4">Dnes žádná data.</p>
       </div>
     );
   }
 
   return (
     <div className="flex-[999_1_560px] min-w-0 p-[22px] bg-surface border border-line rounded-2xl flex flex-col gap-3">
-      <h2 className="text-lg font-semibold text-text">Oper\u00e1to\u0159i</h2>
+      <h2 className="text-lg font-semibold text-text">Operátoři</h2>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="text-muted text-left">
               <th className="px-2 py-2.5 font-medium border-b border-line">
-                Oper\u00e1tor
+                Operátor
               </th>
               <th className="px-2 py-2.5 font-medium border-b border-line text-right">
                 Hodiny
@@ -44,7 +44,7 @@ export function OperatorsTable({
                 Za hodinu
               </th>
               <th className="px-2 py-2.5 font-medium border-b border-line text-right">
-                Dovol\u00e1no
+                Dovoláno
               </th>
               <th className="px-2 py-2.5 font-medium border-b border-line text-right">
                 Konzultace
@@ -82,7 +82,7 @@ export function OperatorsTable({
                 >
                   {op.calls_per_hour}
                   {op.below_target && (
-                    <span className="text-urgent"> pod c\u00edlem</span>
+                    <span className="text-urgent"> pod cílem</span>
                   )}
                 </td>
                 <td
