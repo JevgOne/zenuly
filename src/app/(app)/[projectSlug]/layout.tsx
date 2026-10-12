@@ -96,7 +96,7 @@ export default async function ProjectLayout({
         role={effectiveRole}
       />
       <main className="pt-14 pb-[78px] lg:pb-0">{children}</main>
-      <BottomNav projectSlug={projectSlug} />
+      <BottomNav projectSlug={projectSlug} role={effectiveRole} />
     </ProjectProvider>
   );
 }
