@@ -21,10 +21,12 @@ export default async function Home() {
   // Load user's project memberships (separate queries to avoid RLS join issues)
   const { data: memberships } = await supabase
     .from("project_members")
-    .select("project_id")
+    .select("project_id, role")
     .eq("profile_id", user.id);
 
   const projectIds = (memberships ?? []).map((m) => m.project_id);
+  const isAdmin = profile?.role === "admin";
+  const isManager = (memberships ?? []).some((m) => m.role === "manager");
 
   if (projectIds.length > 0) {
     // Fetch project slugs separately
@@ -33,16 +35,20 @@ export default async function Home() {
       .select("slug")
       .in("id", projectIds)
       .limit(1);
-    if (projects && projects.length > 0) redirect(`/${projects[0].slug}`);
+    if (projects && projects.length > 0) {
+      const slug = projects[0].slug;
+      redirect(isAdmin || isManager ? `/${slug}/dashboard` : `/${slug}`);
+    }
   }
 
   // Admin with no memberships — check all projects
-  if (profile?.role === "admin") {
+  if (isAdmin) {
     const { data: allProjects } = await supabase
       .from("projects")
       .select("slug")
       .limit(1);
-    if (allProjects && allProjects.length > 0) redirect(`/${allProjects[0].slug}`);
+    if (allProjects && allProjects.length > 0)
+      redirect(`/${allProjects[0].slug}/dashboard`);
   }
 
   // No projects — show waiting message
