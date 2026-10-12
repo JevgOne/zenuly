@@ -50,6 +50,15 @@ export default async function UsersPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-4"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Zpět
+      </Link>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-semibold text-text">Správa uživatelů</h1>
         <InviteForm projects={projects ?? []} />
@@ -116,14 +125,6 @@ export default async function UsersPage() {
         </table>
       </div>
 
-      <div className="mt-4">
-        <Link
-          href="/"
-          className="text-sm text-accent hover:text-accent transition-colors"
-        >
-          Zpět na hlavní stránku
-        </Link>
-      </div>
     </div>
   );
 }

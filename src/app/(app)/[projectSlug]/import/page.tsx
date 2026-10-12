@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
+import Link from "next/link";
 import { ImportWizard } from "./import-wizard";
 
 export const instant = false;
@@ -50,6 +51,15 @@ export default async function ImportPage({
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6">
+      <Link
+        href={`/${projectSlug}/kontakty`}
+        className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-4"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Zpět
+      </Link>
       <h1 className="text-2xl font-semibold text-text mb-6">Import leadů</h1>
       <ImportWizard projectId={project.id} projectSlug={project.slug} />
     </div>
