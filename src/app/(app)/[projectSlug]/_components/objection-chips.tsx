@@ -25,7 +25,7 @@ export function ObjectionChips({
   const chips = script.objections.slice(0, 5);
 
   return (
-    <div className="hidden xl:block">
+    <div className="hidden xl:block" data-onboarding="objections">
       <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-muted block mb-2">
         Námitky – ťukni během hovoru
       </span>

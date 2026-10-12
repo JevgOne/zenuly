@@ -243,7 +243,7 @@ export function OutcomePanel({
   const groups = ["interest", "retry", "end"] as const;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" data-onboarding="outcome-panel">
       {/* Note textarea */}
       <div>
         <textarea
@@ -445,6 +445,7 @@ export function OutcomePanel({
           type="button"
           onClick={handleSubmit}
           disabled={!canSubmit}
+          data-onboarding="save-button"
           className="flex-1 h-[52px] bg-accent text-white rounded-lg font-semibold text-[15px] hover:bg-accent/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
         >
           {saving ? "Ukládám…" : "Uložit a další lead"}

@@ -87,6 +87,7 @@ export function HelpSheet() {
         onClick={toggle}
         className="w-9 h-9 rounded-full border border-line bg-surface flex items-center justify-center text-muted hover:text-text hover:border-accent transition-colors"
         aria-label="Nápověda"
+        data-onboarding="help-button"
       >
         <span className="text-[15px] font-bold">?</span>
       </button>

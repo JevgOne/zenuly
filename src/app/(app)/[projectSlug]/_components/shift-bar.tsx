@@ -94,7 +94,7 @@ export function ShiftBar({
   // No active shift
   if (!shift?.active) {
     return (
-      <div className="p-4">
+      <div className="p-4" data-onboarding="shift-start">
         <button
           type="button"
           onClick={handleStart}

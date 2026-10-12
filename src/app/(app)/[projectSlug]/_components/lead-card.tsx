@@ -99,11 +99,13 @@ export function LeadCard({
       </div>
 
       {/* Callscript hook */}
-      <CallscriptCard
-        hookText={lead.hook_text}
-        hookSource={lead.hook_source}
-        findings={lead.findings}
-      />
+      <div data-onboarding="hook-section">
+        <CallscriptCard
+          hookText={lead.hook_text}
+          hookSource={lead.hook_source}
+          findings={lead.findings}
+        />
+      </div>
 
       {/* First sentence */}
       <FirstSentence

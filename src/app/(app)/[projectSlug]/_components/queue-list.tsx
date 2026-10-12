@@ -87,9 +87,14 @@ export function QueueList({
   }
 
   const sectionOrder = ["overdue", "new", "today"];
+  // Track first rendered lead for onboarding
+  const firstLeadId = sectionOrder.reduce<string | null>((found, s) => {
+    if (found) return found;
+    return sections[s]?.[0]?.id ?? null;
+  }, null);
 
   return (
-    <div className="divide-y divide-line">
+    <div className="divide-y divide-line" data-onboarding="queue-list">
       {sectionOrder.map((section) => {
         const sectionItems = sections[section];
         if (!sectionItems?.length) return null;
@@ -109,6 +114,7 @@ export function QueueList({
                 key={item.id}
                 type="button"
                 onClick={() => onSelectLead(item.id)}
+                {...(item.id === firstLeadId ? { "data-onboarding": "first-lead" } : {})}
                 className={`w-full text-left px-4 py-3 flex items-start gap-3 transition-colors min-h-[44px] ${
                   selectedLeadId === item.id
                     ? "bg-accent-soft border-l-2 border-accent"
