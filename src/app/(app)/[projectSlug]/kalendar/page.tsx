@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getCalendarConnection } from "@/app/actions/calendar";
 
 export const instant = false;
 
@@ -17,13 +18,8 @@ export default async function KalendarPage({
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  // Check if user has a calendar connection
-  const { data: connection } = await supabase
-    .from("calendar_connections")
-    .select("id, provider, is_active")
-    .eq("profile_id", user.id)
-    .eq("is_active", true)
-    .maybeSingle();
+  // Use the same function as settings for consistency
+  const connection = await getCalendarConnection();
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
@@ -31,14 +27,16 @@ export default async function KalendarPage({
         Kalendář
       </h1>
 
-      {connection ? (
+      {connection?.isActive ? (
         <div className="bg-surface border border-line rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
             <span className="w-2 h-2 rounded-full bg-green-500" />
             <span className="text-sm font-medium text-text">
               {connection.provider === "google"
                 ? "Google Calendar"
-                : connection.provider}{" "}
+                : connection.provider === "notion"
+                  ? "Notion Calendar"
+                  : connection.provider}{" "}
               propojeno
             </span>
           </div>
