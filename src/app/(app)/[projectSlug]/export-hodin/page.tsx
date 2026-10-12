@@ -24,8 +24,16 @@ export default async function ExportHodinPage({
     .eq("id", user.id)
     .single();
 
-  if (!profile || (profile.role !== "admin" && profile.role !== "manager"))
-    redirect(`/${projectSlug}`);
+  if (!profile) redirect("/login");
+  if (profile.role !== "admin") {
+    const { data: membership } = await supabase
+      .from("project_members")
+      .select("role")
+      .eq("profile_id", user.id)
+      .single();
+    if (!membership || membership.role !== "manager")
+      redirect(`/${projectSlug}`);
+  }
 
   const { data: project } = await supabase
     .from("projects")

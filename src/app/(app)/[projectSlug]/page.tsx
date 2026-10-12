@@ -22,7 +22,17 @@ export default async function ProjectPage({
     .eq("id", user.id)
     .single();
 
-  if (profile?.role === "admin" || profile?.role === "manager") {
+  if (profile?.role === "admin") {
+    redirect(`/${projectSlug}/dashboard`);
+  }
+
+  // Check project_members for manager role
+  const { data: membership } = await supabase
+    .from("project_members")
+    .select("role")
+    .eq("profile_id", user.id)
+    .single();
+  if (membership?.role === "manager") {
     redirect(`/${projectSlug}/dashboard`);
   }
 
