@@ -15,11 +15,13 @@ export function UserActions({
   fullName,
   memberships,
   allProjects,
+  globalRole,
 }: {
   profileId: string;
   fullName: string;
   memberships: Membership[];
   allProjects: Project[];
+  globalRole: string;
 }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -96,17 +98,23 @@ export function UserActions({
                 className="flex items-center gap-2 bg-bg rounded-lg px-3 py-2"
               >
                 <span className="text-sm text-text flex-1">{m.name}</span>
-                <select
-                  value={m.role}
-                  disabled={loading}
-                  onChange={(e) =>
-                    handleRoleChange(m.id, e.target.value as "operator" | "manager")
-                  }
-                  className="text-xs border border-input-border rounded px-2 h-7 bg-surface text-text"
-                >
-                  <option value="operator">Operátor</option>
-                  <option value="manager">Manažer</option>
-                </select>
+                {globalRole === "admin" ? (
+                  <span className="text-xs font-medium text-accent bg-accent-soft px-2 py-0.5 rounded">
+                    Admin
+                  </span>
+                ) : (
+                  <select
+                    value={m.role}
+                    disabled={loading}
+                    onChange={(e) =>
+                      handleRoleChange(m.id, e.target.value as "operator" | "manager")
+                    }
+                    className="text-xs border border-input-border rounded px-2 h-7 bg-surface text-text"
+                  >
+                    <option value="operator">Operátor</option>
+                    <option value="manager">Manažer</option>
+                  </select>
+                )}
                 <button
                   type="button"
                   disabled={loading}

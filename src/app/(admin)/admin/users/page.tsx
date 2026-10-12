@@ -98,7 +98,7 @@ export default async function UsersPage() {
                 </td>
                 <td className="px-4 py-3 text-muted">
                   {(membershipMap.get(p.id) ?? [])
-                    .map((proj) => `${proj.name} (${proj.role === "manager" ? "manažer" : "operátor"})`)
+                    .map((proj) => `${proj.name} (${p.role === "admin" ? "admin" : proj.role === "manager" ? "manažer" : "operátor"})`)
                     .join(", ") || "—"}
                 </td>
                 <td className="px-4 py-3 text-right">
@@ -107,6 +107,7 @@ export default async function UsersPage() {
                     fullName={p.full_name}
                     memberships={membershipMap.get(p.id) ?? []}
                     allProjects={projects ?? []}
+                    globalRole={p.role}
                   />
                 </td>
               </tr>
