@@ -64,7 +64,7 @@ function getSteps(
         id: "settings",
         title: "Nastavení",
         text: "Správa účtu, propojení kalendáře a konfigurace systému. V administraci najdete správu uživatelů a projektů.",
-        path: `/settings`,
+        path: null,
         icon: "settings",
       },
       {
@@ -280,16 +280,16 @@ export function OnboardingWizard({
   const isLast = step === steps.length - 1;
   const totalSteps = steps.length;
 
-  // Navigate to the step's page
+  // Navigate to the step's page on each step change
   useEffect(() => {
     if (current.path) {
       setNavigating(true);
       router.push(current.path);
-      // Give the page a moment to render
-      const t = setTimeout(() => setNavigating(false), 400);
+      const t = setTimeout(() => setNavigating(false), 600);
       return () => clearTimeout(t);
     }
-  }, [current.path, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
 
   const handleNext = useCallback(() => {
     if (step < totalSteps - 1) {
@@ -403,7 +403,7 @@ export function OnboardingWizard({
               <button
                 type="button"
                 onClick={isLast ? handleFinish : handleNext}
-                disabled={saving}
+                disabled={saving || navigating}
                 className="flex-1 h-11 bg-accent text-white rounded-lg font-semibold text-[15px] hover:bg-accent/90 transition-colors disabled:opacity-50 min-h-[44px]"
               >
                 {saving

@@ -21,7 +21,7 @@ export default async function KalendarPage({
   const { data: connection } = await supabase
     .from("calendar_connections")
     .select("id, provider, is_active")
-    .eq("user_id", user.id)
+    .eq("profile_id", user.id)
     .eq("is_active", true)
     .maybeSingle();
 

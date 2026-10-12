@@ -205,15 +205,38 @@ export async function getContactDetail(
   };
 }
 
-export async function assignLeadOwner(
-  leadId: string,
-  operatorId: string | null,
-): Promise<void> {
+async function requireAdminOrManager() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) throw new Error("Not authenticated");
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+  if (!profile) throw new Error("Profile not found");
+
+  if (profile.role === "admin") return supabase;
+
+  const { data: membership } = await supabase
+    .from("project_members")
+    .select("role")
+    .eq("profile_id", user.id)
+    .single();
+  if (!membership || membership.role !== "manager")
+    throw new Error("Forbidden");
+
+  return supabase;
+}
+
+export async function assignLeadOwner(
+  leadId: string,
+  operatorId: string | null,
+): Promise<void> {
+  const supabase = await requireAdminOrManager();
 
   const { error } = await supabase
     .from("leads")
@@ -226,11 +249,7 @@ export async function changeLeadStage(
   leadId: string,
   stageId: string,
 ): Promise<void> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
+  const supabase = await requireAdminOrManager();
 
   const { error } = await supabase
     .from("leads")

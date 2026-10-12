@@ -265,7 +265,7 @@ export function OutcomePanel({
             {OUTCOMES.filter((o) => o.group === group).map((outcome) => {
               const isSelected = selected === outcome.key;
               let btnClass =
-                "relative flex items-center justify-center gap-2 rounded-lg px-4 h-11 text-[14px] font-medium transition-all min-h-[44px]";
+                "relative flex items-center justify-center gap-2 rounded-lg px-4 xl:pr-9 h-11 text-[14px] font-medium transition-all min-h-[44px]";
 
               if (isSelected) {
                 if (group === "interest")
