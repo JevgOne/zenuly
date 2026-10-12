@@ -19,6 +19,8 @@ export function LoginForm() {
   const [error, setError] = useState(errorParam ?? "");
   const [loading, setLoading] = useState(false);
   const [showMfa, setShowMfa] = useState(false);
+  const [showResend, setShowResend] = useState(false);
+  const [resendSent, setResendSent] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -33,10 +35,14 @@ export function LoginForm() {
 
     if (signInError) {
       setLoading(false);
-      if (signInError.message.includes("Invalid login")) {
-        setError("Nesprávný e-mail nebo heslo.");
-      } else if (signInError.message.includes("Email not confirmed")) {
-        setError("E-mail není ověřen. Zkontrolujte svou schránku.");
+      if (signInError.message.includes("Email not confirmed")) {
+        setError("E-mail není ověřen. Zkontrolujte svou schránku nebo si nechte poslat nový odkaz.");
+        setShowResend(true);
+      } else if (signInError.message.includes("Invalid login")) {
+        // Supabase returns "Invalid login credentials" for both wrong password
+        // AND unconfirmed email. Show hint about possible unverified email.
+        setError("Nesprávný e-mail nebo heslo. Pokud jste se právě zaregistrovali, zkontrolujte zda jste potvrdili ověřovací e-mail.");
+        setShowResend(true);
       } else {
         setError(signInError.message);
       }
@@ -153,6 +159,33 @@ export function LoginForm() {
       </label>
 
       {error && <p className="text-urgent text-sm">{error}</p>}
+
+      {showResend && !resendSent && (
+        <button
+          type="button"
+          onClick={async () => {
+            if (!email) return;
+            const supabase = createClient();
+            await supabase.auth.resend({
+              type: "signup",
+              email,
+              options: {
+                emailRedirectTo: `${window.location.origin}/auth/confirm`,
+              },
+            });
+            setResendSent(true);
+          }}
+          className="text-sm text-accent hover:text-accent/80 transition-colors font-medium text-left"
+        >
+          Znovu odeslat ověřovací e-mail
+        </button>
+      )}
+
+      {resendSent && (
+        <p className="text-sm text-accent bg-accent-soft border border-accent rounded-sm px-3 py-2">
+          Ověřovací e-mail odeslán. Zkontrolujte svou schránku.
+        </p>
+      )}
 
       <button
         type="submit"

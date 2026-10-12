@@ -53,10 +53,16 @@ export function RegisterForm() {
       <div className="flex flex-col gap-4">
         <div className="bg-accent-soft border border-accent rounded-sm px-4 py-3">
           <p className="text-sm text-accent font-medium mb-1">Registrace úspěšná</p>
-          <p className="text-sm text-accent">
+          <p className="text-sm text-accent mb-2">
             Na váš e-mail jsme odeslali ověřovací odkaz. Klikněte na něj pro dokončení registrace.
           </p>
+          <p className="text-sm text-accent font-medium">
+            Bez potvrzení e-mailu se nepůjde přihlásit.
+          </p>
         </div>
+        <p className="text-xs text-muted">
+          Nevidíte e-mail? Zkontrolujte složku spam. Odkaz je platný 24 hodin.
+        </p>
         <button
           type="button"
           onClick={() => router.push("/login")}
