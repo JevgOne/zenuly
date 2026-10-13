@@ -287,7 +287,7 @@ export function OnboardingWizard({
   // Trigger navigation on step change
   useEffect(() => {
     if (current.path) {
-      setPendingPath(current.path);
+      setPendingPath(current.path); // eslint-disable-line react-hooks/set-state-in-effect
       router.push(current.path);
     } else {
       setPendingPath(null);
@@ -298,7 +298,7 @@ export function OnboardingWizard({
   // Clear pendingPath once URL matches (navigation complete)
   useEffect(() => {
     if (pendingPath && pathname === pendingPath) {
-      setPendingPath(null);
+      setPendingPath(null); // eslint-disable-line react-hooks/set-state-in-effect
     }
   }, [pathname, pendingPath]);
 

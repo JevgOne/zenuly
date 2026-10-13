@@ -125,7 +125,7 @@ export function OutcomePanel({
 
   // Reset form state when leadId changes
   useEffect(() => {
-    setSelected(null);
+    setSelected(null); // eslint-disable-line react-hooks/set-state-in-effect
     setNote("");
     setEmail(leadEmail ?? "");
     setTimeSlot("");

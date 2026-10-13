@@ -36,6 +36,11 @@ const OBORY = {
   ucetni: 'office=accountant',
   pravnik: 'office=lawyer',
   fitness: 'leisure=fitness_centre',
+  psisalon: 'shop=pet_grooming',
+  psihotel: 'amenity=animal_boarding',
+  sauna: 'leisure=sauna',
+  spa: 'amenity=spa',
+  joga: 'leisure=yoga',
 }
 
 const args = process.argv.slice(2)
@@ -89,9 +94,9 @@ const isNotBusiness = (t) =>
 // gastro, ubytování…) a není to obec, silnice, příroda ani jiný objekt, který není firma.
 const ZBYTEK =
   '[!"shop"][!"craft"][!"office"][!"healthcare"][!"place"][!"boundary"][!"highway"][!"railway"][!"public_transport"][!"natural"][!"route"][!"waterway"][!"aeroway"]' +
-  '["amenity"!~"^(restaurant|cafe|pub|bar|fast_food|dentist|doctors|veterinary|clinic|driving_school|childcare|language_school|music_school|dancing_school|car_wash|car_rental|events_venue|studio)$"]' +
+  '["amenity"!~"^(restaurant|cafe|pub|bar|fast_food|dentist|doctors|veterinary|clinic|driving_school|childcare|language_school|music_school|dancing_school|car_wash|car_rental|events_venue|studio|animal_boarding|spa)$"]' +
   '["tourism"!~"^(hotel|guest_house|apartment|chalet|camp_site|hostel)$"]' +
-  '["leisure"!~"^(fitness_centre|sports_centre|dance|sauna|horse_riding|bowling_alley|escape_game|park|playground|pitch|stadium|nature_reserve|garden)$"]'
+  '["leisure"!~"^(fitness_centre|sports_centre|dance|sauna|horse_riding|bowling_alley|escape_game|park|playground|pitch|stadium|nature_reserve|garden|yoga)$"]'
 
 async function searchOsm(mesto, obory) {
   const webTags = ['["website"]', '["contact:website"]']
@@ -476,6 +481,11 @@ const OBOR_TEXT = {
   'office=financial': ['finančního poradce', 'přehledem služeb, referencemi a kontaktem', 'nové klienty'],
   'leisure=fitness_centre': ['fitness centra', 'rozvrhem, ceníkem a pár fotkami', 'nové členy'],
   'leisure=sports_centre': ['sportovního centra', 'rozvrhem, ceníkem a pár fotkami', 'nové návštěvníky'],
+  'shop=pet_grooming': ['psího salonu', 'přehledem služeb, ceníkem a fotkami proměn', 'nové zákazníky'],
+  'amenity=animal_boarding': ['psího hotelu', 'přehledem služeb, ceníkem a fotkami', 'nové zákazníky'],
+  'leisure=sauna': ['sauny', 'přehledem služeb, ceníkem a otevírací dobou', 'nové návštěvníky'],
+  'amenity=spa': ['wellness centra', 'přehledem procedur, ceníkem a fotkami', 'nové klienty'],
+  'leisure=yoga': ['jóga studia', 'rozvrhem lekcí, ceníkem a fotkami', 'nové klienty'],
 }
 const OBOR_FALLBACK = {
   craft: ['řemeslníků', ...SLUZBY],

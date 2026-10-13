@@ -8,65 +8,51 @@
 
 ## AKTIVNÍ
 
-### TASK-K05: Krok 5 — Import leadů z CSV
+### TASK-54: Exkluzivní přiřazení leadů + noční cron rebalancing
 Priorita: 1
-Stav: zpracovává se
-Přiřazeno: planovac → implementator
+Stav: zpracovává se — plánování
+Přiřazeno: planovac
 
 ### Kompletní zadání:
-Udělej import leadů z CSV a Excelu pro admina: mapování sloupců, normalizace telefonu do E.164, kontrola duplicit v projektu, odmítnutí čísel ze seznamu Nevolat, povinný zdroj čísla. Na konci souhrn: kolik importováno, kolik duplicit a kolik zablokováno.
-Hotovo, když: import 100 testovacích řádků projde a duplicity i Nevolat se správně odfiltrují.
-Plán: `.claude-context/tasks/task-030-import-leads-plan.md`
+Dva operátoři nesmí volat stejný kontakt. Když operátor dostane lead do fronty, nikdo jiný ho nedostane. Jednou denně v noci (např. 2:00) se zkontroluje kdo co navolal a přehodí se stale leady jinému operátorovi.
+Hotovo, když: get_queue vrací exkluzivní leady a noční cron rebalancuje nezavolané.
 
 ---
 
-### TASK-K10: Krok 10 — E-maily (Resend)
-Priorita: 1
-Stav: hotovo
-Přiřazeno: ✅
+### TASK-68: Lead finder — rozšíření na beauty/wellness/služby
+Priorita: 2
+Stav: zpracovává se — plánování
+Přiřazeno: planovac
 
 ### Kompletní zadání:
-Napoj odesílání e-mailů (Resend) se šablonami A a B ze specifikace, předvyplněním proměnných a odesláním jedním tlačítkem z úkolu. Odeslání uzavře úkol, zapíše se do historie a posune fázi podle pravidel. Přidej automatický e-mail po vyčerpání pokusů.
-Hotovo, když: testovací nabídka i prezentace dorazí a úkol se uzavře.
+Rozšířit find-leads.mjs o nové obory: masážní salony, beauty salony, kadeřnictví, květinářství, kadeřnictví pro psy, a další lokální služby. Kvalita nad kvantitou — lepší filtrování (ARES, telefon, web status). Výstup CSV do /Users/zen/zenuly/leady/.
+Hotovo, když: nový sběr vrací kvalitní leady z beauty/wellness oborů.
 
 ---
 
-### TASK-K11: Krok 11 — Směny a výkon
-Priorita: 1
-Stav: hotovo
-Přiřazeno: ✅
+### TASK-69: Registrační email z info@zenuly.cz (Resend SMTP)
+Priorita: 2
+Stav: zpracovává se — plánování
+Přiřazeno: planovac
 
 ### Kompletní zadání:
-Udělej směny (Začít, Pauza, Ukončit), živé počítadlo hovorů za hodinu vs. cíl, upozornění na podezřele rychlé zápisy a měsíční export odpracovaných hodin pro admina.
-Hotovo, když: z exportu spočítáš výplatu za testovací směny.
-Poznámka: Směny (start/pause/resume/end) už fungují. Chybí: živé počítadlo vs cíl, upozornění na rychlé zápisy, měsíční export hodin.
-
----
-
-### TASK-K12: Krok 12 — Denní report
-Priorita: 1
-Stav: hotovo
-Přiřazeno: ✅
-
-### Kompletní zadání:
-Udělej denní report podle specifikace (body 1–5): stránku pro admina přesně podle předlohy 08 a e-mail každý pracovní den v 18:30 Europe/Prague přes plánovanou úlohu.
-Hotovo, když: report dorazí sám a čísla sedí s daty v databázi.
-
----
-
-### TASK-LEADS: Hledání leadů — find-leads.mjs přes celou ČR
-Priorita: 3
-Stav: zpracovává se
-Přiřazeno: implementator
-
-### Kompletní zadání:
-Spustit find-leads.mjs postupně pro všech 14 krajů ČR. Výstup CSV do /Users/zen/zenuly/leady/. Kraje jeden po druhém.
+Registrační (verification) email musí přijít z info@zenuly.cz, ne z default Supabase senderu. Nastavit custom SMTP v Supabase dashboardu přes Resend (smtp.resend.com).
+Hotovo, když: registrační email přijde z info@zenuly.cz.
 
 ---
 
 ## ČEKÁ
 
-(prázdné)
+### TASK-NVD: Projekt NVD (úklid + pomocná síla + security)
+Priorita: 3
+Stav: čeká — dotazník odeslaný majiteli, čeká se na odpovědi
+
+### Kompletní zadání:
+Nový projekt v CRM pro firmu NVD (uklidnvd.cz, securitynvd.cz). Jedna firma, tři služby: úklid, pomocná síla, security. Operátoři volají z okruhů (firmy.cz, mapy.cz), ukládají kontakty za běhu. AI doplní kartu z ARES + web. 10 výsledků hovorů včetně "Spolupracuje s jinou firmou" (AI analýza konkurence před návratem za 7 měsíců). Týdenní report. Pravidlo 25 hovorů/h. Bez pevné pracovní doby.
+
+Blokováno: odpovědi majitele na dotazník (struktura, služby, emaily, reporty, výkon).
+Dotazník: viz Claude Docs "NVD — Dotazník pro majitele" + memory project_nvd_crm.md.
+Hotovo, když: projekt NVD funguje v CRM se všemi pravidly, reporty a automatickými emaily.
 
 ---
 
@@ -76,6 +62,7 @@ Spustit find-leads.mjs postupně pro všech 14 krajů ČR. Výstup CSV do /Users
 ### TASK-K02: Krok 2 — Databázové schéma ✅
 ### TASK-K03: Krok 3 — record_call_outcome ✅
 ### TASK-K04: Krok 4 — Přihlášení a role ✅
+### TASK-K05: Krok 5 — Import leadů z CSV ✅
 ### TASK-K06: Krok 6 — Karta leadu, calling screen ✅
 ### TASK-K07: Krok 7 — Fronta, přidělování, onboarding ✅
 ### TASK-K08: Krok 8 — Zápis výsledku hovoru ✅
@@ -83,5 +70,7 @@ Spustit find-leads.mjs postupně pro všech 14 krajů ČR. Výstup CSV do /Users
 ### TASK-K10: Krok 10 — E-maily (Resend) ✅
 ### TASK-K11: Krok 11 — Směny a výkon ✅
 ### TASK-K12: Krok 12 — Denní report ✅
+### TASK-LEADS: Hledání leadů přes celou ČR ✅
+### TASK-AUDIT: Kompletní audit + opravy všech bugů ✅
 
 ---

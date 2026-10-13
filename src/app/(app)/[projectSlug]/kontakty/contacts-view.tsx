@@ -218,7 +218,7 @@ export function ContactsView({
   );
 
   useEffect(() => {
-    load();
+    load(); // eslint-disable-line react-hooks/set-state-in-effect
   }, [load]);
 
   function handleSearchChange(value: string) {

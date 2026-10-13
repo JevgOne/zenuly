@@ -56,13 +56,6 @@ function formatDate(iso: string): string {
   });
 }
 
-function formatShortDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("cs-CZ", {
-    day: "numeric",
-    month: "short",
-    timeZone: "Europe/Prague",
-  });
-}
 
 function formatPhone(phone: string): string {
   const clean = phone.replace(/\s/g, "");
@@ -427,7 +420,7 @@ export function ContactDetailView({
                 {/* Timeline line */}
                 <div className="absolute left-[7px] top-2 bottom-2 w-px bg-line" />
                 <div className="space-y-0">
-                  {contact.calls.map((call, i) => (
+                  {contact.calls.map((call) => (
                     <div key={call.id} className="relative flex gap-3 pb-4 last:pb-0">
                       {/* Dot */}
                       <div className={`relative z-10 mt-1.5 w-[15px] h-[15px] rounded-full border-2 border-surface ${outcomeColor(call.outcome_name)} shrink-0`} />
