@@ -9,7 +9,7 @@
 //   node find-leads.mjs --mesto Kolín                  (všechno, co má v OSM web)
 //   node find-leads.mjs --urls weby.txt                (jen analýza vlastního seznamu URL)
 //
-// Přepínače: --min-score N (výchozí 3)  --out soubor.csv  --bez-webu  --pagespeed
+// Přepínače: --min-score N (výchozí 3)  --out soubor.csv  --bez-webu  --pagespeed  --jen-telefon
 //            --lokal "v Kolíně" (tvar města do textu e-mailu)  --podpis "Jan Novák, Weblyx, 777 123 456"
 
 const OBORY = {
@@ -44,7 +44,7 @@ const OBORY = {
 }
 
 const args = process.argv.slice(2)
-const opt = { minScore: 3, out: null, urls: null, mesto: null, bezWebu: false, pagespeed: false }
+const opt = { minScore: 3, out: null, urls: null, mesto: null, bezWebu: false, pagespeed: false, jenTelefon: false }
 const queries = []
 for (let i = 0; i < args.length; i++) {
   const a = args[i]
@@ -56,6 +56,7 @@ for (let i = 0; i < args.length; i++) {
   else if (a === '--podpis') opt.podpis = args[++i]
   else if (a === '--bez-webu') opt.bezWebu = true
   else if (a === '--pagespeed') opt.pagespeed = true
+  else if (a === '--jen-telefon') opt.jenTelefon = true
   else queries.push(a)
 }
 
@@ -265,8 +266,17 @@ function extractEmails(html) {
 }
 
 function extractPhone(html) {
+  // 1. href=tel: link (most reliable)
   const tel = /href=["']tel:([^"']+)/i.exec(html)?.[1]
-  return tel ? decodeURIComponent(tel).trim() : ''
+  if (tel) return decodeURIComponent(tel).trim()
+  // 2. text patterns: +420 777 123 456, tel: 777 123 456, tel.: 777123456
+  const text = html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<[^>]+>/g, ' ')
+  const m = text.match(/(?:tel(?:efon)?\.?\s*:?\s*|phone\s*:?\s*|\+420\s*)(\+?420)?[\s.-]*(\d{3})[\s.-]*(\d{3})[\s.-]*(\d{3})\b/)
+  if (m) {
+    const digits = (m[1] || '+420').replace(/\s/g, '') + ' ' + m[2] + ' ' + m[3] + ' ' + m[4]
+    return digits.startsWith('+') ? digits : '+420 ' + m[2] + ' ' + m[3] + ' ' + m[4]
+  }
+  return ''
 }
 
 function contactLinks(html, baseUrl) {
@@ -386,7 +396,14 @@ process.stderr.write('\n')
 
 const rows = analyzed
   .filter((r) => (r.noSite ? opt.bezWebu && (r.email || r.phone) : r.score >= opt.minScore))
-  .sort((a, b) => b.score - a.score)
+  .filter((r) => !opt.jenTelefon || r.phone)
+
+// Fisher-Yates shuffle — operátorky volají postupně, náhodné pořadí zabrání
+// tomu, aby dvě operátorky volaly stejné firmy ze začátku seznamu
+for (let i = rows.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [rows[i], rows[j]] = [rows[j], rows[i]]
+}
 
 // ---------- text oslovení ----------
 
@@ -533,11 +550,35 @@ function buildEmail(r) {
 }
 for (const r of rows) r.mail = buildEmail(r)
 
+const leadType = (r) => r.noSite ? 'no_web' : 'bad_web'
+// problémy webu v češtině pro operátorku — co říct při hovoru
+const PROBLEM_CZ = {
+  'není responzivní (chybí viewport)': 'Web se špatně zobrazuje na mobilu',
+  'bez HTTPS': 'Web nemá zabezpečení (HTTPS)',
+  'zastaralé HTML (font/center/frameset)': 'Web používá zastaralou technologii',
+  'layout v tabulkách': 'Web používá zastaralý layout',
+  'chybí OG tagy': 'Web se špatně zobrazuje na sociálních sítích',
+  'Flash': 'Web používá Flash (nefunguje)',
+  'jQuery 1.x': 'Web používá zastaralé knihovny',
+}
+const problemyCz = (r) => {
+  if (r.noSite) return r.web ? 'Nemá vlastní web, jen sociální sítě' : 'Nemá žádný web'
+  return r.reasons.map((reason) => {
+    if (PROBLEM_CZ[reason]) return PROBLEM_CZ[reason]
+    if (/web nefunguje/.test(reason)) return 'Web nefunguje'
+    if (/patička © \d+/.test(reason)) return reason.replace('patička', 'Patička webu')
+    if (/starý /.test(reason)) return 'Web běží na zastaralém systému'
+    if (/neměněno od/.test(reason)) return reason.replace('neměněno', 'Web neměněn')
+    if (/PageSpeed/.test(reason)) return 'Web je pomalý na mobilu'
+    return reason
+  }).join(', ')
+}
+
 const cell = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`
 const csv = [
-  ['firma', 'web', 'email', 'telefon', 'adresa', 'skore', 'duvody', 'predmet', 'text_emailu'].join(';'),
+  ['firma', 'web', 'email', 'telefon', 'adresa', 'skore', 'typ_leadu', 'problemy_webu', 'duvody', 'predmet', 'text_emailu'].join(';'),
   ...rows.map((r) =>
-    [r.name, r.web, r.email, r.phone, r.address, r.noSite ? '' : r.score, r.reasons.join(' | '), r.mail.subject, r.mail.body]
+    [r.name, r.web, r.email, r.phone, r.address, r.noSite ? '' : r.score, leadType(r), problemyCz(r), r.reasons.join(' | '), r.mail.subject, r.mail.body]
       .map(cell)
       .join(';'),
   ),
@@ -545,6 +586,7 @@ const csv = [
 
 await writeFile(opt.out, '﻿' + csv)
 const withEmail = rows.filter((r) => r.email).length
+const withPhone = rows.filter((r) => r.phone).length
 
 // ---------- HTML přehled ----------
 
@@ -645,7 +687,7 @@ a:hover { text-decoration:underline; }
 <body>
 <div class="wrap">
 <h1>${esc(title)}</h1>
-<div class="sub">${rows.length} leadů z ${leads.length} prověřených firem · ${withEmail} s e-mailem · vygenerováno ${new Date().toLocaleDateString('cs-CZ')} · skóre: čím vyšší, tím zastaralejší web</div>
+<div class="sub">${rows.length} leadů z ${leads.length} prověřených firem · ${withPhone} s telefonem · ${withEmail} s e-mailem · vygenerováno ${new Date().toLocaleDateString('cs-CZ')} · skóre: čím vyšší, tím zastaralejší web</div>
 <div class="bar">
 <input type="search" id="q" placeholder="Hledat firmu, web, e-mail, důvod…">
 <label><input type="checkbox" id="onlyEmail"> jen s e-mailem</label>
@@ -700,4 +742,4 @@ apply()
 const htmlOut = opt.out.replace(/\.csv$/i, '') + '.html'
 await writeFile(htmlOut, html)
 
-console.error(`Hotovo: ${rows.length} leadů z ${leads.length} firem (${withEmail} s e-mailem) → ${opt.out}, ${htmlOut}`)
+console.error(`Hotovo: ${rows.length} leadů z ${leads.length} firem (${withPhone} s telefonem, ${withEmail} s e-mailem) → ${opt.out}, ${htmlOut}`)

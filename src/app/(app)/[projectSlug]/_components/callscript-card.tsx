@@ -24,8 +24,8 @@ function buildHookSentence(
   const found = reasons.map((r) => r.say).join(" a ");
 
   const sentence = noSite
-    ? `Hledal jsem vaši firmu na internetu a všiml jsem si, že ${found}.`
-    : `Díval jsem se na váš web ${domain} a všiml jsem si, že ${found}.`;
+    ? `Hledal jsem firmy z vašeho oboru ve vašem okolí a ${found}.`
+    : `Hledal jsem firmy z vašeho oboru a narazil jsem na váš web ${domain}. Otevřel jsem ho z telefonu a ${found}.`;
 
   const impact = reasons[0].impact;
 
@@ -71,10 +71,10 @@ export function CallscriptCard({
     // Generated from findings
     displayText = hook.sentence;
     impactText = hook.impact;
-    sourceLabel = hookSource === "ai_audit" ? "AI audit" : "audit webu";
+    sourceLabel = hookSource === "ai_audit" ? "AI audit" : "průzkum webu";
   } else {
     displayText =
-      "Audit webu nemáme. Začni: \u201eVolám kvůli vašemu webu, mám pro vás jednu věc\u2026\u201c";
+      "Průzkum webu nemáme. Začni: \u201eHledal jsem firmy z vašeho oboru a narazil jsem na vás\u2026\u201c";
     sourceLabel = "fallback";
   }
 

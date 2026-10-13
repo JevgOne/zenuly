@@ -13,16 +13,16 @@
 
 /** A finding → what to say about it, and why it matters to the owner. Most telling first. */
 const REASONS: Array<[pattern: RegExp, say: (m: RegExpExecArray) => string, impact: string]> = [
-  [/nemá web/, () => 'jsem nenašel váš vlastní web, jen kontakt na mapě', 'Kdo vás hledá na internetu, najde dřív konkurenci, která web má.'],
-  [/jen profil na sociální síti/, () => 'máte jen profil na sociálních sítích, ne vlastní web', 'Na Googlu se profil skoro nezobrazí a pravidla sítě se můžou kdykoli změnit.'],
+  [/nemá web/, () => 'jsem vás na Googlu nenašel, jen kontakt na mapě', 'Lidi hledají služby nejdřív na internetu a kdo tam není, toho minou.'],
+  [/jen profil na sociální síti/, () => 'jsem vás našel jen na sociálních sítích, ne přes Google', 'Na Googlu se profil skoro nezobrazí a pravidla sítě se můžou kdykoli změnit.'],
   [/web nefunguje/, () => 'se mi váš web vůbec nenačetl', 'Kdo na něj klikne, odejde hned jinam.'],
-  [/není responzivní/, () => 'se na mobilu špatně zobrazuje, člověk musí zvětšovat a posouvat', 'Většina lidí dnes hledá z telefonu a takový web rychle zavře.'],
-  [/bez HTTPS/, () => 'ho prohlížeč označuje jako nezabezpečený', 'Návštěvník vidí varování dřív než vaši nabídku.'],
-  [/patička © (\d{4})/, (m) => `má v patičce pořád rok ${m[1]}`, 'Působí to, jako by firma už nefungovala.'],
-  [/neměněno od (\d{4})/, (m) => `se naposledy měnil v roce ${m[1]}`, 'Zákazník si není jistý, jestli údaje ještě platí.'],
-  [/PageSpeed mobil (\d+)\/100/, () => 'se na mobilu načítá pomalu', 'Lidé nečekají a odejdou dřív, než se stránka zobrazí.'],
-  [/starý (WordPress|Joomla)/, () => 'běží na staré verzi redakčního systému', 'Takové weby bývají terčem útoků a špatně se upravují.'],
-  [/Flash|zastaralé HTML|layout v tabulkách|jQuery 1/, () => 'je postavený starou technologií', 'Na nových telefonech a prohlížečích se může rozpadat.'],
+  [/není responzivní/, () => 'se na mobilu nedá pořádně přečíst, musí se zvětšovat a posouvat', 'Většina lidí dnes hledá z telefonu a takový web zavře do pár vteřin.'],
+  [/bez HTTPS/, () => 'mi prohlížeč ukázal varování, že stránka není zabezpečená', 'Lidi to odradí dřív, než vůbec uvidí vaši nabídku.'],
+  [/patička © (\d{4})/, (m) => `má v patičce pořád rok ${m[1]}, takže působí zastarale`, 'Zákazník si řekne, jestli firma ještě vůbec funguje.'],
+  [/neměněno od (\d{4})/, (m) => `se naposledy měnil v roce ${m[1]}`, 'Člověk si není jistý, jestli údaje ještě platí.'],
+  [/PageSpeed mobil (\d+)\/100/, () => 'se na mobilu načítá hodně pomalu', 'Lidi nečekají a odejdou dřív, než se stránka zobrazí.'],
+  [/starý (WordPress|Joomla)/, () => 'běží na starší verzi systému, co už se neaktualizuje', 'Takové weby bývají náchylné k napadení a špatně se upravují.'],
+  [/Flash|zastaralé HTML|layout v tabulkách|jQuery 1/, () => 'je postavený technologií, která se už nepoužívá', 'Na novějších telefonech se může rozpadat.'],
   [/chybí OG tagy/, () => 'se při sdílení na Facebooku neukáže s obrázkem', 'Sdílený odkaz pak nikoho nezaujme.'],
 ];
 
@@ -70,9 +70,9 @@ export function buildScript(lead: { company: string; website: string; reasons: s
       {
         title: 'Proč voláte',
         say: noSite
-          ? `Volám jen na minutu. Hledal jsem vaši firmu na internetu a všiml jsem si, že ${found}. ${impact}`
-          : `Volám jen na minutu. Díval jsem se na váš web ${domain} a všiml jsem si, že ${found}. ${impact}`,
-        hint: 'Řekněte to klidně a věcně, jako postřeh, ne jako výčitku.',
+          ? `Volám jen na chvilku. Hledal jsem firmy z vašeho oboru ve vašem okolí a ${found}. ${impact}`
+          : `Volám jen na chvilku. Hledal jsem firmy z vašeho oboru ve vašem okolí a narazil jsem na váš web ${domain}. Otevřel jsem ho z telefonu a ${found}. ${impact}`,
+        hint: 'Řekněte to klidně a věcně, jako osobní postřeh, ne jako výčitku. Žádný „audit" nezmiňujte.',
       },
       {
         title: 'Otázka',
@@ -110,8 +110,8 @@ export function buildScript(lead: { company: string; website: string; reasons: s
       { they: 'Jak dlouho trvá udělat web?', you: 'Většinou do týdne od dodání podkladů. Podrobnosti vám řekne Jevgenij.' },
       { they: 'Kde je háček? Co za to chcete?', you: 'Žádný háček. Děláme weby a takhle hledáme firmy, kterým můžeme pomoct. Když se vám to nebude líbit, nic se neděje.' },
       { they: 'Odkud máte moje číslo? Jak jste na nás přišli?', you: 'Z veřejných údajů vaší firmy, číslo je uvedené u vaší provozovny na mapě nebo na vašem webu. Hledali jsme firmy z vašeho oboru ve vašem okolí.' },
-      { they: 'Volá mi takových deset denně.', you: 'To chápu a omlouvám se. Rozdíl je v tom, že jsme se na váš web opravdu podívali a volám s konkrétní věcí, ne s obecnou nabídkou.' },
-      { they: 'To jste zjistili jak? To je nějaký robot?', you: 'Web jsme prošli měřicím nástrojem, stejným, jakým kontrolujeme weby našich klientů. Výsledek vám Jevgenij ukáže a vysvětlí.' },
+      { they: 'Volá mi takových deset denně.', you: 'To chápu a omlouvám se. My jsme se na váš web opravdu podívali a volám s jednou konkrétní věcí, ne s obecnou nabídkou.' },
+      { they: 'To jste zjistili jak? To je nějaký robot?', you: 'Hledali jsme firmy z vašeho oboru a procházeli jejich weby. Váš nás zaujal, protože by mohl fungovat mnohem líp. Jevgenij vám to rád ukáže.' },
       { they: 'Už jste mi psali e-mail.', you: 'Ano, to jsme byli my. Jestli vás to obtěžovalo, omlouvám se. Volám, protože po telefonu se to vysvětlí líp než e-mailem.' },
       { they: 'O tom nerozhoduju já.', you: 'Rozumím. Kdo má web na starosti a kdy ho zastihnu? Zavolám přímo jemu.' },
       { they: 'Nevolejte mi už.', you: 'Rozumím, omlouvám se za vyrušení. Zařídím, aby vám už nikdo od nás nevolal. Hezký den.' },
