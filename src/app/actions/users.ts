@@ -85,6 +85,55 @@ export async function changeProjectRole(
   revalidatePath("/admin/users");
 }
 
+export async function updateUserName(profileId: string, newName: string) {
+  await requireAdmin();
+  const trimmed = newName.trim();
+  if (!trimmed) throw new Error("Jméno nesmí být prázdné.");
+
+  const admin = createAdminClient();
+
+  const { error: dbError } = await admin
+    .from("profiles")
+    .update({ full_name: trimmed })
+    .eq("id", profileId);
+  if (dbError) throw new Error(dbError.message);
+
+  const { error: authError } = await admin.auth.admin.updateUserById(profileId, {
+    user_metadata: { full_name: trimmed },
+  });
+  if (authError) throw new Error(authError.message);
+
+  revalidatePath("/admin/users");
+  revalidatePath("/settings");
+}
+
+export async function updateOwnName(newName: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const trimmed = newName.trim();
+  if (!trimmed) throw new Error("Jméno nesmí být prázdné.");
+
+  const admin = createAdminClient();
+
+  const { error: dbError } = await admin
+    .from("profiles")
+    .update({ full_name: trimmed })
+    .eq("id", user.id);
+  if (dbError) throw new Error(dbError.message);
+
+  const { error: authError } = await admin.auth.admin.updateUserById(user.id, {
+    user_metadata: { full_name: trimmed },
+  });
+  if (authError) throw new Error(authError.message);
+
+  revalidatePath("/settings");
+  revalidatePath("/admin/users");
+}
+
 export async function deleteUser(profileId: string) {
   const currentUser = await requireAdmin();
   if (currentUser.id === profileId) {

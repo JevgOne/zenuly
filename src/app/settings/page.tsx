@@ -7,6 +7,7 @@ import { MfaSetup } from "./mfa-setup";
 import { CalendarSection } from "./calendar-section";
 import { getAvailableProviders } from "@/lib/calendar/factory";
 import { getCalendarConnection } from "@/app/actions/calendar";
+import { ProfileNameForm } from "./profile-name-form";
 
 export const instant = false;
 
@@ -56,17 +57,17 @@ export default async function SettingsPage() {
 
       <div className="space-y-6">
         <div className="bg-surface border border-line rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-text mb-2">Profil</h2>
-          <div className="text-sm text-muted space-y-1">
-            <p>
-              <span className="font-medium text-text">{profile.full_name}</span>
-            </p>
-            <p>{user.email}</p>
-            <p>
-              {profile.role === "admin"
-                ? "Administrátor"
-                : "Uživatel"}
-            </p>
+          <h2 className="text-lg font-semibold text-text mb-3">Profil</h2>
+          <div className="space-y-3">
+            <ProfileNameForm currentName={profile.full_name ?? ""} />
+            <div className="text-sm text-muted space-y-1">
+              <p>{user.email}</p>
+              <p>
+                {profile.role === "admin"
+                  ? "Administrátor"
+                  : "Uživatel"}
+              </p>
+            </div>
           </div>
         </div>
 

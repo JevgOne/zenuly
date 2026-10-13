@@ -7,6 +7,7 @@ import {
   changeProjectRole,
   removeFromProject,
   deleteUser,
+  updateUserName,
 } from "@/app/actions/users";
 
 type Project = { id: string; name: string; slug: string };
@@ -30,6 +31,8 @@ export function UserActions({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [addProjectId, setAddProjectId] = useState("");
+  const [editName, setEditName] = useState(fullName);
+  const [nameChanged, setNameChanged] = useState(false);
 
   const assignedIds = new Set(memberships.map((m) => m.id));
   const availableProjects = allProjects.filter((p) => !assignedIds.has(p.id));
@@ -91,7 +94,43 @@ export function UserActions({
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
       <div className="bg-surface border border-line rounded-lg p-6 max-w-md w-full">
-        <h2 className="text-lg font-semibold text-text mb-1">{fullName}</h2>
+        <div className="mb-4">
+          <label className="text-sm font-medium text-muted block mb-1">Jméno</label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={editName}
+              onChange={(e) => {
+                setEditName(e.target.value);
+                setNameChanged(e.target.value.trim() !== fullName);
+              }}
+              className="flex-1 text-sm border border-input-border rounded-md px-3 h-9 bg-surface text-text"
+            />
+            {nameChanged && (
+              <button
+                type="button"
+                disabled={loading || !editName.trim()}
+                onClick={async () => {
+                  setLoading(true);
+                  setError("");
+                  try {
+                    await updateUserName(profileId, editName);
+                    setNameChanged(false);
+                    setOpen(false);
+                    router.refresh();
+                  } catch (e) {
+                    setError(e instanceof Error ? e.message : "Chyba");
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+                className="h-9 px-4 bg-accent text-white rounded-md text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-50"
+              >
+                Uložit
+              </button>
+            )}
+          </div>
+        </div>
         <p className="text-sm text-muted mb-4">Správa projektů a rolí</p>
 
         {/* Current memberships */}
