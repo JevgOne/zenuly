@@ -7,6 +7,7 @@ import {
   type ContactDetail,
   assignLeadOwner,
   changeLeadStage,
+  updateLeadNotes,
 } from "@/app/actions/contacts";
 import { reasonsFor } from "@/lib/callscript";
 import { PageHelpButton } from "@/components/page-help-button";
@@ -56,6 +57,20 @@ function formatDate(iso: string): string {
   });
 }
 
+
+function relativeTime(iso: string): string {
+  const now = Date.now();
+  const target = new Date(iso).getTime();
+  const diffMs = target - now;
+  const absMs = Math.abs(diffMs);
+  const hours = Math.floor(absMs / 3_600_000);
+  const days = Math.floor(absMs / 86_400_000);
+  const prefix = diffMs < 0 ? "před " : "za ";
+  const suffix = diffMs < 0 ? "" : "";
+  if (days >= 1) return `${prefix}${days} ${days === 1 ? "den" : days < 5 ? "dny" : "dní"}${suffix}`;
+  if (hours >= 1) return `${prefix}${hours} ${hours === 1 ? "hodinou" : hours < 5 ? "hodinami" : "hodinami"}${suffix}`;
+  return diffMs < 0 ? "právě teď" : "za chvíli";
+}
 
 function formatPhone(phone: string): string {
   const clean = phone.replace(/\s/g, "");
@@ -124,6 +139,53 @@ function outcomeColor(name: string): string {
   if (lower.includes("email") || lower.includes("report")) return "bg-blue-400";
   if (lower.includes("nezájem") || lower.includes("nepovedlo")) return "bg-urgent";
   return "bg-muted/40";
+}
+
+function NotesSection({ leadId, initialNotes }: { leadId: string; initialNotes: string }) {
+  const [notes, setNotes] = useState(initialNotes);
+  const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const changed = notes !== initialNotes;
+
+  async function handleSave() {
+    setSaving(true);
+    try {
+      await updateLeadNotes(leadId, notes);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch {
+      // silently fail
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="bg-surface border border-line rounded-xl p-5">
+      <h2 className="text-[14px] font-semibold text-text mb-3">Poznámky</h2>
+      <textarea
+        value={notes}
+        onChange={(e) => { setNotes(e.target.value); setSaved(false); }}
+        rows={4}
+        placeholder="Interní poznámky o firmě..."
+        className="w-full border border-input-border rounded-lg px-3 py-2.5 text-[14px] bg-surface text-text outline-none focus:border-accent transition-colors resize-none"
+      />
+      <div className="flex items-center gap-2 mt-2">
+        {changed && (
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="h-8 px-3 bg-accent text-white rounded-lg text-[13px] font-medium hover:bg-accent/90 transition-colors disabled:opacity-50"
+          >
+            {saving ? "Ukládám..." : "Uložit"}
+          </button>
+        )}
+        {saved && (
+          <span className="text-[12px] text-green-600">Uloženo</span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export function ContactDetailView({
@@ -375,6 +437,46 @@ export function ContactDetailView({
         )}
       </div>
 
+      {/* Next action banner */}
+      {contact.next_action_at && (
+        <div className={`rounded-xl p-4 flex items-center gap-3 border mb-4 ${
+          contact.next_action_type === "meeting"
+            ? "bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800"
+            : new Date(contact.next_action_at) < new Date()
+              ? "bg-urgent-soft border-urgent/20"
+              : "bg-accent-soft border-accent/20"
+        }`}>
+          <span className={`text-[20px] ${contact.next_action_type === "meeting" ? "text-green-600" : new Date(contact.next_action_at) < new Date() ? "text-urgent" : "text-accent"}`}>
+            {contact.next_action_type === "meeting" ? "\u{1F4C5}" : "\u{1F4DE}"}
+          </span>
+          <div className="flex-1">
+            <span className={`text-[13px] font-semibold ${
+              contact.next_action_type === "meeting"
+                ? "text-green-700 dark:text-green-400"
+                : new Date(contact.next_action_at) < new Date()
+                  ? "text-urgent"
+                  : "text-accent"
+            }`}>
+              {contact.next_action_type === "meeting" ? "Schůzka" : "Zavolat"}
+            </span>
+            <span className={`text-[14px] font-medium ml-2 ${
+              contact.next_action_type === "meeting"
+                ? "text-green-800 dark:text-green-300"
+                : new Date(contact.next_action_at) < new Date()
+                  ? "text-urgent"
+                  : "text-text"
+            }`}>
+              {formatDate(contact.next_action_at)}
+            </span>
+          </div>
+          <span className={`text-[12px] ${
+            new Date(contact.next_action_at) < new Date() ? "text-urgent font-semibold" : "text-muted"
+          }`}>
+            {relativeTime(contact.next_action_at)}
+          </span>
+        </div>
+      )}
+
       {/* ===== MAIN CONTENT GRID ===== */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Left column (2/3) */}
@@ -399,6 +501,19 @@ export function ContactDetailView({
                 </p>
               )}
             </div>
+          )}
+
+          {/* Findings / Web analysis — collapsible */}
+          {contact.findings && (
+            <details className="bg-surface border border-line rounded-xl">
+              <summary className="p-5 cursor-pointer text-[14px] font-semibold text-text hover:text-accent transition-colors list-none flex items-center gap-2">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-muted shrink-0"><path d="M5.25 3.5l3.5 3.5-3.5 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                Průzkum webu
+              </summary>
+              <div className="px-5 pb-5 text-[13px] text-muted leading-relaxed whitespace-pre-line">
+                {contact.findings}
+              </div>
+            </details>
           )}
 
           {/* Call history timeline */}
@@ -449,6 +564,9 @@ export function ContactDetailView({
               </div>
             )}
           </div>
+
+          {/* Notes */}
+          <NotesSection leadId={contact.id} initialNotes={contact.notes ?? ""} />
         </div>
 
         {/* Right column (1/3) — sidebar */}

@@ -70,6 +70,7 @@ export type ContactDetail = {
   phone_source: string;
   hook_text: string | null;
   findings: string | null;
+  notes: string | null;
   priority: number;
   attempt_count: number;
   next_action_at: string | null;
@@ -107,7 +108,7 @@ export async function getContactDetail(
   const { data: lead } = await supabase
     .from("leads")
     .select(
-      "id, company, contact_person, phone, email, website, city, ico, lead_source, phone_source, hook_text, findings, priority, attempt_count, next_action_at, next_action_type, created_at, updated_at, stage_id, owner_id, project_id"
+      "id, company, contact_person, phone, email, website, city, ico, lead_source, phone_source, hook_text, findings, priority, attempt_count, next_action_at, next_action_type, created_at, updated_at, stage_id, owner_id, project_id, notes"
     )
     .eq("id", leadId)
     .single();
@@ -171,6 +172,7 @@ export async function getContactDetail(
     phone_source: lead.phone_source,
     hook_text: lead.hook_text,
     findings: lead.findings,
+    notes: lead.notes ?? null,
     priority: lead.priority,
     attempt_count: lead.attempt_count,
     next_action_at: lead.next_action_at,
@@ -257,6 +259,18 @@ export async function changeLeadStage(
   const { error } = await supabase
     .from("leads")
     .update({ stage_id: stageId, updated_at: new Date().toISOString() })
+    .eq("id", leadId);
+  if (error) throw new Error(error.message);
+}
+
+export async function updateLeadNotes(
+  leadId: string,
+  notes: string,
+): Promise<void> {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("leads")
+    .update({ notes, updated_at: new Date().toISOString() })
     .eq("id", leadId);
   if (error) throw new Error(error.message);
 }

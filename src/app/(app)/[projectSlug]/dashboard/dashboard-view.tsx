@@ -15,15 +15,17 @@ function KpiCard({
   value,
   suffix,
   accent,
+  href,
 }: {
   label: string;
   value: number | string;
   suffix?: string;
   accent?: boolean;
+  href?: string;
 }) {
-  return (
-    <div className="bg-surface border border-line rounded-xl p-5 flex flex-col gap-1">
-      <span className="text-[12px] font-medium text-muted uppercase tracking-wide">
+  const content = (
+    <div className={`bg-surface border border-line rounded-xl p-5 flex flex-col gap-1 ${href ? "hover:border-accent/40 hover:shadow-sm transition-all cursor-pointer group" : ""}`}>
+      <span className={`text-[12px] font-medium text-muted uppercase tracking-wide ${href ? "group-hover:text-accent transition-colors" : ""}`}>
         {label}
       </span>
       <span
@@ -38,6 +40,11 @@ function KpiCard({
       </span>
     </div>
   );
+
+  if (href) {
+    return <Link href={href}>{content}</Link>;
+  }
+  return content;
 }
 
 function PipelineBar({
@@ -250,16 +257,17 @@ export function DashboardView({
 
       {/* KPI cards */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
-        <KpiCard label="Celkem leadů" value={stats.total_leads} />
-        <KpiCard label="Hovory dnes" value={stats.calls_today} accent />
+        <KpiCard label="Celkem leadů" value={stats.total_leads} href={`/${projectSlug}/kontakty`} />
+        <KpiCard label="Hovory dnes" value={stats.calls_today} accent href={`/${projectSlug}/report`} />
         <KpiCard
           label="Dovoláno"
           value={`${stats.reached_today}`}
           suffix={`(${reachedPct} %)`}
+          href={`/${projectSlug}/report`}
         />
-        <KpiCard label="Konzultace" value={stats.consultations_this_week} suffix="/ týden" />
-        <KpiCard label="Nevyřízené úkoly" value={stats.pending_tasks} />
-        <KpiCard label="Aktivní směny" value={stats.active_shifts} />
+        <KpiCard label="Konzultace" value={stats.consultations_this_week} suffix="/ týden" href={`/${projectSlug}/kalendar`} />
+        <KpiCard label="Nevyřízené úkoly" value={stats.pending_tasks} href={`/${projectSlug}/ukoly`} />
+        <KpiCard label="Aktivní směny" value={stats.active_shifts} href={`/${projectSlug}/vykon`} />
       </div>
 
       {/* Pipeline + Operators */}

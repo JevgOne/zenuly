@@ -339,3 +339,26 @@ export async function getCalendarConnection(): Promise<{
     isActive: data.is_active as boolean,
   };
 }
+
+/** Get upcoming consultations (meetings) for the calendar page */
+export async function getUpcomingConsultations(projectId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data } = await supabase
+    .from("leads")
+    .select(
+      "id, company, contact_person, phone, email, next_action_at, owner_id, profiles(full_name)"
+    )
+    .eq("project_id", projectId)
+    .eq("is_active", true)
+    .eq("next_action_type", "meeting")
+    .gte("next_action_at", new Date().toISOString())
+    .order("next_action_at", { ascending: true })
+    .limit(50);
+
+  return data ?? [];
+}
