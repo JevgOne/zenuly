@@ -33,7 +33,8 @@ export function CallingLayout({
       const data = await getLeadCard(leadId);
       setLead(data);
       setShowOutcome(false);
-    } catch {
+    } catch (err) {
+      console.error("getLeadCard failed:", err);
       setLead(null);
     } finally {
       setLoadingLead(false);

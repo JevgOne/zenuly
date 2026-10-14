@@ -321,6 +321,7 @@ async function analyze(lead) {
     }
     result.score = 5
     result.reasons = [`web nefunguje (${err.message})`]
+    result.deadWeb = true
     return result
   }
 
@@ -340,7 +341,10 @@ async function analyze(lead) {
   // adresy na doméně firmy mají přednost před gmail/seznam apod.
   emails.sort((a, b) => Number(b.endsWith('@' + host)) - Number(a.endsWith('@' + host)))
   result.email = emails.slice(0, 2).join(', ')
-  result.phone ||= phone
+  // web phone has priority over OSM phone (OSM data can be stale)
+  if (phone) result.phone = phone
+  // fallback to OSM phone if web didn't have one
+  // (result.phone already has OSM value from lead data)
 
   if (opt.pagespeed && result.score >= opt.minScore - 2) {
     const perf = await pagespeedScore(page.finalUrl)
@@ -396,6 +400,7 @@ process.stderr.write('\n')
 
 const rows = analyzed
   .filter((r) => (r.noSite ? opt.bezWebu && (r.email || r.phone) : r.score >= opt.minScore))
+  .filter((r) => !r.deadWeb)  // dead websites have unreliable OSM-only phone numbers
   .filter((r) => !opt.jenTelefon || r.phone)
 
 // Fisher-Yates shuffle — operátorky volají postupně, náhodné pořadí zabrání
